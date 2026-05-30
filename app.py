@@ -1,5 +1,5 @@
 import streamlit as st
 
-print("<<Hello World>>")
+print("<Hello World>")
 
-st.title("<<Hello World>>")
+st.title("<Hello World>")
