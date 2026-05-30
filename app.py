@@ -4,8 +4,8 @@ from typing import List, Dict, Optional, Tuple
 import streamlit as st
 
 # =========================================================
-# MISTER TRUCO - VERSÃO TELA CHEIA SEM BARRA LATERAL
-# Opções integradas diretamente no topo para controle total
+# MISTER TRUCO - VERSÃO FULLSCREEN AUDITADA (SEM ERROS)
+# Correção de contraste, IDs duplicados e exibição da mesa
 # =========================================================
 
 st.set_page_config(
@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide",
 )
 
-# --- CSS INTEGRADO PARA CORREÇÃO DE CONTRASTE E ALTURA ---
+# --- CSS INTEGRADO CORRIGIDO (CONTRASTE MÁXIMO NAS LETRAS) ---
 st.markdown(
     """
     <style>
@@ -30,7 +30,7 @@ st.markdown(
     }
     header {visibility: hidden;}
     footer {visibility: hidden;}
-    hr {margin: 0.4rem 0 !important; border-color: rgba(255,255,255,0.1) !important;}
+    hr {margin: 0.4rem 0 !important; border-color: rgba(255,255,255,0.2) !important;}
 
     /* Placar Superior Refinado */
     .status-text {
@@ -39,11 +39,11 @@ st.markdown(
         font-weight: bold;
         font-size: 15px;
         text-align: center;
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0,0,0,0.6);
         padding: 4px 12px;
         border-radius: 6px;
         margin: 0px;
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
     }
 
     /* Cartas Ocultas da CPU */
@@ -65,7 +65,7 @@ st.markdown(
         box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
     }
 
-    /* Cartas Jogáveis Grandes com Contraste Máximo */
+    /* Cartas Jogadas e visíveis na mesa (Fundo Branco com Letras Pretas) */
     .card-played {
         border: 2px solid #000000 !important;
         border-radius: 8px !important;
@@ -83,8 +83,27 @@ st.markdown(
         box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
     }
     
+    /* Cartas miniatura no painel lateral */
+    .card-mini {
+        border: 1.5px solid #000000 !important;
+        border-radius: 5px !important;
+        background-color: #ffffff !important; 
+        color: #000000 !important; 
+        width: 45px;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
+    
     .red-suit { color: #dc2626 !important; font-size: 30px; line-height: 1; }
     .black-suit { color: #000000 !important; font-size: 30px; line-height: 1; }
+    .red-suit-mini { color: #dc2626 !important; font-size: 20px; line-height: 1; }
+    .black-suit-mini { color: #000000 !important; font-size: 20px; line-height: 1; }
     
     /* Caixa de texto do Bot (Balão lateral) */
     .balloon-cpu {
@@ -98,10 +117,11 @@ st.markdown(
         margin-bottom: 12px;
     }
     
-    /* Estilização para os seletores de rádio ficarem brancos e discretos no topo */
-    div[data-testid="stRadio"] label {
-        color: white !important;
+    /* CORREÇÃO DO TEXTO DO RÁDIO (BOTÕES DO TOPO) - Forçar ficar branco legível */
+    div[data-testid="stRadio"] label, div[data-testid="stRadio"] p {
+        color: #ffffff !important;
         font-size: 13px !important;
+        font-weight: bold !important;
     }
     div[data-testid="stRadio"] div[role="radiogroup"] {
         flex-direction: row !important;
@@ -121,6 +141,18 @@ st.markdown(
         background-color: #f3f4f6 !important;
         color: #000000 !important;
     }
+    
+    /* Texto de alerta de desafio (Amarelo de alto contraste) */
+    .challenge-alert {
+        color: #fde047 !important;
+        font-weight: bold !important;
+        font-size: 15px !important;
+        background-color: rgba(0,0,0,0.4);
+        padding: 6px;
+        border-radius: 6px;
+        border: 1px dashed #fde047;
+        margin-bottom: 10px;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -128,6 +160,7 @@ st.markdown(
 
 SUITS = ["♦", "♠", "♥", "♣"]
 SUIT_CLASSES = {"♦": "red-suit", "♠": "black-suit", "♥": "red-suit", "♣": "black-suit"}
+SUIT_MINI_CLASSES = {"♦": "red-suit-mini", "♠": "black-suit-mini", "♥": "red-suit-mini", "♣": "black-suit-mini"}
 SUIT_POWER = {"♦": 1, "♠": 2, "♥": 3, "♣": 4}
 BET_SEQUENCE = [1, 3, 6, 9, 12]
 
@@ -361,9 +394,7 @@ def maybe_bot_turns():
         play_card(player, idx)
 
 
-# --- INICIALIZAÇÃO E GERENCIAMENTO DE REGRAS NO TOPO ---
-
-# Criamos a área de configuração horizontal logo abaixo do título
+# --- CONTEXTO DE CONFIGURAÇÃO DO TOPO ---
 c_top_title, c_top_players, c_top_mode, c_top_reset = st.columns([1, 1.2, 1.2, 0.8])
 
 with c_top_title:
@@ -376,7 +407,6 @@ with c_top_mode:
     mode = st.radio("Manilha:", ["Manilha Velha", "Manilha Nova"], label_visibility="collapsed")
 
 with c_top_reset:
-    # Reinicia o jogo se clicado ou se as opções mudarem dinamicamente
     apply_btn = st.button("Aplicar Regras", use_container_width=True)
 
 if "game" not in st.session_state or st.session_state.game["mode"] != mode or st.session_state.game["n_players"] != n_players or apply_btn:
@@ -391,8 +421,7 @@ if g["pending_truco"] and g["pending_truco"]["to_team"] != team_of_player(0, g["
 
 maybe_bot_turns()
 
-# --- PLACAR E MESA (FIT SCREEN) ---
-
+# --- PLACAR E MESA ---
 c_header = st.columns([2, 1])
 with c_header[0]:
     st.markdown(f"<div class='status-text'>CPU: {g['score'][1]}   ▏   VOCÊ: {g['score'][0]}</div>", unsafe_allow_html=True)
@@ -436,18 +465,18 @@ with col_board:
 
     st.markdown("<div style='margin: 12px 0;'></div>", unsafe_allow_html=True)
 
-    # 3. Barra Inferior de Comandos Rápidos
+    # 3. Barra Inferior de Comandos Rápidos da Mesa
     cols_act = st.columns([1.2, 1, 1, 1.2])
     next_val = next_bet_value(g["hand_points"])
     truco_lbl = "TRUCO" if next_val == 3 else f"PEDIR {next_val}" if next_val else "MÁXIMO"
     
     with cols_act[1]:
-        if st.button(truco_lbl, disabled=not next_val or not human_turn, use_container_width=True):
+        if st.button(truco_lbl, key="mesa_truco_btn", disabled=not next_val or not human_turn, use_container_width=True):
             ask_truco(0)
             st.rerun()
             
     with cols_act[2]:
-        if st.button("CORRER", disabled=not human_turn, use_container_width=True):
+        if st.button("CORRER", key="mesa_correr_btn", disabled=not human_turn, use_container_width=True):
             g["score"][1] += g["hand_points"]
             finish_hand("Você correu do truco!", already_scored=True)
             st.rerun()
@@ -456,14 +485,14 @@ with col_panel:
     # Balão Dinâmico de Fala do Oponente (CPU)
     st.markdown(f"<div class='balloon-cpu'><b>💻 CPU diz:</b><br/><i>\"{g['message']}\"</i></div>", unsafe_allow_html=True)
 
-    # Resposta se for desafiado
+    # AREA DE DESAFIO (Se trucado) - RESOLVIDO CONFLITO DE CHAVES E CONTRASTE
     if g["pending_truco"] and g["pending_truco"]["to_team"] == team_of_player(0, g["n_players"]):
-        st.error(f"Eles pediram {g['pending_truco']['value']}!")
+        st.markdown(f"<div class='challenge-alert'>⚠️ Gritaram {g['pending_truco']['value']}!</div>", unsafe_allow_html=True)
         c_choice = st.columns(2)
-        if c_choice[0].button("ACEITAR", use_container_width=True):
+        if c_choice[0].button("ACEITAR", key="challenge_accept_unique", use_container_width=True):
             accept_truco()
             st.rerun()
-        if c_choice[1].button("CORRER", use_container_width=True):
+        if c_choice[1].button("CORRER", key="challenge_refuse_unique", use_container_width=True):
             refuse_truco()
             st.rerun()
 
@@ -471,17 +500,33 @@ with col_panel:
     if g["mode"] == "Manilha Nova" and g["vira"]:
         st.markdown(f"<div style='background-color: rgba(0,0,0,0.4); padding: 5px; border-radius: 6px; color: white; text-align: center; font-size:11px; margin-bottom:10px; border: 1px solid rgba(255,255,255,0.1);'>VIRA: <b>{g['vira'].label}</b>   |   MANILHA: <b style='color:#38bdf8;'>{get_next_rank(g['vira'].rank)}</b></div>", unsafe_allow_html=True)
 
-    # Estado Atual da Mesa
+    # 2. VISUALIZAÇÃO CLARA DAS CARTAS EM JOGO NA MESA (Exibição Premium)
     st.markdown("<p style='color: white; font-weight: bold; margin: 0; font-size:13px;'>Mesa:</p>", unsafe_allow_html=True)
     if not g["table"]:
         st.caption("Aguardando jogadas...")
     else:
         for play in g["table"]:
             c = play["card"]
-            st.markdown(f"<span style='color: #ffffff; font-size: 13px;'>• <b>{player_name(play['player'])}</b>: {c.label}</span>", unsafe_allow_html=True)
+            mini_s_class = SUIT_MINI_CLASSES[c.suit]
+            
+            # Renderiza um mini-card de verdade na barra lateral para ver o que jogaram
+            st.markdown(
+                f"""
+                <div style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 8px; margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div class='card-mini'>
+                        <div style='font-size:11px; margin-bottom:-4px;'>{c.rank}</div>
+                        <div class='{mini_s_class}'>{c.suit}</div>
+                    </div>
+                    <div style='color: #ffffff; font-size: 13px;'>
+                        <b>{player_name(play['player'])}</b> jogou
+                    </div>
+                </div>
+                """, 
+                unsafe_allow_html=True
+            )
 
     st.markdown("<div style='margin: 8px 0;'></div>", unsafe_allow_html=True)
-    if st.button("Avançar para Nova Mão", disabled=not g["finished_hand"] or g["finished_match"], use_container_width=True):
+    if st.button("Próxima Mão", key="next_hand_btn", disabled=not g["finished_hand"] or g["finished_match"], use_container_width=True):
         new_hand_keep_score()
         st.rerun()
 
