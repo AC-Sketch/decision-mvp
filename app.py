@@ -4,8 +4,8 @@ from typing import List, Dict, Optional, Tuple
 import streamlit as st
 
 # =========================================================
-# MISTER TRUCO - VERSÃO FULLSCREEN PREMIUM
-# Otimizado para máxima legibilidade e encaixe perfeito na tela
+# MISTER TRUCO - VERSÃO TELA CHEIA SEM BARRA LATERAL
+# Opções integradas diretamente no topo para controle total
 # =========================================================
 
 st.set_page_config(
@@ -23,7 +23,7 @@ st.markdown(
         background-color: #1a4a2b !important;
     }
     .block-container {
-        padding-top: 1rem !important;
+        padding-top: 0.5rem !important;
         padding-bottom: 0rem !important;
         padding-left: 2rem !important;
         padding-right: 2rem !important;
@@ -37,7 +37,7 @@ st.markdown(
         color: #ffffff !important;
         font-family: 'Courier New', Courier, monospace;
         font-weight: bold;
-        font-size: 16px;
+        font-size: 15px;
         text-align: center;
         background-color: rgba(0,0,0,0.5);
         padding: 4px 12px;
@@ -46,15 +46,15 @@ st.markdown(
         border: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Cartas Ocultas da CPU (Verso clássico) */
+    /* Cartas Ocultas da CPU */
     .card-back {
         border: 2px solid #ffffff;
         border-radius: 8px;
         background-color: #11331c;
         background-image: repeating-linear-gradient(45deg, #1e4a2b 0, #1e4a2b 2px, transparent 0, transparent 50%);
         background-size: 8px 8px;
-        height: 100px;
-        max-width: 75px;
+        height: 95px;
+        max-width: 70px;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -65,15 +65,15 @@ st.markdown(
         box-shadow: 3px 3px 6px rgba(0,0,0,0.4);
     }
 
-    /* Cartas Jogáveis Grandes com Contraste Máximo (Fundo Branco Atômico) */
+    /* Cartas Jogáveis Grandes com Contraste Máximo */
     .card-played {
         border: 2px solid #000000 !important;
         border-radius: 8px !important;
-        background-color: #ffffff !important; /* Branco puro garantido */
-        color: #000000 !important; /* Texto sempre preto */
-        height: 110px;
-        max-width: 85px;
-        margin: 0 auto 6px auto;
+        background-color: #ffffff !important; 
+        color: #000000 !important; 
+        height: 105px;
+        max-width: 80px;
+        margin: 0 auto 4px auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -83,9 +83,8 @@ st.markdown(
         box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
     }
     
-    /* Cores dos Naipes Independentes do Tema do Sistema */
-    .red-suit { color: #dc2626 !important; font-size: 32px; line-height: 1; }
-    .black-suit { color: #000000 !important; font-size: 32px; line-height: 1; }
+    .red-suit { color: #dc2626 !important; font-size: 30px; line-height: 1; }
+    .black-suit { color: #000000 !important; font-size: 30px; line-height: 1; }
     
     /* Caixa de texto do Bot (Balão lateral) */
     .balloon-cpu {
@@ -99,7 +98,17 @@ st.markdown(
         margin-bottom: 12px;
     }
     
-    /* Customização dos botões normais para não quebrarem o visual */
+    /* Estilização para os seletores de rádio ficarem brancos e discretos no topo */
+    div[data-testid="stRadio"] label {
+        color: white !important;
+        font-size: 13px !important;
+    }
+    div[data-testid="stRadio"] div[role="radiogroup"] {
+        flex-direction: row !important;
+        gap: 15px !important;
+    }
+
+    /* Customização dos botões normais */
     .stButton>button {
         background-color: #ffffff !important;
         color: #000000 !important;
@@ -110,7 +119,6 @@ st.markdown(
     }
     .stButton>button:hover {
         background-color: #f3f4f6 !important;
-        border-color: #000000 !important;
         color: #000000 !important;
     }
     </style>
@@ -353,17 +361,25 @@ def maybe_bot_turns():
         play_card(player, idx)
 
 
-# --- CONTROLE DA SIDEBAR DE CONFIGURAÇÃO ---
-with st.sidebar:
-    st.markdown("### Configurar Regras")
-    n_players = st.radio("Jogadores", [2, 4], format_func=lambda x: "1 vs 1 (Dois)" if x == 2 else "2 vs 2 (Quatro)")
-    mode = st.radio("Regra Geral", ["Manilha Velha", "Manilha Nova"])
-    if st.button("Aplicar e Reiniciar", use_container_width=True):
-        init_game(n_players, mode)
-        st.rerun()
+# --- INICIALIZAÇÃO E GERENCIAMENTO DE REGRAS NO TOPO ---
 
-# Prevenção de perda de estado de sessão e KeyErrors
-if "game" not in st.session_state or st.session_state.game["mode"] != mode or st.session_state.game["n_players"] != n_players:
+# Criamos a área de configuração horizontal logo abaixo do título
+c_top_title, c_top_players, c_top_mode, c_top_reset = st.columns([1, 1.2, 1.2, 0.8])
+
+with c_top_title:
+    st.markdown("<h3 style='color: white; font-family: monospace; margin:0; padding-top:5px;'>MISTER TRUCO</h3>", unsafe_allow_html=True)
+
+with c_top_players:
+    n_players = st.radio("Jogadores:", [2, 4], format_func=lambda x: "1v1 (Dois)" if x == 2 else "2v2 (Quatro)", label_visibility="collapsed")
+
+with c_top_mode:
+    mode = st.radio("Manilha:", ["Manilha Velha", "Manilha Nova"], label_visibility="collapsed")
+
+with c_top_reset:
+    # Reinicia o jogo se clicado ou se as opções mudarem dinamicamente
+    apply_btn = st.button("Aplicar Regras", use_container_width=True)
+
+if "game" not in st.session_state or st.session_state.game["mode"] != mode or st.session_state.game["n_players"] != n_players or apply_btn:
     init_game(n_players, mode)
 
 g = st.session_state.game
@@ -375,15 +391,12 @@ if g["pending_truco"] and g["pending_truco"]["to_team"] != team_of_player(0, g["
 
 maybe_bot_turns()
 
-# --- CONSTRUÇÃO DO TABULEIRO DINÂMICO ---
+# --- PLACAR E MESA (FIT SCREEN) ---
 
-# Topo integrado: Título e Placar Horizontal Compacto
-c_header = st.columns([1, 1.5, 1])
+c_header = st.columns([2, 1])
 with c_header[0]:
-    st.markdown("<h3 style='color: white; font-family: monospace; margin:0; padding-top:2px;'>MISTER TRUCO</h3>", unsafe_allow_html=True)
-with c_header[1]:
     st.markdown(f"<div class='status-text'>CPU: {g['score'][1]}   ▏   VOCÊ: {g['score'][0]}</div>", unsafe_allow_html=True)
-with c_header[2]:
+with c_header[1]:
     st.markdown(f"<div class='status-text' style='background-color:#11331c;'>VALENDO: {g['hand_points']} PTS</div>", unsafe_allow_html=True)
 
 st.markdown("<hr/>", unsafe_allow_html=True)
@@ -398,10 +411,9 @@ with col_board:
         with cols_cpu[i + 1]:
             st.markdown("<div class='card-back'>R</div>", unsafe_allow_html=True)
 
-    # Espaçamento vertical fixo e controlado
-    st.markdown("<div style='margin: 15px 0;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin: 12px 0;'></div>", unsafe_allow_html=True)
 
-    # 2. Zona Inferior: Suas Cartas Ativas (Fundo Branco com Perfeito Contraste)
+    # 2. Zona Inferior: Suas Cartas Ativas
     cols_player = st.columns([1, 1, 1, 1, 1])
     human_turn = g["turn"] == 0 and not g["pending_truco"] and not g["finished_hand"]
     
@@ -409,7 +421,6 @@ with col_board:
     for i, card in enumerate(cards_to_show):
         with cols_player[i + 1]:
             s_class = SUIT_CLASSES[card.suit]
-            # Montagem estruturada em HTML puro para garantir isolamento de cor
             st.markdown(
                 f"""
                 <div class='card-played'>
@@ -423,7 +434,7 @@ with col_board:
                 play_card(0, i)
                 st.rerun()
 
-    st.markdown("<div style='margin: 15px 0;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin: 12px 0;'></div>", unsafe_allow_html=True)
 
     # 3. Barra Inferior de Comandos Rápidos
     cols_act = st.columns([1.2, 1, 1, 1.2])
@@ -445,7 +456,7 @@ with col_panel:
     # Balão Dinâmico de Fala do Oponente (CPU)
     st.markdown(f"<div class='balloon-cpu'><b>💻 CPU diz:</b><br/><i>\"{g['message']}\"</i></div>", unsafe_allow_html=True)
 
-    # Resposta Emergencial do Humano caso seja Desafiado
+    # Resposta se for desafiado
     if g["pending_truco"] and g["pending_truco"]["to_team"] == team_of_player(0, g["n_players"]):
         st.error(f"Eles pediram {g['pending_truco']['value']}!")
         c_choice = st.columns(2)
@@ -456,18 +467,18 @@ with col_panel:
             refuse_truco()
             st.rerun()
 
-    # Janela Informativa do Vira (Ativa somente no modo Manilha Nova)
+    # Janela Informativa do Vira (Modo Manilha Nova)
     if g["mode"] == "Manilha Nova" and g["vira"]:
-        st.markdown(f"<div style='background-color: rgba(0,0,0,0.4); padding: 5px; border-radius: 6px; color: white; text-align: center; font-size:12px; margin-bottom:10px; border: 1px solid rgba(255,255,255,0.1);'>VIRA: <b>{g['vira'].label}</b>   |   MANILHA: <b style='color:#38bdf8;'>{get_next_rank(g['vira'].rank)}</b></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='background-color: rgba(0,0,0,0.4); padding: 5px; border-radius: 6px; color: white; text-align: center; font-size:11px; margin-bottom:10px; border: 1px solid rgba(255,255,255,0.1);'>VIRA: <b>{g['vira'].label}</b>   |   MANILHA: <b style='color:#38bdf8;'>{get_next_rank(g['vira'].rank)}</b></div>", unsafe_allow_html=True)
 
-    # Estado Atual da Mesa (Quem jogou o quê)
-    st.markdown("<p style='color: white; font-weight: bold; margin: 0; font-size:13px;'>Mesa / Rodada Atual:</p>", unsafe_allow_html=True)
+    # Estado Atual da Mesa
+    st.markdown("<p style='color: white; font-weight: bold; margin: 0; font-size:13px;'>Mesa:</p>", unsafe_allow_html=True)
     if not g["table"]:
         st.caption("Aguardando jogadas...")
     else:
         for play in g["table"]:
             c = play["card"]
-            st.markdown(f"<span style='color: #ffffff; font-size: 13px;'>• <b>{player_name(play['player'])}</b> colocou: {c.label}</span>", unsafe_allow_html=True)
+            st.markdown(f"<span style='color: #ffffff; font-size: 13px;'>• <b>{player_name(play['player'])}</b>: {c.label}</span>", unsafe_allow_html=True)
 
     st.markdown("<div style='margin: 8px 0;'></div>", unsafe_allow_html=True)
     if st.button("Avançar para Nova Mão", disabled=not g["finished_hand"] or g["finished_match"], use_container_width=True):
