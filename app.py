@@ -1,230 +1,250 @@
 import random
 import streamlit as st
 from dataclasses import dataclass
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional
 
-st.set_page_config(page_title="Mister Truco Pro", page_icon="🃏", layout="wide")
+# =========================================================
+# COLETÂNEA RETRÔ: JOGO DE TABULEIRO & RPG DE DADOS
+# Arquitetura de Funções Puras e Estados Blindados
+# =========================================================
 
-# --- CSS INTEGRADO PARA ALTO CONTRASTE ---
+st.set_page_config(page_title="Mister Boardgames", page_icon="🎲", layout="wide")
+
+# --- ESTILIZAÇÃO VISUAL DE ALTO CONTRASTE (ESTILO RETRÔ) ---
 st.markdown("""
     <style>
     .stApp { background-color: #1a4a2b !important; }
     .block-container { padding: 0.5rem 2rem 0rem 2rem !important; }
     header, footer { visibility: hidden; }
     hr { margin: 0.4rem 0 !important; border-color: rgba(255,255,255,0.2) !important; }
+
     .status-text {
-        color: #ffffff !important; font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 15px;
-        text-align: center; background-color: rgba(0,0,0,0.7); padding: 5px 12px; border-radius: 6px; margin: 0px;
+        color: #ffffff !important;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        background-color: rgba(0,0,0,0.7);
+        padding: 6px 12px;
+        border-radius: 6px;
+        margin: 0px;
+        border: 1px solid rgba(255,255,255,0.2);
     }
-    .card-back {
-        border: 2px solid #ffffff; border-radius: 6px; background-color: #11331c;
-        background-image: repeating-linear-gradient(45deg, #1e4a2b 0, #1e4a2b 2px, transparent 0, transparent 50%);
-        background-size: 8px 8px; height: 85px; max-width: 62px; margin: 0 auto;
-        display: flex; align-items: center; justify-content: center; color: #559966; font-size: 20px; font-weight: bold;
+    
+    /* Casas do Tabuleiro */
+    .board-cell {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 36px !important;
+        font-weight: bold !important;
+        height: 90px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #000000 !important;
+        border-radius: 8px !important;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
-    .card-played {
-        border: 2px solid #000000 !important; border-radius: 8px !important; background-color: #ffffff !important; 
-        color: #000000 !important; height: 100px; max-width: 75px; margin: 0 auto 4px auto;
-        display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 22px; font-weight: bold;
-    }
-    .card-center {
-        border: 2px solid #ffffff !important; border-radius: 8px !important; background-color: #ffffff !important; 
-        color: #000000 !important; height: 95px; width: 70px; margin: 0 auto;
-        display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 22px; font-weight: bold;
-    }
-    .red-suit { color: #dc2626 !important; font-size: 28px; line-height: 1; }
-    .black-suit { color: #000000 !important; font-size: 28px; line-height: 1; }
-    .balloon-cpu {
+    
+    .balloon-retro {
         background-color: #ffffff !important; border: 2px solid #000000; border-radius: 12px; 
-        padding: 10px; color: #000000 !important; font-size: 13px; margin-bottom: 12px;
+        padding: 12px; color: #000000 !important; box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        font-size: 14px; margin-bottom: 12px;
     }
-    div[data-testid="stRadio"] label, div[data-testid="stRadio"] p { color: #ffffff !important; font-size: 13px !important; font-weight: bold !important; }
-    div[data-testid="stRadio"] div[role="radiogroup"] { flex-direction: row !important; gap: 15px !important; }
-    .stButton>button { background-color: #ffffff !important; color: #000000 !important; border: 1.5px solid #000000 !important; font-weight: bold !important; }
+
+    .stButton>button {
+        background-color: #ffffff !important; color: #000000 !important;
+        border: 1.5px solid #000000 !important; font-weight: bold !important; border-radius: 6px !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-SUITS_MAP = {"Ouros": "♦", "Espadas": "♠", "Copas": "♥", "Paus": "♣"}
-SUIT_COLORS = {"Ouros": "red-suit", "Espadas": "black-suit", "Copas": "red-suit", "Paus": "black-suit"}
-ORDER_MANILHA_NOVA = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"]
 
-@dataclass
-class Card:
-    rank: str
-    suit: str
-    @property
-    def symbol(self) -> str: return SUITS_MAP[self.suit]
-    @property
-    def color(self) -> str: return SUIT_COLORS[self.suit]
-    @property
-    def label(self) -> str: return f"{self.rank}{self.symbol}"
+# =========================================================
+# LÓGICA CORE: TABULEIRO JOGO DA VELHA (BOT INTELIGENTE)
+# =========================================================
+def init_tic_tac_toe():
+    st.session_state.ttt = {
+        "board": [" "] * 9,
+        "status": "Sua Vez",
+        "winner": None,
+        "score": st.session_state.get("ttt", {}).get("score", [0, 0]) # [Jogador, CPU]
+    }
 
-def get_card_power(card: Card, mode: str, vira: Optional[Card]) -> int:
-    if mode == "Manilha Velha":
-        if card.rank == "4" and card.suit == "Paus": return 104
-        if card.rank == "7" and card.suit == "Copas": return 103
-        if card.rank == "A" and card.suit == "Espadas": return 102
-        if card.rank == "7" and card.suit == "Ouros": return 101
-        order = ["Q", "J", "K", "A", "2", "3"]
-        return order.index(card.rank) if card.rank in order else -1
-    else:
-        if vira is None: return 0
-        next_rank = ORDER_MANILHA_NOVA[(ORDER_MANILHA_NOVA.index(vira.rank) + 1) % len(ORDER_MANILHA_NOVA)]
-        if card.rank == next_rank:
-            suit_pow = {"Ouros": 1, "Espadas": 2, "Copas": 3, "Paus": 4}
-            return 100 + suit_pow.get(card.suit, 0)
-        return ORDER_MANILHA_NOVA.index(card.rank)
+def check_ttt_winner(board: List[str]) -> Optional[str]:
+    lines = [(0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6)]
+    for a, b, c in lines:
+        if board[a] == board[b] == board[c] and board[a] != " ":
+            return board[a]
+    if " " not in board:
+        return "Empate"
+    return None
 
-def start_hand(g: dict):
-    suits = ["Ouros", "Espadas", "Copas", "Paus"]
-    if g["mode"] == "Manilha Velha":
-        deck = [Card(r, s) for r in ["3", "2", "A", "K", "J", "Q"] for s in suits]
-        deck += [Card("4", "Paus"), Card("7", "Copas"), Card("A", "Espadas"), Card("7", "Ouros")]
-    else:
-        deck = [Card(r, s) for r in ORDER_MANILHA_NOVA for s in suits]
-    random.shuffle(deck)
+def bot_ttt_move(board: List[str]) -> int:
+    # 1. Se puder ganhar nesta jogada, ganha
+    for i in range(9):
+        if board[i] == " ":
+            test = board[:]
+            test[i] = "O"
+            if check_ttt_winner(test) == "O": return i
+    # 2. Se o jogador for ganhar, bloqueia
+    for i in range(9):
+        if board[i] == " ":
+            test = board[:]
+            test[i] = "X"
+            if check_ttt_winner(test) == "X": return i
+    # 3. Joga em posição randômica livre
+    empty = [i for i, v in enumerate(board) if v == " "]
+    return random.choice(empty) if empty else 0
+
+
+# =========================================================
+# LÓGICA CORE: RPG DE TABULEIRO E DADOS (MASMORRA)
+# =========================================================
+def init_rpg_board():
+    st.session_state.rpg = {
+        "posicao": 0, # Casa atual no tabuleiro de 0 a 10
+        "vida": 15,
+        "ouro": 5,
+        "log": "Você colocou seu peão na linha de partida do Tabuleiro da Masmorra. Role o dado!",
+        "status": "Jogando"
+    }
+
+def play_rpg_turn():
+    r = st.session_state.rpg
+    dado = random.randint(1, 6)
+    r["posicao"] += dado
     
-    g["hands"] = [[] for _ in range(g["n_players"])]
-    for _ in range(3):
-        for p in range(g["n_players"]): g["hands"][p].append(deck.pop())
-            
-    g["vira"] = deck.pop() if g["mode"] == "Manilha Nova" else None
-    g["table"] = {}
-    g["trick_wins"] = []
-    g["finished_hand"] = False
-    g["turn"] = (g["dealer"] + 1) % g["n_players"]
-    g["message"] = f"Nova rodada! Vez de Jogador {g['turn']} jogar."
-
-def process_trick_victory(g: dict):
-    players_in_trick = list(g["table"].keys())
-    powers = [get_card_power(g["table"][p], g["mode"], g["vira"]) for p in players_in_trick]
-    max_pow = max(powers)
-    winners = [players_in_trick[i] for i, pow_val in enumerate(powers) if pow_val == max_pow]
-    
-    is_tie = len(winners) > 1 and len({w % 2 for w in winners}) > 1
-    if is_tie:
-        g["trick_wins"].append(-1)
-        next_puller = winners[0]
-        g["message"] = "A vaza empatou!"
-    else:
-        next_puller = winners[powers.index(max_pow)]
-        g["trick_wins"].append(next_puller % 2)
-        g["message"] = f"Jogador {next_puller} levou a vaza."
-
-    tw = g["trick_wins"]
-    hand_winner = None
-    if tw.count(0) == 2: hand_winner = 0
-    elif tw.count(1) == 2: hand_winner = 1
-    elif len(tw) == 2 and tw[0] == -1 and tw[1] != -1: hand_winner = tw[1]
-    elif len(tw) == 2 and tw[0] != -1 and tw[1] == -1: hand_winner = tw[0]
-    elif len(tw) == 3: hand_winner = tw[0] if (tw[2] == -1 and tw[0] != -1) else (0 if tw[2] == -1 else tw[2])
-
-    if hand_winner is not None:
-        g["score"][hand_winner] += g["hand_points"]
-        g["finished_hand"] = True
-        g["message"] = f"Vitória do Time {hand_winner + 1} (+{g['hand_points']} pts)."
-        g["dealer"] = (g["dealer"] + 1) % g["n_players"]
+    if r["posicao"] >= 10:
+        r["posicao"] = 10
+        r["status"] = "Vitória"
+        r["log"] = f"🎲 Você rolou {dado} e avançou para a Casa 10! 🏆 PARABÉNS! Você cruzou o tabuleiro vivo e escapou da masmorra com {r['ouro']} moedas de ouro!"
         return
-    g["turn"] = next_puller
 
-def bot_play(g: dict):
-    hand = g["hands"][g["turn"]]
-    if not hand: return
-    hand_powers = [get_card_power(c, g["mode"], g["vira"]) for c in hand]
-    if not g["table"]:
-        chosen_idx = hand_powers.index(min(hand_powers))
-    else:
-        table_max = max([get_card_power(c, g["mode"], g["vira"]) for c in g["table"].values()])
-        options = [i for i, p in enumerate(hand_powers) if p > table_max]
-        chosen_idx = hand_powers.index(min([hand_powers[o] for o in options])) if options else hand_powers.index(min(hand_powers))
-        
-    g["table"][g["turn"]] = g["hands"][g["turn"]].pop(chosen_idx)
-    if len(g["table"]) == g["n_players"]: process_trick_victory(g)
-    else: g["turn"] = (g["turn"] + 1) % g["n_players"]
+    # Eventos de casas do tabuleiro
+    eventos = {
+        1: ("Armadilha de Espinhos", -3, 0, "💥 Casa 1: Você pisou em um falso piso! Perdeu 3 de Vida."),
+        2: ("Baú de Moedas", 0, 5, "💰 Casa 2: Um baú antigo trancado. Você achou 5 moedas de ouro!"),
+        3: ("Encontro com Goblin", -2, 2, "⚔️ Casa 3: Um Goblin sorrateiro te atacou! Você o derrotou, perdeu 2 de vida mas pilhou 2 moedas."),
+        4: ("Fonte Escura", 4, 0, "🧪 Casa 4: Você bebeu de uma fonte mística e recuperou 4 de Vida!"),
+        5: ("Corredor Vazio", 0, 0, "🚶 Casa 5: Uma área silenciosa do tabuleiro. Nada aconteceu."),
+        6: ("Ninho de Morcegos", -1, 0, "🦇 Casa 6: Morcegos famintos te morderam! Perdeu 1 de Vida."),
+        7: ("Estátua de Ouro", 0, 8, "✨ Casa 7: Você arrancou pedras preciosas dos olhos de uma estátua! +8 de Ouro."),
+        8: ("Névoa Venenosa", -4, 0, "☠️ Casa 8: Uma fumaça tóxica cobriu a sala! Você perdeu 4 de Vida."),
+        9: ("Mercador Retrô", 2, -3, "🛒 Casa 9: Você encontrou um mercador, pagou 3 de ouro por uma poção e recuperou 2 de vida.")
+    }
+    
+    nome, vida_alt, ouro_alt, msg = eventos.get(r["posicao"], ("Sala Vazia", 0, 0, "🚶 Você avançou sem problemas."))
+    
+    r["vida"] += vida_alt
+    r["ouro"] += ouro_alt
+    if r["ouro"] < 0: r["ouro"] = 0
+    
+    r["log"] = f"🎲 Você rolou o dado e tirou {dado}. Avançou para a **Casa {r['posicao']}**.\n\n{msg}"
+    
+    if r["vida"] <= 0:
+        r["status"] = "Derrota"
+        r["log"] = f"🎲 Você avançou para a Casa {r['posicao']} após rolar {dado}, mas seus pontos de Vida chegaram a 0... Seu peão foi removido do tabuleiro. Fim de jogo."
 
-# --- TOPO ---
-c_title, c_players, c_mode, c_reset = st.columns([1, 1.2, 1.2, 0.8])
-with c_title: st.markdown("<h3 style='color: white; font-family: monospace; margin:0; padding-top:5px;'>MISTER TRUCO</h3>", unsafe_allow_html=True)
-with c_players: n_players_sel = st.radio("Jogadores", [2, 4], format_func=lambda x: "1v1 (Dois)" if x == 2 else "2v2 (Quatro)", label_visibility="collapsed")
-with c_mode: mode_sel = st.radio("Regras", ["Manilha Velha", "Manilha Nova"], label_visibility="collapsed")
-with c_reset: btn_apply = st.button("Aplicar Regras", use_container_width=True)
 
-if "game" not in st.session_state or btn_apply or st.session_state.game["mode"] != mode_sel or st.session_state.game["n_players"] != n_players_sel:
-    st.session_state.game = {"n_players": n_players_sel, "mode": mode_sel, "score": [0, 0], "dealer": 0, "hands": [], "vira": None, "table": {}, "hand_points": 1, "trick_wins": [], "finished_hand": False, "turn": 0, "message": ""}
-    start_hand(st.session_state.game)
-
-g = st.session_state.game
-
-if not g["finished_hand"] and g["turn"] != 0:
-    bot_play(g)
-    st.rerun()
-
-# --- PLACAR ---
-c_score = st.columns([2, 1])
-with c_score[0]: st.markdown(f"<div class='status-text'>CPU (Time 2): {g['score'][1]}   ▏   JOGADOR (Time 1): {g['score'][0]}</div>", unsafe_allow_html=True)
-with c_score[1]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>VALENDO: {g['hand_points']} PTS</div>", unsafe_allow_html=True)
+# --- MENU DE SELEÇÃO GLOBAL DO TOPO ---
+game_mode = st.selectbox("🎮 SELECIONE O JOGO DE TABULEIRO:", ["⭕ Jogo da Velha (Tabuleiro)", "🎲 RPG de Dados e Tabuleiro"])
 st.markdown("<hr/>", unsafe_allow_html=True)
 
-# --- MESA ---
-col_board, col_panel = st.columns([2.8, 1.2])
-with col_board:
-    if g["n_players"] == 2:
-        c_cpu_pos = st.columns([1.5, 1, 1.5])
-        with c_cpu_pos[1]: st.markdown("<div class='card-back'>R</div>", unsafe_allow_html=True)
-    else:
-        c_cpu_pos = st.columns([1, 1, 1])
-        with c_cpu_pos[0]: st.markdown("<div class='card-back' style='margin:0;'>R</div>", unsafe_allow_html=True)
-        with c_cpu_pos[1]: st.markdown("<div class='card-back'>R</div>", unsafe_allow_html=True)
-        with c_cpu_pos[2]: st.markdown("<div class='card-back' style='margin:0 0 0 auto;'>R</div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='margin: 15px 0;'></div>", unsafe_allow_html=True)
-
-    cols_player = st.columns([1, 1, 1, 1, 1])
-    my_turn_active = (g["turn"] == 0 and not g["finished_hand"])
+# ----------------- COLO: JOGO DA VELHA -----------------
+if game_mode == "⭕ Jogo da Velha (Tabuleiro)":
+    if "ttt" not in st.session_state:
+        init_tic_tac_toe()
+        
+    t = st.session_state.ttt
     
-    for idx, card in enumerate(g["hands"][0]):
-        with cols_player[idx + 1]:
-            st.markdown(f"<div class='card-played'><div>{card.rank}</div><div class='{card.color}'>{card.symbol}</div></div>", unsafe_allow_html=True)
-            if st.button("Jogar", key=f"btn_c_{idx}_{card.label}", disabled=not my_turn_active, use_container_width=True):
-                if len(g["table"]) == g["n_players"]: g["table"] = {}
-                g["table"][0] = g["hands"][0].pop(idx)
-                if len(g["table"]) == g["n_players"]: process_trick_victory(g)
-                else: g["turn"] = (g["turn"] + 1) % g["n_players"]
-                st.rerun()
-
-    st.markdown("<div style='margin: 15px 0;'></div>", unsafe_allow_html=True)
-    cols_act = st.columns([1.2, 1, 1, 1.2])
-    with cols_act[1]:
-        if st.button("TRUCO", disabled=not my_turn_active or g["hand_points"] > 1, use_container_width=True):
-            g["hand_points"] = 3
-            g["message"] = "Você pediu TRUCO! CPU aceitou."
+    # Placar Superior Fixo
+    c_sc = st.columns([2, 1])
+    with c_sc[0]: st.markdown(f"<div class='status-text'>PLACARES   ▏   VOCÊ: {t['score'][0]}   |   CPU: {t['score'][1]}</div>", unsafe_allow_html=True)
+    with c_sc[1]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>STATUS: {t['status'].upper()}</div>", unsafe_allow_html=True)
+    st.markdown("<br/>", unsafe_allow_html=True)
+    
+    col_board, col_panel = st.columns([2.5, 1.5])
+    
+    with col_board:
+        # Renderização da grade 3x3 perfeita usando botões Streamlit nativos
+        for row in range(3):
+            cols_grid = st.columns([1, 1, 1, 3])
+            for col in range(3):
+                idx = row * 3 + col
+                cell_value = t["board"][idx]
+                
+                with cols_grid[col]:
+                    # Botão estilizado atua como a casa do tabuleiro
+                    if st.button(f"{cell_value} ", key=f"ttt_cell_{idx}", disabled=cell_value != " " or t["winner"] is not None):
+                        t["board"][idx] = "X"
+                        winner = check_ttt_winner(t["board"])
+                        
+                        if winner:
+                            t["winner"] = winner
+                        else:
+                            # Vez do Bot jogar de forma imediata na mesma rodada
+                            cpu_move = bot_ttt_move(t["board"])
+                            t["board"][cpu_move] = "O"
+                            winner = check_ttt_winner(t["board"])
+                            if winner: t["winner"] = winner
+                            
+                        # Processa fim de jogo e pontuação
+                        if t["winner"]:
+                            if t["winner"] == "X":
+                                t["score"][0] += 1
+                                t["status"] = "Você Ganhou!"
+                            elif t["winner"] == "O":
+                                t["score"][1] += 1
+                                t["status"] = "CPU Ganhou!"
+                            else:
+                                t["status"] = "Empatou!"
+                        st.rerun()
+                        
+    with col_panel:
+        st.markdown(f"<div class='balloon-retro'><b>💬 Painel do Juiz:</b><br/>{t['status'] if not t['winner'] else 'Partida encerrada.'}</div>", unsafe_allow_html=True)
+        if st.button("Reiniciar Tabuleiro", use_container_width=True):
+            init_tic_tac_toe()
             st.rerun()
-    with cols_act[2]:
-        if st.button("CORRER", disabled=not my_turn_active, use_container_width=True):
-            g["score"][1] += g["hand_points"]
-            start_hand(g)
+
+
+# ----------------- COLO: RPG DE TABULEIRO -----------------
+elif game_mode == "🎲 RPG de Dados e Tabuleiro":
+    if "rpg" not in st.session_state:
+        init_rpg_board()
+        
+    r = st.session_state.rpg
+    
+    # Placar Superior Fixo dos Status do Herói
+    c_r_sc = st.columns([1.5, 1.5, 1])
+    with c_r_sc[0]: st.markdown(f"<div class='status-text'>HERÓI: {r['vida']} HP (Vida)</div>", unsafe_allow_html=True)
+    with c_r_sc[1]: st.markdown(f"<div class='status-text'>BOLSA: {r['ouro']} 💰 (Ouro)</div>", unsafe_allow_html=True)
+    with c_r_sc[2]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>CASA ATUAL: {r['posicao']}/10</div>", unsafe_allow_html=True)
+    st.markdown("<br/>", unsafe_allow_html=True)
+    
+    col_r_board, col_r_panel = st.columns([2.5, 1.5])
+    
+    with col_r_board:
+        # Desenho linear do trilho do tabuleiro (0 a 10)
+        st.markdown("<p style='color:white; font-weight:bold; margin:0;'>Trilho do Tabuleiro:</p>", unsafe_allow_html=True)
+        cols_track = st.columns(11)
+        for step in range(11):
+            with cols_track[step]:
+                if r["posicao"] == step:
+                    # Indica onde está o peão do jogador
+                    st.markdown(f"<div style='background-color:#fde047; color:black; font-weight:bold; text-align:center; padding:10px; border-radius:5px; border:2px solid black;'>🤠 <br/>C{step}</div>", unsafe_allow_html=True)
+                else:
+                    st.markdown(f"<div style='background-color:white; color:black; text-align:center; padding:10px; border-radius:5px; border:1px solid #ccc;'>🔳<br/>C{step}</div>", unsafe_allow_html=True)
+                    
+        st.markdown("<br/><br/>", unsafe_allow_html=True)
+        # Botão de ação para rolar dados
+        if st.button("🎲 ROLAR DADO (AVANÇAR)", disabled=r["status"] != "Jogando", use_container_width=True):
+            play_rpg_turn()
             st.rerun()
-
-with col_panel:
-    st.markdown(f"<div class='balloon-cpu'><b>💬 Status:</b><br/><i>\"{g['message']}\"</i></div>", unsafe_allow_html=True)
-    if g["mode"] == "Manilha Nova" and g["vira"]:
-        m_rank = ORDER_MANILHA_NOVA[(ORDER_MANILHA_NOVA.index(g["vira"].rank) + 1) % len(ORDER_MANILHA_NOVA)]
-        st.markdown(f"<div style='background-color: rgba(0,0,0,0.4); padding: 5px; border-radius: 6px; color: white; text-align: center; font-size:11px; margin-bottom:10px;'>VIRA: <b>{g['vira'].label}</b>   |   MANILHA: <b style='color:#38bdf8;'>{m_rank}</b></div>", unsafe_allow_html=True)
-
-    st.markdown("<p style='color: white; font-weight: bold; margin: 0; font-size:13px;'>Mesa:</p>", unsafe_allow_html=True)
-    for p_idx, c in g["table"].items():
-        p_name = "Você" if p_idx == 0 else f"Bot {p_idx}"
-        st.markdown(f"""
-            <div style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.4); padding: 4px; border-radius: 8px; margin-bottom: 4px;">
-                <div class='card-center'><div>{c.rank}</div><div class='{c.color}'>{c.symbol}</div></div>
-                <div style='color: #ffffff; font-size: 13px;'><b>{p_name}</b> jogou</div>
-            </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<div style='margin: 8px 0;'></div>", unsafe_allow_html=True)
-    if st.button("Avançar Jogada", key=f"next_hand_btn", disabled=not g["finished_hand"] and len(g["table"]) != g["n_players"], use_container_width=True):
-        if g["finished_hand"]: start_hand(g)
-        else: g["table"] = {}
-        st.rerun()
-
-if g["score"][0] >= 12 or g["score"][1] >= 12: st.balloons()
+            
+    with col_r_panel:
+        st.markdown(f"<div class='balloon-retro' style='min-height:120px;'><b>📜 Crônicas da Masmorra:</b><br/>{r['log']}</div>", unsafe_allow_html=True)
+        if st.button("Nova Jornada RPG", use_container_width=True):
+            init_rpg_board()
+            st.rerun()
