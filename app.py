@@ -2,13 +2,13 @@ import random
 import streamlit as st
 
 # =========================================================
-# CENTRAL DE TABULEIROS RETRÔ: BANCO IMOBILIÁRIO & LUDO
-# Lógica estável por eventos e persistência de dados
+# BANCO IMOBILIÁRIO RETRÔ - TABULEIRO QUADRADO REAL (7x7)
+# Circuito expandido para 24 casas (6 por linha/coluna)
 # =========================================================
 
 st.set_page_config(page_title="Mister Boardgames", page_icon="🎲", layout="wide")
 
-# --- CUSTOMIZAÇÃO VISUAL RETRÔ ---
+# --- INTERFACE DE ALTO CONTRASTE E CONFIGURAÇÃO DA GRID 7x7 ---
 st.markdown("""
     <style>
     .stApp { background-color: #1a4a2b !important; }
@@ -29,16 +29,51 @@ st.markdown("""
         border: 1px solid rgba(255,255,255,0.2);
     }
     
-    .board-tile {
+    /* MALHA DO TABULEIRO EXPANDIDA PARA 7 COLUNAS X 7 LINHAS */
+    .banco-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(7, 1fr);
+        gap: 6px;
+        max-width: 680px;
+        margin: 0 auto;
+        background-color: #11331c;
+        padding: 12px;
+        border-radius: 10px;
+        border: 3px solid #000000;
+        box-shadow: 4px 4px 15px rgba(0,0,0,0.5);
+    }
+    
+    .tile-square {
         color: black !important;
         text-align: center;
-        padding: 8px;
-        border-radius: 6px;
+        padding: 4px 2px;
+        border-radius: 4px;
         border: 2px solid #000000;
         font-weight: bold;
-        font-size: 12px;
-        min-height: 75px;
-        box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        font-size: 10px;
+        height: 75px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+    }
+    
+    /* Centro vazio gigante ocupando da coluna 2 à 6 e linha 2 à 6 */
+    .board-center {
+        grid-column: 2 / 7;
+        grid-row: 2 / 7;
+        background-color: #1a4a2b;
+        border: 2px dashed rgba(255,255,255,0.15);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #7ca982;
+        font-family: monospace;
+        font-size: 16px;
+        text-align: center;
     }
     
     .balloon-retro {
@@ -46,7 +81,6 @@ st.markdown("""
         padding: 12px; color: #000000 !important; box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
         font-size: 14px; margin-bottom: 12px;
     }
-
     .stButton>button {
         background-color: #ffffff !important; color: #000000 !important;
         border: 1.5px solid #000000 !important; font-weight: bold !important; border-radius: 6px !important;
@@ -54,260 +88,208 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Mapeamento do anel de 24 casas ao redor da Grid 7x7 (6 casas reais em cada lado limpando as quinas)
+GRID_POSITIONS = {
+    0: (1, 1), 1: (1, 2), 2: (1, 3), 3: (1, 4), 4: (1, 5), 5: (1, 6), 6: (1, 7),  # Linha Superior (0 a 6)
+    7: (2, 7), 8: (3, 7), 9: (4, 7), 10: (5, 7), 11: (6, 7), 12: (4, 7),          # Ajuste lateral direito
+    12: (7, 7), 13: (7, 6), 14: (7, 5), 15: (7, 4), 16: (7, 3), 17: (7, 2), 18: (7, 1), # Linha Inferior
+    19: (6, 1), 20: (5, 1), 21: (4, 1), 22: (3, 1), 23: (2, 1)                    # Lateral Esquerda subindo
+}
 
-# =========================================================
-# CORE LOGIC: BANCO IMOBILIÁRIO SIMPLIFICADO
-# =========================================================
+# Consertando os índices remanescentes da descida e subida da matriz 7x7
+GRID_POSITIONS = {
+    0: (1, 1), 1: (1, 2), 2: (1, 3), 3: (1, 4), 4: (1, 5), 5: (1, 6), 6: (1, 7),
+    7: (2, 7), 8: (3, 7), 9: (4, 7), 10: (5, 7), 11: (6, 7),
+    12: (7, 7), 13: (7, 6), 14: (7, 5), 15: (7, 4), 16: (7, 3), 17: (7, 2), 18: (4, 1),
+    18: (7, 1), 19: (6, 1), 20: (5, 1), 21: (4, 1), 22: (3, 1), 23: (2, 1)
+}
+
 TILES_BANCO = [
-    {"name": "Partida", "type": "GO", "color": "#ffffff"},
-    {"name": "Leblon", "price": 100, "rent": 10, "color": "#f87171"},
-    {"name": "Sorte ou Revés", "type": "Sorte", "color": "#fbbf24"},
-    {"name": "Av. Vieira Souto", "price": 120, "rent": 12, "color": "#f87171"},
-    {"name": "Imposto de Renda", "type": "Taxa", "color": "#9ca3af"},
-    {"name": "Prisão (Visita)", "type": "Neutro", "color": "#ffffff"},
-    {"name": "Av. Paulista", "price": 200, "rent": 20, "color": "#60a5fa"},
-    {"name": "Sorte ou Revés", "type": "Sorte", "color": "#fbbf24"},
-    {"name": "Av. Brigadeiro", "price": 240, "rent": 24, "color": "#60a5fa"},
-    {"name": "Vá para a Prisão", "type": "VáPrisão", "color": "#ef4444"}
+    {"name": "PARTIDA", "type": "GO", "color": "#ffffff"},
+    {"name": "LEBLON", "price": 100, "rent": 10, "color": "#f87171"},
+    {"name": "SORTE/REVÉS", "type": "Sorte", "color": "#fbbf24"},
+    {"name": "VIEIRA SOUTO", "price": 120, "rent": 12, "color": "#f87171"},
+    {"name": "IMPOSTO", "type": "Taxa", "color": "#9ca3af"},
+    {"name": "NOSSA SRA", "price": 140, "rent": 15, "color": "#f87171"},
+    {"name": "PRISÃO", "type": "Neutro", "color": "#ffffff"},
+    {"name": "AV. PAULISTA", "price": 200, "rent": 20, "color": "#60a5fa"},
+    {"name": "SORTE/REVÉS", "type": "Sorte", "color": "#fbbf24"},
+    {"name": "AV. BRIGADEIRO", "price": 240, "rent": 24, "color": "#60a5fa"},
+    {"name": "COMP. FORÇA", "price": 150, "rent": 30, "color": "#e9d5ff"},
+    {"name": "AV. REBOUÇAS", "price": 260, "rent": 26, "color": "#60a5fa"},
+    {"name": "VÁ P/ PRISÃO", "type": "VáPrisão", "color": "#ef4444"},
+    {"name": "MORUMBI", "price": 300, "rent": 32, "color": "#34d399"},
+    {"name": "SORTE/REVÉS", "type": "Sorte", "color": "#fbbf24"},
+    {"name": "INTERLAGOS", "price": 320, "rent": 36, "color": "#34d399"},
+    {"name": "TAXA LUCROS", "type": "Taxa", "color": "#9ca3af"},
+    {"name": "IBIRAPUERA", "price": 350, "rent": 40, "color": "#34d399"},
+    {"name": "PARADA LIVRE", "type": "Neutro", "color": "#ffffff"},
+    {"name": "MINAS GERAIS", "price": 180, "rent": 18, "color": "#fb923c"},
+    {"name": "SORTE/REVÉS", "type": "Sorte", "color": "#fbbf24"},
+    {"name": "AV. PARANÁ", "price": 200, "rent": 20, "color": "#fb923c"},
+    {"name": "COMP. ÁGUA", "price": 150, "rent": 30, "color": "#e9d5ff"},
+    {"name": "REPUBLICA", "price": 220, "rent": 22, "color": "#fb923c"}
 ]
+
 
 def init_banco():
     st.session_state.banco = {
-        "pos": [0, 0], # [Jogador, CPU]
+        "pos": [0, 0], 
         "capital": [1500, 1500],
-        "properties": {}, # tile_idx -> owner_idx (0 ou 1)
-        "log": "O tabuleiro está montado. Cada jogador começa com $1500. Role os dados!",
-        "turn": 0, # 0 = Jogador, 1 = CPU
+        "properties": {}, 
+        "log": "Tabuleiro expandido profissional (24 casas)! Cada linha e coluna possui 6 casas reais. Role os dados!",
+        "turn": 0, 
         "game_over": False
     }
+
 
 def play_banco_turn(player_idx: int):
     b = st.session_state.banco
     dado = random.randint(1, 6)
     
-    # Movimentação no tabuleiro circular
+    old_pos = b["pos"][player_idx]
     b["pos"][player_idx] = (b["pos"][player_idx] + dado) % len(TILES_BANCO)
     curr_pos = b["pos"][player_idx]
-    tile = TILES_BANCO[curr_pos]
     
-    p_name = "Você" if player_idx == 0 else "A CPU"
-    msg_action = f"🎲 {p_name} rolou {dado} e parou em **{tile['name']}**."
+    if curr_pos < old_pos:
+        b["capital"][player_idx] += 200
+        b["log"] = "Passou pela linha de partida e faturou um dividendo de $200!"
 
-    # Processamento de regras de compra e taxas
+    tile = TILES_BANCO[curr_pos]
+    p_name = "Você" if player_idx == 0 else "A CPU"
+    msg_action = f"🎲 {p_name} mandou o peão avançar {dado} casas e parou em **{tile['name']}**."
+
     if "price" in tile:
         owner = b["properties"].get(curr_pos)
         if owner is None:
-            # Disponível para compra
             if b["capital"][player_idx] >= tile["price"]:
                 if player_idx == 0:
-                    # Guardamos para decisão manual na interface
-                    b["log"] = f"{msg_action}\n\nEsta propriedade está disponível por **${tile['price']}**. Deseja comprar?"
-                    return # Para a execução para o humano decidir
+                    b["log"] = f"{msg_action}\n\nTítulo imobiliário livre por **${tile['price']}**. Deseja comprar?"
+                    return 
                 else:
-                    # CPU compra agressivamente
                     b["properties"][curr_pos] = 1
                     b["capital"][1] -= tile["price"]
-                    msg_action += f"\n\n💻 A CPU comprou esta propriedade por ${tile['price']}!"
+                    msg_action += f"\n\n💻 A CPU investiu e comprou {tile['name']} por ${tile['price']}!"
             else:
-                msg_action += "\n\nSaldo insuficiente para comprar."
+                msg_action += "\n\nSaldo em caixa insuficiente para essa aquisição."
         elif owner == player_idx:
-            msg_action += "\n\nA propriedade já pertence a você."
+            msg_action += "\n\nVocê já detém as ações desta localidade."
         else:
-            # Paga aluguel
             b["capital"][player_idx] -= tile["rent"]
             b["capital"][owner] += tile["rent"]
-            msg_action += f"\n\n💸 Parou na propriedade do adversário! Pagou **${tile['rent']}** de aluguel."
+            msg_action += f"\n\n💸 Parada com custo! Pagou **${tile['rent']}** de aluguel ao proprietário."
             
     elif tile["type"] == "Sorte":
-        efeito = random.choice([("Ganhou bônus de ações!", 50), ("Perdeu na bolsa!", -50)])
+        efeito = random.choice([
+            ("Retorno de dividendos de fundos!", 150),
+            ("Cobrança de seguro automotivo!", -100),
+            ("Prêmio de loteria regional!", 200),
+            ("Reparos urgentes de encanamento!", -50)
+        ])
         b["capital"][player_idx] += efeito[1]
-        msg_action += f"\n\n🍀 Sorte ou Revés: {efeito[0]} (${efeito[1]})"
+        msg_action += f"\n\n🍀 CARTÃO DE SORTE OU REVÉS: {efeito[0]} (${efeito[1]})"
     elif tile["type"] == "Taxa":
-        b["capital"][player_idx] -= 100
-        msg_action += "\n\n⚠️ Pagou $100 de impostos ao banco."
+        b["capital"][player_idx] -= 150
+        msg_action += "\n\n⚠️ Imposto sobre Propriedade Territorial Urbana! Recolhido -$150."
     elif tile["type"] == "VáPrisão":
-        b["pos"][player_idx] = 5 # Posição da prisão de visitas
-        msg_action += "\n\n👮 Alerta! Foi enviado diretamente para a Prisão!"
+        b["pos"][player_idx] = 6  # Casa número 6 é a prisão de visitas
+        msg_action += "\n\n👮 Mandado de prisão! O peão foi recolhido imediatamente."
 
-    # Verifica falência
     if b["capital"][player_idx] <= 0:
         b["game_over"] = True
-        b["log"] = f"{msg_action}\n\n💀 FIM DE JOGO! {p_name} faliu!"
+        b["log"] = f"{msg_action}\n\n💀 FALÊNCIA GERAL! O mercado engoliu as economias de {p_name}!"
         return
 
     b["log"] = msg_action
     b["turn"] = 1 - player_idx
 
 
-# =========================================================
-# CORE LOGIC: LUDO SIMPLIFICADO DE CORRIDA
-# =========================================================
-def init_ludo():
-    st.session_state.ludo = {
-        "pos": [0, 0], # [Jogador, CPU] - Posição de 0 a 15 (Fim)
-        "log": "Peões na linha de largada. Role um 6 para sair ou avance diretamente!",
-        "turn": 0,
-        "winner": None
-    }
-
-def play_ludo_turn(player_idx: int):
-    l = st.session_state.ludo
-    dado = random.randint(1, 6)
-    
-    p_name = "Você" if player_idx == 0 else "A CPU"
-    msg = f"🎲 {p_name} rolou {dado}."
-
-    # Lógica de movimentação direta baseada em trilha estática
-    l["pos"][player_idx] += dado
-    
-    if l["pos"][player_idx] >= 15:
-        l["pos"][player_idx] = 15
-        l["winner"] = player_idx
-        l["log"] = f"{msg} Chegou na **Casa 15 (Meta Final)**! 🏆 {p_name} venceu a corrida do Ludo!"
-        return
-
-    # Regra clássica de Ludo: Cair na mesma casa do adversário "come" o peão
-    opp_idx = 1 - player_idx
-    if l["pos"][player_idx] == l["pos"][opp_idx] and l["pos"][player_idx] != 0:
-        l["pos"][opp_idx] = 0
-        msg += f"\n\n💥 PEÃO CAPTURADO! {p_name} caiu na mesma casa e mandou o peão adversário de volta para o Início!"
-
-    l["log"] = f"{msg} Avançou para a **Casa {l['pos'][player_idx]}**."
-    l["turn"] = 1 - opp_idx
-
-
-# --- BARRA SUPERIOR DE CRIAÇÃO DO MENU ---
-game_select = st.selectbox("🎮 SELECIONE O JOGO DE TABULEIRO PARA RODAR:", ["🎩 Banco Imobiliário", "🏁 Ludo Corrida Retrô"])
+# --- COMPONENTES DE INTERFACE ---
+st.markdown("<h2 style='text-align: center; color: white; font-family: monospace; letter-spacing: 2px;'>🎩 MISTER MONOPOLY PRO</h2>", unsafe_allow_html=True)
 st.markdown("<hr/>", unsafe_allow_html=True)
 
+if "banco" not in st.session_state: 
+    init_banco()
+bg = st.session_state.banco
 
-# ----------------- GAME: BANCO IMOBILIÁRIO -----------------
-if game_select == "🎩 Banco Imobiliário":
-    if "banco" not in st.session_state: init_banco()
-    bg = st.session_state.banco
+if bg["turn"] == 1 and not bg["game_over"]:
+    play_banco_turn(1)
+    st.rerun()
 
-    # Loop automático do turno da CPU para sincronia estável
-    if bg["turn"] == 1 and not bg["game_over"]:
-        play_banco_turn(1)
-        st.rerun()
+# Painel de Status
+c_bc = st.columns([1.5, 1.5, 1])
+with c_bc[0]: st.markdown(f"<div class='status-text'>SEU PATRIMÔNIO: ${bg['capital'][0]}</div>", unsafe_allow_html=True)
+with c_bc[1]: st.markdown(f"<div class='status-text'>PATRIMÔNIO CPU: ${bg['capital'][1]}</div>", unsafe_allow_html=True)
+with c_bc[2]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>RODADA: {'Seu Turno' if bg['turn'] == 0 else 'CPU operando...'}</div>", unsafe_allow_html=True)
 
-    # Indicadores superiores de Dinheiro
-    c_bc = st.columns([1.5, 1.5, 1])
-    with c_bc[0]: st.markdown(f"<div class='status-text'>SEU CAPITAL: ${bg['capital'][0]}</div>", unsafe_allow_html=True)
-    with c_bc[1]: st.markdown(f"<div class='status-text'>CAPITAL CPU: ${bg['capital'][1]}</div>", unsafe_allow_html=True)
-    with c_bc[2]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>TURNO: {'Sua Vez' if bg['turn'] == 0 else 'CPU...'}</div>", unsafe_allow_html=True)
-    st.markdown("<br/>", unsafe_allow_html=True)
+st.markdown("<br/>", unsafe_allow_html=True)
 
-    col_board, col_panel = st.columns([3, 1])
+col_board, col_panel = st.columns([2.2, 1.8])
 
-    with col_board:
-        # Renderização visual horizontal das casas do Banco Imobiliário
-        st.markdown("<p style='color: white; font-weight: bold; margin: 0;'>Casas do Tabuleiro:</p>", unsafe_allow_html=True)
-        cols_tiles = st.columns(len(TILES_BANCO))
-        for idx, t in enumerate(TILES_BANCO):
-            with cols_tiles[idx]:
-                # Monta marcadores textuais de quem está na casa
-                peoes = ""
-                if bg["pos"][0] == idx: peoes += "🤠"
-                if bg["pos"][1] == idx: peoes += "💻"
-                
-                dono = "Livre"
-                if idx in bg["properties"]: dono = "Você" if bg["properties"][idx] == 0 else "CPU"
-                info_prop = f"<br/><small>{dono}</small>" if "price" in t else ""
-                
-                st.markdown(f"""
-                    <div class='board-tile' style='background-color: {t['color']};'>
-                        <span style='font-size:10px;'>{t['name']}</span><br/>
-                        <span style='font-size:14px;'>{peoes}</span>
-                        {info_prop}
-                    </div>
-                """, unsafe_allow_html=True)
-
-        st.markdown("<br/><br/>", unsafe_allow_html=True)
-
-        # Botões de Ação do Humano
-        is_human_active = (bg["turn"] == 0 and not bg["game_over"])
-        is_decision_pending = "Deseja comprar?" in bg["log"]
+with col_board:
+    # --- CONSTRUÇÃO DO ANEL QUADRADO REAL 7x7 ---
+    html_tiles = ""
+    for idx, t in enumerate(TILES_BANCO):
+        row, col = GRID_POSITIONS[idx]
         
-        c_btns = st.columns([1, 1, 2])
+        peoes = ""
+        if bg["pos"][0] == idx: peoes += "🤠"
+        if bg["pos"][1] == idx: peoes += "💻"
+        
+        dono_lbl = ""
+        if idx in bg["properties"]:
+            dono_lbl = " [M]" if bg["properties"][idx] == 0 else " [C]"
+            
+        html_tiles += f"""
+        <div class='tile-square' style='grid-column: {col}; grid-row: {row}; background-color: {t['color']};'>
+            <div style='font-size: 8px; font-weight:bold; line-height: 1.1;'>{t['name']}{dono_lbl}</div>
+            <div style='font-size: 15px; margin: 1px 0;'>{peoes}</div>
+            <div style='font-size: 8px; color: rgba(0,0,0,0.6);'>
+                {f"${t['price']}" if 'price' in t else 'Ação'}
+            </div>
+        </div>
+        """
+        
+    html_center = """
+    <div class='board-center'>
+        <b style='letter-spacing:3px; color:white; font-size:20px;'>MONOPOLY</b><br/>
+        <span style='font-size:11px; color:#a7f3d0;'>Circuito Real 24 Casas</span>
+    </div>
+    """
+    
+    st.markdown(f"<div class='banco-grid'>{html_tiles}{html_center}</div>", unsafe_allow_html=True)
+
+with col_panel:
+    st.markdown(f"<div class='balloon-retro' style='min-height:160px;'><b>📜 Relatório da Bolsa de Valores:</b><br/><br/>{bg['log']}</div>", unsafe_allow_html=True)
+    
+    is_human_active = (bg["turn"] == 0 and not bg["game_over"])
+    is_decision_pending = "Deseja comprar?" in bg["log"]
+    
+    c_btns = st.columns(2)
+    with c_btns[0]:
+        if st.button("🎲 LANÇAR DADOS", disabled=not is_human_active or is_decision_pending, use_container_width=True):
+            play_banco_turn(0)
+            st.rerun()
+            
+    if is_decision_pending and is_human_active:
         with c_btns[0]:
-            if st.button("🎲 ROLAR DADOS", disabled=not is_human_active or is_decision_pending, use_container_width=True):
-                play_banco_turn(0)
+            if st.button("👍 Sim, Adquirir Título", use_container_width=True):
+                curr_p = bg["pos"][0]
+                bg["properties"][curr_p] = 0
+                bg["capital"][0] -= TILES_BANCO[curr_p]["price"]
+                bg["log"] = f"Parabéns! Você assinou as escrituras e comprou {TILES_BANCO[curr_p]['name']}."
+                bg["turn"] = 1
                 st.rerun()
-        
-        # Sub-botões caso caia em propriedade livre
-        if is_decision_pending and is_human_active:
-            with c_btns[0]:
-                if st.button("👍 Sim, Comprar", use_container_width=True):
-                    curr_p = bg["pos"][0]
-                    bg["properties"][curr_p] = 0
-                    bg["capital"][0] -= TILES_BANCO[curr_p]["price"]
-                    bg["log"] = f"Você comprou {TILES_BANCO[curr_p]['name']}!"
-                    bg["turn"] = 1
-                    st.rerun()
-            with c_btns[1]:
-                if st.button("👎 Não, Passar", use_container_width=True):
-                    bg["log"] = "Você recusou a compra."
-                    bg["turn"] = 1
-                    st.rerun()
-
-    with col_panel:
-        st.markdown(f"<div class='balloon-retro' style='min-height:120px;'><b>📜 Escrituras & Relatórios:</b><br/>{bg['log']}</div>", unsafe_allow_html=True)
-        if st.button("Resetar Banco Imobiliário", use_container_width=True):
-            init_banco()
-            st.rerun()
-
-
-# ----------------- GAME: LUDO CORRIDA -----------------
-elif game_select == "🏁 Ludo Corrida Retrô":
-    if "ludo" not in st.session_state: init_ludo()
-    lg = st.session_state.ludo
-
-    # Loop estável da CPU
-    if lg["turn"] == 1 and lg["winner"] is None:
-        play_ludo_turn(1)
+        with c_btns[1]:
+            if st.button("👎 Não, Rejeitar Oferta", use_container_width=True):
+                bg["log"] = "Você rejeitou a proposta para reter liquidez em caixa."
+                bg["turn"] = 1
+                st.rerun()
+                
+    st.markdown("<br/><br/>", unsafe_allow_html=True)
+    if st.button("Reiniciar Toda a Mesa", use_container_width=True):
+        init_banco()
         st.rerun()
 
-    # Placar Fixo
-    c_lc = st.columns([1.5, 1.5, 1])
-    with c_lc[0]: st.markdown(f"<div class='status-text'>SUA CASA: {lg['pos'][0]} / 15</div>", unsafe_allow_html=True)
-    with c_lc[1]: st.markdown(f"<div class='status-text'>CASA CPU: {lg['pos'][1]} / 15</div>", unsafe_allow_html=True)
-    with c_lc[2]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>VEZ: {'Você' if lg['turn'] == 0 else 'CPU...'}</div>", unsafe_allow_html=True)
-    st.markdown("<hr/>", unsafe_allow_html=True)
-
-    col_l_board, col_l_panel = st.columns([3, 1])
-
-    with col_l_board:
-        # Trilho linear do Ludo de 0 a 15
-        st.markdown("<p style='color: white; font-weight: bold; margin: 0;'>Trilha de Corrida (Ludo):</p>", unsafe_allow_html=True)
-        cols_track = st.columns(16)
-        for step in range(16):
-            with cols_track[step]:
-                peoes_ludo = ""
-                if lg["pos"][0] == step: peoes_ludo += "🤠"
-                if lg["pos"][1] == step: peoes_ludo += "💻"
-                
-                bg_color = "#ffffff"
-                if step == 0: bg_color = "#9ca3af" # Início
-                if step == 15: bg_color = "#fde047" # Fim
-                
-                st.markdown(f"""
-                    <div class='board-tile' style='background-color: {bg_color}; min-height:60px;'>
-                        <span style='font-size:9px;'>C{step}</span><br/>
-                        <span style='font-size:16px;'>{peoes_ludo}</span>
-                    </div>
-                """, unsafe_allow_html=True)
-
-        st.markdown("<br/><br/>", unsafe_allow_html=True)
-        if st.button("🎲 JOGAR DADO DO LUDO", disabled=lg["turn"] != 0 or lg["winner"] is not None, use_container_width=True):
-            play_ludo_turn(0)
-            st.rerun()
-
-    with col_l_panel:
-        st.markdown(f"<div class='balloon-retro' style='min-height:120px;'><b>💬 Mural de Corrida:</b><br/>{lg['log']}</div>", unsafe_allow_html=True)
-        if st.button("Reiniciar Corrida Ludo", use_container_width=True):
-            init_ludo()
-            st.rerun()
-
-if ("banco" in st.session_state and st.session_state.banco["game_over"] and st.session_state.banco["capital"][0] > 0) or ("ludo" in st.session_state and st.session_state.ludo["winner"] == 0):
+if bg["game_over"] and bg["capital"][0] > 0:
     st.balloons()
