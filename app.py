@@ -4,8 +4,8 @@ from typing import List, Dict, Optional, Tuple
 import streamlit as st
 
 # =========================================================
-# MISTER TRUCO - VERSÃO FINAL ESTÁVEL E AUDITADA
-# Resolução de NameError e Lógica de Manilhas Blindada
+# MISTER TRUCO - VERSÃO ULTRA ESTÁVEL (BARALHO ROBUSTO)
+# Resolução definitiva de erros de caracteres e naipes
 # =========================================================
 
 st.set_page_config(
@@ -94,8 +94,6 @@ st.markdown(
     
     .red-suit { color: #dc2626 !important; font-size: 30px; line-height: 1; }
     .black-suit { color: #000000 !important; font-size: 30px; line-height: 1; }
-    .red-suit-mini { color: #dc2626 !important; font-size: 22px; line-height: 1; }
-    .black-suit-mini { color: #000000 !important; font-size: 22px; line-height: 1; }
     
     .balloon-cpu {
         background-color: #ffffff !important; 
@@ -142,20 +140,28 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-SUITS = ["♦", "♠", "♥", "♣"]
-SUIT_CLASSES = {"♦": "red-suit", "♠": "black-suit", "♥": "red-suit", "♣": "black-suit"}
-SUIT_MINI_CLASSES = {"♦": "red-suit-mini", "♠": "black-suit-mini", "♥": "red-suit-mini", "♣": "black-suit-mini"}
-SUIT_POWER = {"♦": 1, "♠": 2, "♥": 3, "♣": 4}
+# Mapeamentos seguros de Texto para Símbolo e Cor CSS
+SUIT_SYMBOLS = {"Ouros": "♦", "Espadas": "♠", "Copas": "♥", "Paus": "♣"}
+SUIT_COLOR_CLASSES = {"Ouros": "red-suit", "Espadas": "black-suit", "Copas": "red-suit", "Paus": "black-suit"}
+SUIT_POWER = {"Ouros": 1, "Espadas": 2, "Copas": 3, "Paus": 4}
 BET_SEQUENCE = [1, 3, 6, 9, 12]
 
 @dataclass(frozen=True)
 class Card:
     rank: str
-    suit: str
+    suit: str  # Armazena texto puro: 'Ouros', 'Espadas', 'Copas', 'Paus'
+
+    @property
+    def symbol(self) -> str:
+        return SUIT_SYMBOLS[self.suit]
+
+    @property
+    def color_class(self) -> str:
+        return SUIT_COLOR_CLASSES[self.suit]
 
     @property
     def label(self) -> str:
-        return f"{self.rank}{self.suit}"
+        return f"{self.rank}{self.symbol}"
 
 
 def get_next_rank(rank: str) -> str:
@@ -168,11 +174,10 @@ def get_next_rank(rank: str) -> str:
 
 def card_power(card: Card, mode: str, vira: Optional[Card] = None) -> Tuple[int, int]:
     if mode == "Manilha Velha":
-        # Mapeamento clássico e infalível de forças para o Truco Paulista/Mineiro
-        if card.rank == "4" and card.suit == "♣": return (104, 4)  # Zap
-        if card.rank == "7" and card.suit == "♥": return (103, 3)  # Copilha
-        if card.rank == "A" and card.suit == "♠": return (102, 2)  # Espadilha
-        if card.rank == "7" and card.suit == "♦": return (101, 1)  # Ouros / Pica-fumo
+        if card.rank == "4" and card.suit == "Paus": return (104, 4)     # Zap
+        if card.rank == "7" and card.suit == "Copas": return (103, 3)    # Copilha
+        if card.rank == "A" and card.suit == "Espadas": return (102, 2)  # Espadilha
+        if card.rank == "7" and card.suit == "Ouros": return (101, 1)    # Pica-fumo
         
         order = ["Q", "J", "K", "A", "2", "3"]
         return (order.index(card.rank) if card.rank in order else -1, 0)
@@ -185,17 +190,18 @@ def card_power(card: Card, mode: str, vira: Optional[Card] = None) -> Tuple[int,
 
 
 def make_deck(mode: str) -> List[Card]:
+    suits_list = ["Ouros", "Espadas", "Copas", "Paus"]
     if mode == "Manilha Velha":
         valid_ranks = ["3", "2", "A", "K", "J", "Q"]
-        deck = [Card(rank, suit) for rank in valid_ranks for suit in SUITS]
-        deck.append(Card("4", "♣"))
-        deck.append(Card("7", "♥"))
-        deck.append(Card("A", "♠"))
-        deck.append(Card("7", "♦"))
+        deck = [Card(rank, s) for rank in valid_ranks for s in suits_list]
+        deck.append(Card("4", "Paus"))
+        deck.append(Card("7", "Copas"))
+        deck.append(Card("A", "Espadas"))
+        deck.append(Card("7", "Ouros"))
         return deck
     else:
         ranks = ["4", "5", "6", "7", "Q", "J", "K", "A", "2", "3"]
-        return [Card(rank, suit) for rank in ranks for suit in SUITS]
+        return [Card(rank, s) for rank in ranks for s in suits_list]
 
 
 def team_of_player(player_idx: int, n_players: int) -> int:
@@ -266,7 +272,7 @@ def ask_truco(from_player: int):
     }
     label = "TRUCO!" if new_value == 3 else f"{new_value}!"
     g["history"].insert(0, f"{player_name(from_player)} gritou {label}")
-    g["message"] = f"Eu gritei {label}! Vai aceitar ou vai correr?" if from_player != 0 else f"Você me pediu {label}? Deixa eu ver minhas cartas..."
+    g["message"] = f"Eu gritei {label}! Vai aceitar ou vai correr?" if from_player != 0 else f"Você me pediu {label}? Deixa eu pensar..."
 
 
 def accept_truco():
@@ -275,7 +281,7 @@ def accept_truco():
     if not pending: return
     g["hand_points"] = pending["value"]
     g["history"].insert(0, f"Desafio aceito! Valendo {g['hand_points']} tentos.")
-    g["message"] = f"Aceito! Agora a rodada vale {g['hand_points']} pontos."
+    g["message"] = f"Aceito! A rodada agora vale {g['hand_points']} pontos."
     g["pending_truco"] = None
 
 
@@ -347,7 +353,7 @@ def resolve_trick():
     g["table"] = []
     g["trick_no"] += 1
     g["turn"] = winner_player
-    g["message"] = f"Vaza resolvida. {player_name(winner_player)} ganhou a última e puxa agora."
+    g["message"] = f"Vaza resolvida. {player_name(winner_player)} ganhou a última e puxa a próxima."
 
 
 def finish_hand(msg: str, already_scored: bool = False):
@@ -439,7 +445,7 @@ with col_board:
 
     st.markdown("<div style='margin: 12px 0;'></div>", unsafe_allow_html=True)
 
-    # 2. Zona Inferior: Suas Cartas Ativas (FIXADO NAMEERROR DE ESCOPO)
+    # 2. Zona Inferior: Suas Cartas Ativas
     cols_player = st.columns([1, 1, 1, 1, 1])
     human_turn = g["turn"] == 0 and not g["pending_truco"] and not g["finished_hand"]
     
@@ -447,18 +453,16 @@ with col_board:
     for idx_card in range(len(my_cards)):
         card = my_cards[idx_card]
         with cols_player[idx_card + 1]:
-            s_class = SUIT_CLASSES[card.suit]
             st.markdown(
                 f"""
                 <div class='card-played'>
                     <div style='font-size:18px; margin-bottom:-4px;'>{card.rank}</div>
-                    <div class='{s_class}'>{card.suit}</div>
+                    <div class='{card.color_class}'>{card.symbol}</div>
                 </div>
                 """, 
                 unsafe_allow_html=True
             )
-            # Passando explicitamente o índice correto para evitar colisões
-            if st.button("Jogar", key=f"btn_play_card_{idx_card}_{card.label}", disabled=not human_turn, use_container_width=True):
+            if st.button("Jogar", key=f"btn_p_{idx_card}_{card.rank}_{card.suit}", disabled=not human_turn, use_container_width=True):
                 play_card(0, idx_card)
                 st.rerun()
 
@@ -506,13 +510,12 @@ with col_panel:
     else:
         for play in g["table"]:
             c = play["card"]
-            mini_s_class = SUIT_MINI_CLASSES[c.suit]
             st.markdown(
                 f"""
                 <div style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 8px; margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.1);">
                     <div class='card-mini'>
                         <div style='font-size:12px; margin-bottom:-4px;'>{c.rank}</div>
-                        <div class='{mini_s_class}'>{c.suit}</div>
+                        <div class='{c.color_class}'>{c.symbol}</div>
                     </div>
                     <div style='color: #ffffff; font-size: 13px;'>
                         <b>{player_name(play['player'])}</b> jogou.
