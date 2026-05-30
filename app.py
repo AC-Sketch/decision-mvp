@@ -1,16 +1,14 @@
 import random
 import streamlit as st
-from dataclasses import dataclass
-from typing import List, Dict, Optional
 
 # =========================================================
-# MISTER MASTER TRIVIA - JOGO DE PERGUNTAS E RESPOSTAS
-# Arquitetura estável por eventos e proteção de estados
+# CENTRAL DE TABULEIROS RETRÔ: BANCO IMOBILIÁRIO & LUDO
+# Lógica estável por eventos e persistência de dados
 # =========================================================
 
-st.set_page_config(page_title="Mister Master Trivia", page_icon="🧠", layout="wide")
+st.set_page_config(page_title="Mister Boardgames", page_icon="🎲", layout="wide")
 
-# --- ESTILIZAÇÃO VISUAL DE ALTO CONTRASTE ---
+# --- CUSTOMIZAÇÃO VISUAL RETRÔ ---
 st.markdown("""
     <style>
     .stApp { background-color: #1a4a2b !important; }
@@ -31,199 +29,285 @@ st.markdown("""
         border: 1px solid rgba(255,255,255,0.2);
     }
     
-    .panel-question {
-        background-color: #ffffff !important;
-        border: 2px solid #000000;
-        border-radius: 12px; 
-        padding: 20px;
-        color: #000000 !important;
-        box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
-        font-size: 18px;
-        font-weight: bold;
+    .board-tile {
+        color: black !important;
         text-align: center;
-        margin-bottom: 15px;
+        padding: 8px;
+        border-radius: 6px;
+        border: 2px solid #000000;
+        font-weight: bold;
+        font-size: 12px;
+        min-height: 75px;
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .balloon-retro {
+        background-color: #ffffff !important; border: 2px solid #000000; border-radius: 12px; 
+        padding: 12px; color: #000000 !important; box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        font-size: 14px; margin-bottom: 12px;
     }
 
     .stButton>button {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        border: 1.5px solid #000000 !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-        padding: 10px !important;
-        font-size: 15px !important;
-    }
-    .stButton>button:hover {
-        background-color: #f3f4f6 !important;
+        background-color: #ffffff !important; color: #000000 !important;
+        border: 1.5px solid #000000 !important; font-weight: bold !important; border-radius: 6px !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- BANCO DE DADOS DE PERGUNTAS (ESTILO MASTER CLÁSSICO) ---
-QUESTIONS_DB = [
-    {
-        "categoria": "História",
-        "pergunta": "Em que ano o homem pisou na Lua pela primeira vez?",
-        "opcoes": ["1965", "1969", "1972", "1975"],
-        "correta": "1969",
-        "dica": "Aconteceu no mesmo ano do famoso festival de rock de Woodstock."
-    },
-    {
-        "categoria": "Geografia",
-        "pergunta": "Qual é o maior oceano do planeta Terra?",
-        "opcoes": ["Oceano Atlântico", "Oceano Índico", "Oceano Pacífico", "Oceano Ártico"],
-        "correta": "Oceano Pacífico",
-        "dica": "Ele banha a costa oeste das Américas e o leste da Ásia."
-    },
-    {
-        "categoria": "Ciência",
-        "pergunta": "Qual elemento químico possui o símbolo 'O' na tabela periódica?",
-        "opcoes": ["Ouro", "Oxigênio", "Ozônio", "Osmio"],
-        "correta": "Oxigênio",
-        "dica": "É o elemento essencial para a nossa respiração."
-    },
-    {
-        "categoria": "Tecnologia",
-        "pergunta": "O que significa a sigla 'WWW' no início dos endereços de internet?",
-        "opcoes": ["Web Wide Window", "World Wide Web", "Western Wire Web", "World Wide Window"],
-        "correta": "World Wide Web",
-        "dica": "Traduzido livremente significa 'Rede de Alcance Mundial'."
-    },
-    {
-        "categoria": "Entretenimento",
-        "pergunta": "Qual é o nome do criador do icônico personagem Mario nos videogames?",
-        "opcoes": ["Hideo Kojima", "Shigeru Miyamoto", "Akira Toriyama", "Masahiro Sakurai"],
-        "correta": "Shigeru Miyamoto",
-        "dica": "Ele também é o cérebro por trás da franquia The Legend of Zelda."
-    }
+
+# =========================================================
+# CORE LOGIC: BANCO IMOBILIÁRIO SIMPLIFICADO
+# =========================================================
+TILES_BANCO = [
+    {"name": "Partida", "type": "GO", "color": "#ffffff"},
+    {"name": "Leblon", "price": 100, "rent": 10, "color": "#f87171"},
+    {"name": "Sorte ou Revés", "type": "Sorte", "color": "#fbbf24"},
+    {"name": "Av. Vieira Souto", "price": 120, "rent": 12, "color": "#f87171"},
+    {"name": "Imposto de Renda", "type": "Taxa", "color": "#9ca3af"},
+    {"name": "Prisão (Visita)", "type": "Neutro", "color": "#ffffff"},
+    {"name": "Av. Paulista", "price": 200, "rent": 20, "color": "#60a5fa"},
+    {"name": "Sorte ou Revés", "type": "Sorte", "color": "#fbbf24"},
+    {"name": "Av. Brigadeiro", "price": 240, "rent": 24, "color": "#60a5fa"},
+    {"name": "Vá para a Prisão", "type": "VáPrisão", "color": "#ef4444"}
 ]
 
-# --- CORE ENGINE (INICIALIZAÇÃO DO ESTADO) ---
-def init_master_game():
-    # Sorteia a ordem das perguntas para o jogador
-    pool = QUESTIONS_DB[:]
-    random.shuffle(pool)
-    
-    st.session_state.master = {
-        "questions": pool,
-        "current_idx": 0,
-        "score": 0,
-        "vidas": 3,
-        "status": "Jogando", # 'Jogando', 'Vitória', 'Derrota'
-        "feedback": "Bem-vindo ao Master! Escolha uma alternativa abaixo.",
-        "ajuda_5050": True,
-        "ajuda_dica": True,
-        "opcoes_visiveis": None, # Controla o corte do 50/50
-        "mostrar_dica": False
+def init_banco():
+    st.session_state.banco = {
+        "pos": [0, 0], # [Jogador, CPU]
+        "capital": [1500, 1500],
+        "properties": {}, # tile_idx -> owner_idx (0 ou 1)
+        "log": "O tabuleiro está montado. Cada jogador começa com $1500. Role os dados!",
+        "turn": 0, # 0 = Jogador, 1 = CPU
+        "game_over": False
     }
 
-def process_answer(chosen: str):
-    m = st.session_state.master
-    q = m["questions"][m["current_idx"]]
+def play_banco_turn(player_idx: int):
+    b = st.session_state.banco
+    dado = random.randint(1, 6)
     
-    if chosen == q["correta"]:
-        m["score"] += 10
-        m["feedback"] = f"✅ CORRETO! Você ganhou 10 pontos. ('{q['correta']}' era a resposta certa)."
-    else:
-        m["vidas"] -= 1
-        m["feedback"] = f"❌ INCORRETO! Você perdeu 1 vida. A resposta certa era '{q['correta']}'."
-        
-    if m["vidas"] <= 0:
-        m["status"] = "Derrota"
-        m["feedback"] = f"💀 FIM DE JOGO! Suas vidas acabaram. Pontuação final: {m['score']} pontos."
-        return
-        
-    # Avança para a próxima pergunta se houver
-    m["current_idx"] += 1
-    m["opcoes_visiveis"] = None # Reseta ajuda para a próxima questão
-    m["mostrar_dica"] = False
+    # Movimentação no tabuleiro circular
+    b["pos"][player_idx] = (b["pos"][player_idx] + dado) % len(TILES_BANCO)
+    curr_pos = b["pos"][player_idx]
+    tile = TILES_BANCO[curr_pos]
     
-    if m["current_idx"] >= len(m["questions"]):
-        m["status"] = "Vitória"
-        m["feedback"] = f"🏆 PARABÉNS! Você respondeu todo o banco de dados! Pontuação máxima: {m['score']} pontos!"
+    p_name = "Você" if player_idx == 0 else "A CPU"
+    msg_action = f"🎲 {p_name} rolou {dado} e parou em **{tile['name']}**."
 
-# --- FLUXO DE EXECUÇÃO DA INTERFACE ---
-st.markdown("<h2 style='color: white; font-family: monospace; text-align: center; letter-spacing: 2px;'>MISTER MASTER TRIVIA</h2>", unsafe_allow_html=True)
+    # Processamento de regras de compra e taxas
+    if "price" in tile:
+        owner = b["properties"].get(curr_pos)
+        if owner is None:
+            # Disponível para compra
+            if b["capital"][player_idx] >= tile["price"]:
+                if player_idx == 0:
+                    # Guardamos para decisão manual na interface
+                    b["log"] = f"{msg_action}\n\nEsta propriedade está disponível por **${tile['price']}**. Deseja comprar?"
+                    return # Para a execução para o humano decidir
+                else:
+                    # CPU compra agressivamente
+                    b["properties"][curr_pos] = 1
+                    b["capital"][1] -= tile["price"]
+                    msg_action += f"\n\n💻 A CPU comprou esta propriedade por ${tile['price']}!"
+            else:
+                msg_action += "\n\nSaldo insuficiente para comprar."
+        elif owner == player_idx:
+            msg_action += "\n\nA propriedade já pertence a você."
+        else:
+            # Paga aluguel
+            b["capital"][player_idx] -= tile["rent"]
+            b["capital"][owner] += tile["rent"]
+            msg_action += f"\n\n💸 Parou na propriedade do adversário! Pagou **${tile['rent']}** de aluguel."
+            
+    elif tile["type"] == "Sorte":
+        efeito = random.choice([("Ganhou bônus de ações!", 50), ("Perdeu na bolsa!", -50)])
+        b["capital"][player_idx] += efeito[1]
+        msg_action += f"\n\n🍀 Sorte ou Revés: {efeito[0]} (${efeito[1]})"
+    elif tile["type"] == "Taxa":
+        b["capital"][player_idx] -= 100
+        msg_action += "\n\n⚠️ Pagou $100 de impostos ao banco."
+    elif tile["type"] == "VáPrisão":
+        b["pos"][player_idx] = 5 # Posição da prisão de visitas
+        msg_action += "\n\n👮 Alerta! Foi enviado diretamente para a Prisão!"
+
+    # Verifica falência
+    if b["capital"][player_idx] <= 0:
+        b["game_over"] = True
+        b["log"] = f"{msg_action}\n\n💀 FIM DE JOGO! {p_name} faliu!"
+        return
+
+    b["log"] = msg_action
+    b["turn"] = 1 - player_idx
+
+
+# =========================================================
+# CORE LOGIC: LUDO SIMPLIFICADO DE CORRIDA
+# =========================================================
+def init_ludo():
+    st.session_state.ludo = {
+        "pos": [0, 0], # [Jogador, CPU] - Posição de 0 a 15 (Fim)
+        "log": "Peões na linha de largada. Role um 6 para sair ou avance diretamente!",
+        "turn": 0,
+        "winner": None
+    }
+
+def play_ludo_turn(player_idx: int):
+    l = st.session_state.ludo
+    dado = random.randint(1, 6)
+    
+    p_name = "Você" if player_idx == 0 else "A CPU"
+    msg = f"🎲 {p_name} rolou {dado}."
+
+    # Lógica de movimentação direta baseada em trilha estática
+    l["pos"][player_idx] += dado
+    
+    if l["pos"][player_idx] >= 15:
+        l["pos"][player_idx] = 15
+        l["winner"] = player_idx
+        l["log"] = f"{msg} Chegou na **Casa 15 (Meta Final)**! 🏆 {p_name} venceu a corrida do Ludo!"
+        return
+
+    # Regra clássica de Ludo: Cair na mesma casa do adversário "come" o peão
+    opp_idx = 1 - player_idx
+    if l["pos"][player_idx] == l["pos"][opp_idx] and l["pos"][player_idx] != 0:
+        l["pos"][opp_idx] = 0
+        msg += f"\n\n💥 PEÃO CAPTURADO! {p_name} caiu na mesma casa e mandou o peão adversário de volta para o Início!"
+
+    l["log"] = f"{msg} Avançou para a **Casa {l['pos'][player_idx]}**."
+    l["turn"] = 1 - opp_idx
+
+
+# --- BARRA SUPERIOR DE CRIAÇÃO DO MENU ---
+game_select = st.selectbox("🎮 SELECIONE O JOGO DE TABULEIRO PARA RODAR:", ["🎩 Banco Imobiliário", "🏁 Ludo Corrida Retrô"])
 st.markdown("<hr/>", unsafe_allow_html=True)
 
-if "master" not in st.session_state:
-    init_master_game()
 
-m = st.session_state.master
+# ----------------- GAME: BANCO IMOBILIÁRIO -----------------
+if game_select == "🎩 Banco Imobiliário":
+    if "banco" not in st.session_state: init_banco()
+    bg = st.session_state.banco
 
-# Painel Superior de Status (Placar fixo)
-c_sc = st.columns([1.5, 1.5, 1])
-with c_sc[0]: st.markdown(f"<div class='status-text'>PONTUAÇÃO: {m['score']} PTS</div>", unsafe_allow_html=True)
-with c_sc[1]: st.markdown(f"<div class='status-text'>VIDAS: {'❤️ ' * m['vidas']}</div>", unsafe_allow_html=True)
-with c_sc[2]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>PROGRESSO: {min(m['current_idx'] + 1, len(m['questions']))}/{len(m['questions'])}</div>", unsafe_allow_html=True)
+    # Loop automático do turno da CPU para sincronia estável
+    if bg["turn"] == 1 and not bg["game_over"]:
+        play_banco_turn(1)
+        st.rerun()
 
-st.markdown("<br/>", unsafe_allow_html=True)
+    # Indicadores superiores de Dinheiro
+    c_bc = st.columns([1.5, 1.5, 1])
+    with c_bc[0]: st.markdown(f"<div class='status-text'>SEU CAPITAL: ${bg['capital'][0]}</div>", unsafe_allow_html=True)
+    with c_bc[1]: st.markdown(f"<div class='status-text'>CAPITAL CPU: ${bg['capital'][1]}</div>", unsafe_allow_html=True)
+    with c_bc[2]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>TURNO: {'Sua Vez' if bg['turn'] == 0 else 'CPU...'}</div>", unsafe_allow_html=True)
+    st.markdown("<br/>", unsafe_allow_html=True)
 
-col_game, col_panel = st.columns([2.6, 1.4])
+    col_board, col_panel = st.columns([3, 1])
 
-with col_game:
-    if m["status"] == "Jogando":
-        # Puxa os dados da pergunta atual
-        q_atual = m["questions"][m["current_idx"]]
-        
-        # Define quais opções exibir (tratamento do botão 50/50)
-        if m["opcoes_visiveis"] is None:
-            m["opcoes_visiveis"] = q_atual["opcoes"][:]
-            
-        # Caixa da Pergunta Grande
-        st.markdown(f"<div class='panel-question'><small style='color:gray;'>CATEGORIA: {q_atual['categoria'].upper()}</small><br/><br/>{q_atual['pergunta']}</div>", unsafe_allow_html=True)
-        
-        # Renderização das Alternativas em Grid de 2x2
-        for r in range(2):
-            cols_opt = st.columns(2)
-            for c in range(2):
-                opt_idx = r * 2 + c
-                opt_text = q_atual["opcoes"][opt_idx]
+    with col_board:
+        # Renderização visual horizontal das casas do Banco Imobiliário
+        st.markdown("<p style='color: white; font-weight: bold; margin: 0;'>Casas do Tabuleiro:</p>", unsafe_allow_html=True)
+        cols_tiles = st.columns(len(TILES_BANCO))
+        for idx, t in enumerate(TILES_BANCO):
+            with cols_tiles[idx]:
+                # Monta marcadores textuais de quem está na casa
+                peoes = ""
+                if bg["pos"][0] == idx: peoes += "🤠"
+                if bg["pos"][1] == idx: peoes += "💻"
                 
-                # Oculta se o jogador usou a ajuda 50/50
-                is_visible = opt_text in m["opcoes_visiveis"]
-                btn_label = opt_text if is_visible else "---"
+                dono = "Livre"
+                if idx in bg["properties"]: dono = "Você" if bg["properties"][idx] == 0 else "CPU"
+                info_prop = f"<br/><small>{dono}</small>" if "price" in t else ""
                 
-                with cols_opt[c]:
-                    if st.button(btn_label, key=f"opt_btn_{opt_idx}", disabled=not is_visible, use_container_width=True):
-                        process_answer(opt_text)
-                        st.rerun()
-                        
-    else:
-        # Fim de jogo (Vitória ou Derrota)
-        st.markdown(f"<div class='panel-question' style='background-color:#0f172a; color:white !important;'>PARTIDA CONCLUÍDA</div>", unsafe_allow_html=True)
-        if st.button("Jogar Novamente / Reiniciar Banco", use_container_width=True):
-            init_master_game()
+                st.markdown(f"""
+                    <div class='board-tile' style='background-color: {t['color']};'>
+                        <span style='font-size:10px;'>{t['name']}</span><br/>
+                        <span style='font-size:14px;'>{peoes}</span>
+                        {info_prop}
+                    </div>
+                """, unsafe_allow_html=True)
+
+        st.markdown("<br/><br/>", unsafe_allow_html=True)
+
+        # Botões de Ação do Humano
+        is_human_active = (bg["turn"] == 0 and not bg["game_over"])
+        is_decision_pending = "Deseja comprar?" in bg["log"]
+        
+        c_btns = st.columns([1, 1, 2])
+        with c_btns[0]:
+            if st.button("🎲 ROLAR DADOS", disabled=not is_human_active or is_decision_pending, use_container_width=True):
+                play_banco_turn(0)
+                st.rerun()
+        
+        # Sub-botões caso caia em propriedade livre
+        if is_decision_pending and is_human_active:
+            with c_btns[0]:
+                if st.button("👍 Sim, Comprar", use_container_width=True):
+                    curr_p = bg["pos"][0]
+                    bg["properties"][curr_p] = 0
+                    bg["capital"][0] -= TILES_BANCO[curr_p]["price"]
+                    bg["log"] = f"Você comprou {TILES_BANCO[curr_p]['name']}!"
+                    bg["turn"] = 1
+                    st.rerun()
+            with c_btns[1]:
+                if st.button("👎 Não, Passar", use_container_width=True):
+                    bg["log"] = "Você recusou a compra."
+                    bg["turn"] = 1
+                    st.rerun()
+
+    with col_panel:
+        st.markdown(f"<div class='balloon-retro' style='min-height:120px;'><b>📜 Escrituras & Relatórios:</b><br/>{bg['log']}</div>", unsafe_allow_html=True)
+        if st.button("Resetar Banco Imobiliário", use_container_width=True):
+            init_banco()
             st.rerun()
 
-with col_panel:
-    # Balão de Feedback do Juiz
-    st.markdown(f"<div class='balloon-retro'><b>💬 Histórico / Juiz:</b><br/><i>\"{m['feedback']}\"</i></div>", unsafe_allow_html=True)
-    
-    # Linha de Dica Ativa
-    if m["status"] == "Jogando" and m["mostrar_dica"]:
-        q_atual = m["questions"][m["current_idx"]]
-        st.warning(f"💡 Dica: {q_atual['dica']}")
-        
-    # Painel Lateral de Recursos de Ajuda
-    st.markdown("<p style='color: white; font-weight: bold; margin: 5px 0;'>Linhas de Ajuda Disponíveis:</p>", unsafe_allow_html=True)
-    
-    # Botão Ajuda 1: 50/50
-    if st.button("🃏 Eliminar 2 Erradas (50/50)", disabled=not m["ajuda_5050"] or m["status"] != "Jogando", use_container_width=True):
-        q_atual = m["questions"][m["current_idx"]]
-        erradas = [o for o in q_atual["opcoes"] if o != q_atual["correta"]]
-        removidas = random.sample(erradas, 2)
-        m["opcoes_visiveis"] = [o for o in q_atual["opcoes"] if o not in removidas]
-        m["ajuda_5050"] = False
-        m["feedback"] = "Ajuda 50/50 utilizada! Duas alternativas incorretas foram desativadas."
-        st.rerun()
-        
-    # Botão Ajuda 2: Pedir Dica
-    if st.button("💡 Revelar uma Dica", disabled=not m["ajuda_dica"] or m["status"] != "Jogando", use_container_width=True):
-        m["mostrar_dica"] = True
-        m["ajuda_dica"] = False
-        m["feedback"] = "Dica revelada! Olhe o painel logo abaixo."
+
+# ----------------- GAME: LUDO CORRIDA -----------------
+elif game_select == "🏁 Ludo Corrida Retrô":
+    if "ludo" not in st.session_state: init_ludo()
+    lg = st.session_state.ludo
+
+    # Loop estável da CPU
+    if lg["turn"] == 1 and lg["winner"] is None:
+        play_ludo_turn(1)
         st.rerun()
 
-if m["status"] == "Vitória":
+    # Placar Fixo
+    c_lc = st.columns([1.5, 1.5, 1])
+    with c_lc[0]: st.markdown(f"<div class='status-text'>SUA CASA: {lg['pos'][0]} / 15</div>", unsafe_allow_html=True)
+    with c_lc[1]: st.markdown(f"<div class='status-text'>CASA CPU: {lg['pos'][1]} / 15</div>", unsafe_allow_html=True)
+    with c_lc[2]: st.markdown(f"<div class='status-text' style='background-color:#11331c;'>VEZ: {'Você' if lg['turn'] == 0 else 'CPU...'}</div>", unsafe_allow_html=True)
+    st.markdown("<hr/>", unsafe_allow_html=True)
+
+    col_l_board, col_l_panel = st.columns([3, 1])
+
+    with col_l_board:
+        # Trilho linear do Ludo de 0 a 15
+        st.markdown("<p style='color: white; font-weight: bold; margin: 0;'>Trilha de Corrida (Ludo):</p>", unsafe_allow_html=True)
+        cols_track = st.columns(16)
+        for step in range(16):
+            with cols_track[step]:
+                peoes_ludo = ""
+                if lg["pos"][0] == step: peoes_ludo += "🤠"
+                if lg["pos"][1] == step: peoes_ludo += "💻"
+                
+                bg_color = "#ffffff"
+                if step == 0: bg_color = "#9ca3af" # Início
+                if step == 15: bg_color = "#fde047" # Fim
+                
+                st.markdown(f"""
+                    <div class='board-tile' style='background-color: {bg_color}; min-height:60px;'>
+                        <span style='font-size:9px;'>C{step}</span><br/>
+                        <span style='font-size:16px;'>{peoes_ludo}</span>
+                    </div>
+                """, unsafe_allow_html=True)
+
+        st.markdown("<br/><br/>", unsafe_allow_html=True)
+        if st.button("🎲 JOGAR DADO DO LUDO", disabled=lg["turn"] != 0 or lg["winner"] is not None, use_container_width=True):
+            play_ludo_turn(0)
+            st.rerun()
+
+    with col_l_panel:
+        st.markdown(f"<div class='balloon-retro' style='min-height:120px;'><b>💬 Mural de Corrida:</b><br/>{lg['log']}</div>", unsafe_allow_html=True)
+        if st.button("Reiniciar Corrida Ludo", use_container_width=True):
+            init_ludo()
+            st.rerun()
+
+if ("banco" in st.session_state and st.session_state.banco["game_over"] and st.session_state.banco["capital"][0] > 0) or ("ludo" in st.session_state and st.session_state.ludo["winner"] == 0):
     st.balloons()
