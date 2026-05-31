@@ -121,7 +121,7 @@ div.stButton > button {
 </style>
 """, unsafe_allow_html=True)
 
-# 20 Strategic Framework Database Items
+# 20 Strategic Framework Database Items - Investigative merged into WHEN category column
 DATA_MAPPING = {
     1: {
         "category": "WHAT - Capabilities & Profile",
@@ -407,7 +407,7 @@ DATA_MAPPING = {
         ]
     },
     20: {
-        "category": "INVESTIGATE - Reverse Interview & Closing",
+        "category": "WHEN - Extreme Scenarios & Crisis",
         "title": "Investigative Approach & Closing",
         "tag": "INVESTIGATIVE",
         "bridge": "To wrap up, I would love to ask a couple of technical questions to better understand the live challenges you are dealing with right now.",
@@ -432,27 +432,24 @@ with st.sidebar:
     st.caption("• Academia de Riqueza Digital.pdf")
     
     st.markdown("### Strategic Framework")
-    st.info("**WHY:** Motivation & Fit\n\n**WHAT:** Scope & Profile\n\n**HOW:** STAR Actions\n\n**WHEN:** Crisis Scenarios")
+    st.info("**WHY:** Motivation & Fit\n\n**WHAT:** Scope & Profile\n\n**HOW:** STAR Actions\n\n**WHEN:** Crisis & Investigative Closing")
     
     st.markdown("### Match Analytics")
     st.metric(label="Interview Adherence Score", value="98%", delta="Elite Match")
     st.caption("**Target:** DWA · Trade Compliance Analyst")
 
-# Layout Category Configuration
+# Layout Category Configuration - perfectly divided into exactly 4 uniform columns
 categories_list = [
     "WHAT - Capabilities & Profile", 
     "WHY - Intent & Fit", 
     "HOW - Case Methodology (STAR)", 
-    "WHEN - Extreme Scenarios & Crisis",
-    "INVESTIGATE - Reverse Interview & Closing"
+    "WHEN - Extreme Scenarios & Crisis"
 ]
 
-active_categories = [cat for cat in categories_list if any(v["category"] == cat for v in DATA_MAPPING.values())]
+# Generate native 4 columns map to maintain symmetrical distribution
+cols = st.columns(len(categories_list))
 
-# Generate native columns map to align layout and headers natively
-cols = st.columns(len(active_categories))
-
-for idx, cat_name in enumerate(active_categories):
+for idx, cat_name in enumerate(categories_list):
     with cols[idx]:
         st.markdown(f'<div class="category-header">{cat_name.split(" - ")[0]}</div>', unsafe_allow_html=True)
         cat_items = {k: v for k, v in DATA_MAPPING.items() if v["category"] == cat_name}
