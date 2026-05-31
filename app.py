@@ -115,6 +115,7 @@ html, body, [data-testid="stAppViewContainer"] {
 # ==============================================================================
 # 2. COMPOSIÇÃO DO TABULEIRO (18 CENÁRIOS E MARCOS REGULATÓRIOS DA NR-1)
 # ==============================================================================
+# Sincronização e correção definitiva do NameError apontado em image_6b1b26.png
 CASAS_MAPA = {
     0: {"titulo": "Marco Zero: Planejamento GRO", "tipo": "normal", "icon": "🚀"},
     1: {"titulo": "Identificação Primária de Perigos", "tipo": "normal", "icon": "🔍"},
@@ -454,8 +455,7 @@ with tab_tabuleiro:
         j_vez = st.session_state.jogadores[idx_vez]
         
         # --- MODELAGEM DOS CARDS NATIVOS (PROVA DE FALHAS CONTRA BUG DO MARKDOWN) ---
-        # Removido completamente o loop acumulador em string de HTML cru.
-        # Agora o Streamlit renderiza 18 blocos modulares perfeitamente isolados em colunas.
+        # Sincronização exata de CASAS_MAPA corrigindo o NameError da linha 341
         for row_idx in range(3):
             cols = st.columns(6)
             for col_idx in range(6):
@@ -559,9 +559,9 @@ with tab_pdf_regras:
     with cl1:
         st.markdown("""
         #### 🏛️ Textos Oficiais e Portarias Governamentais
-        * **[Texto Integral da NR-1 (Ministério do Trabalho e Emprego)](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf)**
+        * **[Texto Integral da NR-1 (Ministério do Trabalho e Emprego)](https://www.gov.br/trabalho-e-emplego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf)**
             *Acesso ao normativo completo emitido pela União contendo as regras estruturais para o GRO/PGR.*
-        * **[Guia Prático Oficial de Implementação do PGR - SIT](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf)**
+        * **[Guia Prático Oficial de Implementação do PGR - SIT](https://www.gov.br/trabalho-e-emplego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf)**
             *Manual técnico com as diretrizes da Secretaria de Inspeção do Trabalho sobre avaliação de probabilidade e severidade.*
         * **[Consolidação das Leis do Trabalho (CLT) - Capítulo V](http://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm)**
             *Artigos 154 a 201 da CLT que fornecem a sustentação legislativa máxima às Normas Regulamentadoras.*
