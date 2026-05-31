@@ -7,34 +7,29 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Ultra-Compact & Responsive UX Injection
+# Custom Fluid & Non-Overlapping UX Injection
 st.markdown("""
 <style>
-/* Eliminates padding to enforce single-page dashboard constraints */
+/* Reset main padding limits to prevent overlapping headers */
 .block-container {
-    padding-top: 0.4rem !important;
-    padding-bottom: 0rem !important;
-    padding-left: 0.8rem !important;
-    padding-right: 0.8rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
     max-width: 100% !important;
-    height: 100vh;
-    overflow: hidden;
 }
 
-/* Hide global scrollbars for clean hardware-app feel */
+/* Global scrollbar behavior control for clean hardware feel */
 ::-webkit-scrollbar {
     display: none !important;
 }
-html, body {
-    overflow: hidden !important;
-}
 
 div[data-testid="stVerticalBlock"] {
-    gap: 0.15rem !important;
+    gap: 0.25rem !important;
 }
 
 [data-testid="stSidebarUserContent"] {
-    padding-top: 0.8rem !important;
+    padding-top: 1rem !important;
 }
 
 h3, p, div {
@@ -44,100 +39,89 @@ h3, p, div {
 
 div[data-testid="stMetric"] {
     background-color: #f8f9fa;
-    padding: 4px !important;
+    padding: 6px !important;
     border-radius: 4px;
     border: 1px solid #e9ecef;
     text-align: center;
 }
 
-/* Flexbox Uniform Button Grid Layout Optimization */
+/* Force every single column button wrapper to have exact uniform heights and padding */
 div.stButton > button {
     width: 100% !important;
-    height: 42px !important; /* Fixed symmetric height */
-    white-space: normal !important; /* Allow elegant wrapping */
+    height: 44px !important; /* Uniform button blocks */
+    white-space: normal !important; /* Forces multi-line wrap if text is long */
     word-break: keep-all !important;
     overflow: hidden !important;
-    font-size: calc(9px + 0.1vw) !important; /* Responsive fluid micro-text */
-    line-height: 1.1 !important;
-    padding: 0.2rem 0.3rem !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    padding: 0.3rem 0.3rem !important;
     text-align: center !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     border-radius: 5px !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
-}
-
-/* Symmetric Grid Row Wrapping Blocks */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 4px;
-    width: 100%;
+    margin-bottom: 4px !important;
 }
 
 .category-header {
-    font-size: 10.5px !important;
+    font-size: 11px !important;
     font-weight: bold !important;
     color: #2c3e50;
     border-bottom: 2px solid #e9ecef;
-    padding-bottom: 2px;
-    margin-bottom: 0.2rem !important;
+    padding-bottom: 3px;
+    margin-bottom: 0.4rem !important;
     text-transform: uppercase;
     letter-spacing: 0.3px;
-    text-align: center;
 }
 
-/* Output Display Blocks - Fixed Heights to Guarantee Zero-Scroll */
+/* Output Display Blocks - Engineered for Clear Single-Page Layout Reading */
 .response-box {
     background-color: #e8f8f5;
     border-left: 4px solid #18bc9c;
-    padding: 6px 8px !important;
+    padding: 8px 10px !important;
     border-radius: 4px;
-    height: 62px;
-    overflow: hidden;
+    margin-bottom: 0.4rem;
+    min-height: 65px;
 }
 
 .followup-box {
     background-color: #f4f6f7;
     border-left: 4px solid #34495e;
-    padding: 6px 8px !important;
+    padding: 8px 10px !important;
     border-radius: 4px;
-    height: 62px;
-    overflow: hidden;
+    margin-bottom: 0.4rem;
+    min-height: 65px;
 }
 
 .growth-box {
     background-color: #fef9e7;
     border-left: 4px solid #f39c12;
-    padding: 6px 8px !important;
+    padding: 6px 10px !important;
     border-radius: 4px;
-    height: 52px;
-    overflow: hidden;
+    margin-bottom: 0.4rem;
+    min-height: 55px;
 }
 
 .match-box {
     background-color: #ebf5fb;
     border-left: 4px solid #3498db;
-    padding: 6px 8px !important;
+    padding: 6px 10px !important;
     border-radius: 4px;
-    height: 52px;
-    overflow: hidden;
-    font-size: 11px;
+    margin-bottom: 0.4rem;
+    min-height: 55px;
 }
 
 .bullet-container-box {
     background-color: #ffffff;
     border: 1px solid #e9ecef;
     border-radius: 4px;
-    padding: 8px !important;
-    height: 122px;
-    overflow: hidden;
+    padding: 10px !important;
+    min-height: 260px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# 20 Strategic Blocks Ordered Chronologically & Structurally
+# 20 Strategic Framework Database Items
 DATA_MAPPING = {
     1: {
         "category": "WHAT - Capabilities & Profile",
@@ -454,7 +438,7 @@ with st.sidebar:
     st.metric(label="Interview Adherence Score", value="98%", delta="Elite Match")
     st.caption("**Target:** DWA · Trade Compliance Analyst")
 
-# Layout Render Pipeline
+# Layout Category Configuration
 categories_list = [
     "WHAT - Capabilities & Profile", 
     "WHY - Intent & Fit", 
@@ -464,9 +448,10 @@ categories_list = [
 ]
 
 active_categories = [cat for cat in categories_list if any(v["category"] == cat for v in DATA_MAPPING.values())]
+
+# Generate native columns map to align layout and headers natively
 cols = st.columns(len(active_categories))
 
-# Generate the completely symmetric, non-cut Flexbox Grid Layout
 for idx, cat_name in enumerate(active_categories):
     with cols[idx]:
         st.markdown(f'<div class="category-header">{cat_name.split(" - ")[0]}</div>', unsafe_allow_html=True)
@@ -482,11 +467,11 @@ for idx, cat_name in enumerate(active_categories):
                 st.session_state.active_id = item_id
                 st.rerun()
 
-st.markdown("<div style='margin-top: 0.1rem; border-top: 1px solid #e9ecef; margin-bottom: 0.2rem;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-top: 0.3rem; border-top: 1px solid #e9ecef; margin-bottom: 0.4rem;'></div>", unsafe_allow_html=True)
 
 active_data = DATA_MAPPING[st.session_state.active_id]
 
-# Two Perfectly Proportioned Sub-Panels for Simultaneous Data Delivery
+# Responsive 50-50 Split View below buttons matrix
 col_out1, col_out2 = st.columns([0.50, 0.50])
 
 with col_out1:
@@ -494,7 +479,7 @@ with col_out1:
         f"""
         <div class="response-box">
             <span style="color:#117a65; font-size:9.5px; font-weight:bold; text-transform:uppercase;">The Golden Bridge (Natural phrasing):</span><br>
-            <strong style="font-size:12px; color:#2c3e50; line-height:1.2;">"{active_data['bridge']}"</strong>
+            <strong style="font-size:12.5px; color:#2c3e50; line-height:1.2;">"{active_data['bridge']}"</strong>
         </div>
         """, 
         unsafe_allow_html=True
@@ -504,7 +489,7 @@ with col_out1:
         f"""
         <div class="followup-box">
             <span style="color:#2c3e50; font-size:9.5px; font-weight:bold; text-transform:uppercase;">Deep Dive (If asked to elaborate):</span><br>
-            <p style="font-size:11.5px; color:#34495e; line-height:1.2;">{active_data['followup']}</p>
+            <p style="font-size:12px; color:#34495e; line-height:1.25;">{active_data['followup']}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -514,7 +499,7 @@ with col_out1:
         f"""
         <div class="growth-box">
             <strong style="color:#d35400; text-transform:uppercase; font-size:9px;">The DWA Growth Link (The Strategic Approach):</strong><br>
-            <p style="color:#ba4a00; font-size:11px; line-height:1.2; margin-top:1px;">{active_data['growth']}</p>
+            <p style="color:#ba4a00; font-size:11.5px; line-height:1.25; margin-top:1px;">{active_data['growth']}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -524,7 +509,7 @@ with col_out1:
         f"""
         <div class="match-box">
             <strong style="color:#2980b9; text-transform:uppercase; font-size:9px;">The Compliance Match Concept:</strong><br>
-            <p style="color:#1f618d; font-size:11px; line-height:1.2; margin-top:1px;">{active_data['match']}</p>
+            <p style="color:#1f618d; font-size:11.5px; line-height:1.25; margin-top:1px;">{active_data['match']}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -534,9 +519,9 @@ with col_out2:
     st.markdown(
         f"""
         <div class="bullet-container-box">
-            <span style="color:#2c3e50; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:3px;">Bulletproof Supporting Arguments:</span>
-            {"".join(f'<p style="font-size:11.5px; color:#2c3e50; line-height:1.25; margin-bottom:3px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
-            <p style='font-size:10.5px; color:#7f8c8d; margin-top:5px; border-top: 1px dashed #e9ecef; padding-top:2px;'><strong>Baseline Case Reference:</strong> {active_data['case']}</p>
+            <span style="color:#2c3e50; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">Bulletproof Supporting Arguments:</span>
+            {"".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.3; margin-bottom:4px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
+            <p style='font-size:11px; color:#7f8c8d; margin-top:8px; border-top: 1px dashed #e9ecef; padding-top:4px;'><strong>Baseline Case Reference:</strong> {active_data['case']}</p>
         </div>
         """,
         unsafe_allow_html=True
