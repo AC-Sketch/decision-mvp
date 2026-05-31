@@ -174,7 +174,7 @@ BANCO_QUESTOES_NR1 = [
         "opcoes": [
             "A) O trabalhador deve receber uma advertência administrativa imediata por quebra de produtividade e abandono de posto.",
             "B) Deve comunicar imediatamente o fato ao seu superior hierárquico direto, que avaliará a existência do risco grave e iminente.",
-            "C) A organização suspende o contrato de trabalho de forma temporária até a emissão de laudo por perito judicial.",
+            "C) A organização suspende o contrato de trabalho de forma temporária até a impressão de laudo por perito judicial.",
             "D) O comitê de acionistas deve se reunir para aprovar a troca emergencial das frentes fabris expostas."
         ],
         "correta": 1,
@@ -399,7 +399,7 @@ with st.sidebar:
             })
             
         if st.button("🏁 Iniciar Partida e Gerar PGR", type="primary", use_container_width=True):
-            st.session_state.jogadores = jugadores_temp
+            st.session_state.jogadores = jogadores_temp
             st.session_state.jogo_iniciado = True
             st.session_state.rodada_atual = 1
             st.session_state.pergunta_atual_index = 0
@@ -442,7 +442,7 @@ tab_tabuleiro, tab_pdf_regras, tab_pesquisas_avancadas = st.tabs([
 ])
 
 # ------------------------------------------------------------------------------
-# TAB 1: O TABULEIRO COMPLETO COMPILADO COM COLUNAS NATIVAS (CORREÇÃO DO BUG HTML)
+# TAB 1: O TABULEIRO COMPLETO COMPILADO COM COLUNAS NATIVAS (RESOLUÇÃO DO VAZAMENTO)
 # ------------------------------------------------------------------------------
 with tab_tabuleiro:
     if not st.session_state.jogo_iniciado:
@@ -453,31 +453,26 @@ with tab_tabuleiro:
         idx_vez = st.session_state.pergunta_atual_index % len(st.session_state.jogadores)
         j_vez = st.session_state.jogadores[idx_vez]
         
-        # --- SOLUÇÃO ROBUSTA DA REAVALIAÇÃO TÉCNICA (CONFORME SOLICITADO) ---
-        # Substituição do bloco único de texto HTML por colunas e containers nativos estruturados do Streamlit.
-        # Dividimos as 18 casas em 3 fileiras coordenadas de 6 blocos.
+        # --- MODELAGEM DOS CARDS NATIVOS (PROVA DE FALHAS CONTRA BUG DO MARKDOWN) ---
+        # Removido completamente o loop acumulador em string de HTML cru.
+        # Agora o Streamlit renderiza 18 blocos modulares perfeitamente isolados em colunas.
         for row_idx in range(3):
             cols = st.columns(6)
             for col_idx in range(6):
                 n_casa = row_idx * 6 + col_idx
                 casa_info = CASAS_MAPA[n_casa]
                 
-                # Identificação de marcadores de jogador na casa
-                tokens_list = []
-                for p in st.session_state.jogadores:
-                    if p["posicao"] % 18 == n_casa:
-                        tokens_list.append(f"{p['emoji']} {p['nome']}")
+                # Coleta quais avatares estão presentes no bloco
+                marcadores = [f"{p['emoji']} {p['nome']}" for p in st.session_state.jogadores if p["posicao"] % 18 == n_casa]
+                status_jogadores = " | ".join(marcadores) if marcadores else "Ninguém"
                 
-                tokens_string = " | ".join(tokens_list) if tokens_list else "Vazio"
-                
-                # Definição visual customizada baseada no tipo de cenário
                 with cols[col_idx]:
                     if j_vez["posicao"] % 18 == n_casa:
-                        st.info(f"📍 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n🟢 *Aqui: {tokens_string}*")
+                        st.info(f"📍 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n🟢 *Aqui: {status_jogadores}*")
                     elif casa_info["tipo"] == "especial":
-                        st.error(f"⚠️ **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Agentes: {tokens_string}*")
+                        st.error(f"🚨 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Risco: {status_jogadores}*")
                     else:
-                        st.help(f"📦 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Agentes: {tokens_string}*")
+                        st.help(f"📦 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Status: {status_jogadores}*")
                         
         st.divider()
         
@@ -485,8 +480,8 @@ with tab_tabuleiro:
         col_mecanica, col_auditoria = st.columns([0.45, 0.55])
         
         with col_mecanica:
-            st.markdown(f"#### 🎯 Turno Ativo: **{j_vez['nome']}**")
-            st.markdown(f"**Papel:** {j_vez['char']} — *Especialidade:* `{j_vez['skill']}`")
+            st.markdown(f"#### 🎯 Turno Ativo: **{j_vez['nome']}** ({j_vez['char']})")
+            st.caption(f"Habilidade Operacional: `{j_vez['skill']}`")
             
             cc1, cc2 = st.columns([0.4, 0.6])
             with cc1:
@@ -564,21 +559,21 @@ with tab_pdf_regras:
     with cl1:
         st.markdown("""
         #### 🏛️ Textos Oficiais e Portarias Governamentais
-        *   **[Texto Integral da NR-1 (Ministério do Trabalho e Emprego)](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf)**
+        * **[Texto Integral da NR-1 (Ministério do Trabalho e Emprego)](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf)**
             *Acesso ao normativo completo emitido pela União contendo as regras estruturais para o GRO/PGR.*
-        *   **[Guia Prático Oficial de Implementação do PGR - SIT](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf)**
+        * **[Guia Prático Oficial de Implementação do PGR - SIT](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf)**
             *Manual técnico com as diretrizes da Secretaria de Inspeção do Trabalho sobre avaliação de probabilidade e severidade.*
-        *   **[Consolidação das Leis do Trabalho (CLT) - Capítulo V](http://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm)**
+        * **[Consolidação das Leis do Trabalho (CLT) - Capítulo V](http://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm)**
             *Artigos 154 a 201 da CLT que fornecem a sustentação legislativa máxima às Normas Regulamentadoras.*
         """)
     with cl2:
         st.markdown("""
         #### 🛠️ Portais de Envio e Sistemas Federais
-        *   **[Portal de Eventos de SST do eSocial](https://www.gov.br/esocial/pt-br)**
+        * **[Portal de Eventos de SST do eSocial](https://www.gov.br/esocial/pt-br)**
             *Plataforma de transmissão obrigatória dos layouts governamentais S-2210 (CAT), S-2220 (Aso) e S-2240 (Riscos).*
-        *   **[Escola Nacional da Inspeção do Trabalho (ENIT)](https://enit.trabalho.gov.br/)**
+        * **[Escola Nacional da Inspeção do Trabalho (ENIT)](https://enit.trabalho.gov.br/)**
             *Acervo público de capacitações gratuitas, notas técnicas oficiais e pareceres dos auditores fiscais.*
-        *   **[Consulta de Certificado de Aprovação de EPI (MTE)](https://sit.trabalho.gov.br/ca_epi/)**
+        * **[Consulta de Certificado de Aprovação de EPI (MTE)](https://sit.trabalho.gov.br/ca_epi/)**
             *Mecanismo federal para consulta de conformidade e validade jurídica de equipamentos de proteção individual.*
         """)
 
@@ -595,11 +590,11 @@ with tab_pesquisas_avancadas:
     with ct1:
         st.markdown("""
         #### 🔬 Revistas Científicas Revisadas por Pares (Peer-Reviewed)
-        *   **[Revista Brasileira de Saúde Ocupacional (RBSO) - SciELO](https://www.scielo.br/j/rbso/)**
+        * **[Revista Brasileira de Saúde Ocupacional (RBSO) - SciELO](https://www.scielo.br/j/rbso/)**
             *Periódico de maior relevância nacional dedicado a estudos epidemiológicos, cargas de trabalho e medicina ocupacional.*
-        *   **[Biblioteca Digital de Teses e Dissertações da USP](https://teses.usp.br/)**
+        * **[Biblioteca Digital de Teses e Dissertações da USP](https://teses.usp.br/)**
             *Pesquisas acadêmicas demonstrando a forte correlação estatística entre ergonomia fabril e o aumento real do faturamento por turno.*
-        *   **[Portal de Publicações Técnicas da Fundacentro](https://www.fundacentro.gov.br/)**
+        * **[Portal de Publicações Técnicas da Fundacentro](https://www.fundacentro.gov.br/)**
             *Estudos avançados sobre dispersão de contaminantes de ar, limites de tolerância física e atenuação acústica de ruídos industriais.*
         """)
     with ct2:
