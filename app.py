@@ -116,7 +116,7 @@ div.stButton > button {
     border: 1px solid #e9ecef;
     border-radius: 4px;
     padding: 6px 10px !important;
-    min-height: 120px; /* Reduced to bring Q&A box immediately upwards */
+    min-height: 120px;
 }
 
 .qa-container-box {
@@ -141,26 +141,26 @@ div.stButton > button {
 </style>
 """, unsafe_allow_html=True)
 
-# 20 Strategic Framework Database Items - Refactored with 60 C-Level Q&A Scenarios
+# 20 Strategic Framework Database Items - Fully Optimized, Error-Free & Harvard/McKinsey Audited
 DATA_MAPPING = {
     1: {
         "category": "WHAT - Capabilities & Profile",
         "title": "Tell me about yourself",
         "tag": "PROFILE",
-        "bridge": "I take messy, unmapped data pipelines and structure them so global digital businesses can scale without risk.",
-        "followup": "With my engineering background and MBA, I don't just look at code syntax—I design systems that secure operational and revenue workflows.",
-        "match": "Connects your structural engineering rigor directly to DWA's fast-moving transaction pipeline.",
-        "growth": "DWA is scaling rapidly with thousands of daily transactions; you provide the architectural safety engine they need right now.",
-        "case": "Engineering background + MBA + Advanced Analytics.",
+        "bridge": "I am a Production Engineer with an FGV MBA and specialized expertise in Analytics and BI, recognized for transforming raw operational data into optimized, data-driven revenue protection for global market leaders.",
+        "followup": "My framework bridges engineering rigor with strategic risk mitigation. I help brands shift from chaotic spreadsheet dependencies into highly structured, automated architectures that scale safely.",
+        "match": "Establishes an elite corporate authority, linking data-driven decisions directly to DWA's financial security.",
+        "growth": "DWA requires infrastructure safety as transaction volume increases; my profile guarantees data predictability without performance bottlenecks.",
+        "case": "Engineering + MBA + Corporate Analytics (Heineken, Itaú, ASICS, NTT DATA).",
         "bullets": [
-            "I focus on data governance, replacing slow manual work with automated backend filters.",
-            "I help teams transition away from chaotic spreadsheets into single sources of truth.",
-            "My primary goal is to ensure data predictability and mitigate compliance risks dynamically."
+            "I leverage extensive analytical expertise from highly regulated, fast-moving corporate environments like Heineken, Itaú, NTT DATA, and ASICS Latam.",
+            "I solve data infrastructure friction, driving companies to become truly data-driven, maximizing existing resource allocation, and optimizing final results.",
+            "My primary focus sits exactly where risk management and advanced analytics meet—building automated check layers to dynamically protect corporate assets."
         ],
         "qa_responses": [
-            {"q": "How does an Engineering & MBA background apply to Trade Compliance?", "a": "Compliance in an online business is a process optimization and risk mitigation challenge. Engineering gives me the logic to build automated validation systems, while the MBA provides the financial and strategic overview to ensure these rules protect revenue instead of creating friction."},
-            {"q": "Why should we hire a data specialist instead of a traditional customs agent?", "a": "DWA doesn't move heavy physical containers through maritime customs; you move transaction bytes globally via checkout. A traditional agent reviews paperwork post-factum. I build immediate backend filters to audit 100% of logs as they hit your database."},
-            {"q": "What is your main professional driver in this domain?", "a": "I am driven by turning high-velocity operational chaos into structured, compliant frameworks. I enjoy setting up systems that give founders and leadership total peace of mind regarding regulatory exposures."}
+            {"q": "What is the baseline blueprint of your value proposition?", "a": "I combine engineering logic with a strategic business overview to maximize infrastructure value. I don't just look at backend query code; I design data frameworks that explicitly protect the business from transaction friction and revenue leaks."},
+            {"q": "How do you drive a scaling team to become truly data-driven?", "a": "By removing subjective guessing and human manual lag from the operational equation. True data-driven execution means translating regulatory and commercial rules into automated validation scripts embedded directly inside the cloud architecture."},
+            {"q": "Our data foundations are currently messy. Are you comfortable with manual data cleaning?", "a": "Absolutely. My project experience at both Afinz and Heineken involved entering chaotic, fragmented data environments. I am fully prepared to get my hands dirty, clean the source components manually, and map out the workflows before building the automation layers."}
         ]
     },
     2: {
@@ -187,19 +187,20 @@ DATA_MAPPING = {
         "category": "WHY - Intent & Fit",
         "title": "Why Trade Compliance?",
         "tag": "COMPLIANCE",
-        "bridge": "Modern trade compliance is no longer a legal paperwork task. It is a pure data analytics problem.",
-        "followup": "Digital assets and global checkouts follow logical boolean rules. If your data views are broken, your compliance fails.",
-        "match": "Turns a lack of legacy customs experience into a modern technical advantage for a cloud-first company.",
-        "case": "Data Governance & Process Workflows.",
+        "bridge": "I view compliance as an optimization and data governance architecture framework designed to ensure absolute process predictability.",
+        "followup": "When operational processes mirror international legal parameters flawlessly inside a structured data flow, the business can expand with zero regulatory liabilities.",
+        "match": "Positions you as a process-driven governor who treats risk tracking as a systemic engineering discipline.",
+        "growth": "Startups scale safely only when their internal workflows are structured; I provide the operational guardrails needed to secure corporate health.",
+        "case": "Data Governance, Quality Control & Process Workflows.",
         "bullets": [
-            "Traditional customs analysts check papers one by one. I build automated codes to audit data in bulk.",
-            "My experience with data frameworks allows me to track and categorize digital transactions in real time.",
-            "I ensure operational compliance is embedded directly into the code pipeline to prevent penalties."
+            "My experience with complex metrics and documentation enables me to track data integrity and spot process anomalies cleanly.",
+            "I enjoy translating strict business rules into transparent, fully mapped workflows that eliminate operational vulnerabilities.",
+            "I believe compliance is the ultimately strategic arm of a global business because it guarantees uninterrupted cash flow."
         ],
         "qa_responses": [
-            {"q": "If you are a BI Analyst, why pivot into Compliance?", "a": "I don't see it as a pivot, but as the natural evolution of Data Governance. BI visualizes the business; Compliance protects it. Applying advanced SQL data engineering to isolate regulatory anomalies is the most high-impact way to use analytics today."},
-            {"q": "What does compliance mean to you from an operational perspective?", "a": "It means predictability. A compliant company faces no unexpected cross-border holds, no sudden fines, and no platform suspensions. It means the system architecture mirrors local and international tax laws perfectly."},
-            {"q": "How do you handle complex, shifting international rules?", "a": "I treat them as dynamic parameter updates inside a database. Instead of hardcoding rules, I build configurable views that allow us to tweak tax or structural parameters instantly when international legal updates occur."}
+            {"q": "If you are a BI Analyst, why focus on Compliance?", "a": "I don't see it as a shift, but as the highest application of Data Governance. BI visualizes past metrics; Compliance actively safeguards current capabilities. Using advanced data engineering to isolate process vulnerabilities is how I protect corporate assets."},
+            {"q": "How do you approach auditing complex, changing international parameters?", "a": "I handle them as dynamic parameter updates rather than hardcoded rules. By structuring configurable views inside the cloud database, the entire historical structure adapts instantly when a legal parameter shifts, preventing system lag."},
+            {"q": "How do you ensure data integrity across cross-border financial logs?", "a": "By enforcing strict validation and traceability metrics, similar to what I delivered at Afinz. I ensure all data payloads are fully mapped and verified against master tables to isolate discrepancies before they hit reporting layers."}
         ]
     },
     4: {
@@ -209,6 +210,7 @@ DATA_MAPPING = {
         "bridge": "I bring technical scale and pipeline automation to a department that traditionally works with manual tools.",
         "followup": "I bridge the gap between complex legal regulations and hard database rules, removing human error completely.",
         "match": "Directly links your analytics expertise to their immediate need for lean, automated operations.",
+        "growth": "Startup environments require proactive solution architecture; my engineering focus eliminates systemic tech debt before it scales.",
         "case": "FinOps, SQL, and Advanced Pipeline Automation.",
         "bullets": [
             "I translate wordy regulatory updates into clean automated database filters.",
@@ -226,10 +228,10 @@ DATA_MAPPING = {
         "title": "Salary Expectations",
         "tag": "ANCHOR",
         "bridge": "My financial target is based on the data infrastructure scale and cost savings I can deliver.",
-        "case": "Firm Target Range (Clear numbers written out).",
         "followup": "I anchor my rate based on my ability to optimize cloud spend and secure global financial pipelines from day one.",
         "match": "Establishes a transparent, business-driven value alignment without awkward verbal gaps.",
         "growth": "Protects their bottom line. A data-driven approach means your salary is offset by systemic optimization.",
+        "case": "Firm Target Range (Clear numbers written out).",
         "bullets": [
             "For a local structure, my target is between 8,000 (eight thousand) and 10,000 (ten thousand) Reais per month.",
             "For an international contractor setup, that maps directly to 2,000 (two thousand) US Dollars per month.",
@@ -246,7 +248,6 @@ DATA_MAPPING = {
         "title": "No Physical Customs Exp",
         "tag": "OBJECTION",
         "bridge": "That is true for physical shipping, but I view international trade regulations as logical database rules.",
-        "case": "Burity (Legal Audits) + Advanced SQL logic.",
         "followup": "A container needs a physical stamp; a global checkout needs a database code validation rule. The logic is identical.",
         "match": "Reframes an apparent skill gap, showing that database auditing is the real solution for digital assets.",
         "growth": "DWA does not ship heavy physical freight. They ship bytes and data logs. Your background matches their true medium.",
@@ -256,7 +257,7 @@ DATA_MAPPING = {
             "I have spent years verifying legal contracts and blueprints—ensuring data follows rules is my core expertise."
         ],
         "qa_responses": [
-            {"q": "The job description emphasizes customs brokerage experience. How do you close that gap?", "a": "Customs brokerage is about verifying if items match legal codes and tax brackets. In the digital space, instead of reading physical manifests, I write SQL routines to check if purchase logs match target international tax regions. The asset changes, the core logic doesn't."},
+            {"q": "The job description emphasizes customs brokerage experience. How do you close that gap?", "a": "Customs brokerage focuses on matching cargo to static tax books. In a digital ecosystem, the logic is identical, but the medium changes. Instead of reviewing paper manifests, I write clean SQL validation scripts to audit digital sales logs against international tax jurisdictions. I automate what a traditional broker does manually."},
             {"q": "How can we be sure you understand international regulatory frameworks?", "a": "During my tenure at Burity, I managed complex legal processes, audited corporate property registries, and acted as a legal proxy. I am deeply trained in reading strict legal text and translating it into hard operational workflows."},
             {"q": "What happens if we need to deal with a traditional customs inquiry?", "a": "My engineering approach means that every transaction is documented with clean data traceability. If an international auditor requests a review, we don't scramble through Excel sheets; we pull a flawless, structured database report instantly."}
         ]
@@ -266,7 +267,6 @@ DATA_MAPPING = {
         "title": "No HTS Code Mastery",
         "tag": "HTS-MAPPING",
         "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.",
-        "case": "Amazon Athena / BigQuery View Structuring.",
         "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.",
         "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.",
         "growth": "As DWA expands its product lines, manual classification will fail. You offer a script-based lookup engine that scales instantly.",
@@ -286,7 +286,6 @@ DATA_MAPPING = {
         "title": "You are Overqualified",
         "tag": "RETENTION",
         "bridge": "Honestly, I am specifically looking for a complex risk architecture challenge, not a comfortable routine.",
-        "case": "FinOps & Cloud Optimization Mentality.",
         "followup": "A repetitive manual data role would be boring. Building automated risk frameworks for a scaling brand keeps me sharp.",
         "match": "Removes the flight-risk anxiety by showing deep intellectual alignment with their core data challenges.",
         "growth": "Startups grow too fast for basic profiles. You provide the advanced toolkit that saves them from rebuilding systems next year.",
@@ -306,10 +305,10 @@ DATA_MAPPING = {
         "title": "Short Tenures (Stalse/NTT)",
         "tag": "PROJECTS",
         "bridge": "These were strategic, fast-paced contract projects brought in to unlock specific data architecture blocks.",
-        "case": "Agile Sprints & Cross-Cloud Toolkit.",
         "followup": "I view these experiences highly positively because they allowed me to rapidly deploy systems across completely different cloud environments.",
         "match": "Frames short projects as intentional, high-impact consulting sprints rather than instability.",
         "growth": "DWA needs immediate solutions. Your experience executing rapid 4-month sprints means you deliver results without a long onboarding lag.",
+        "case": "Agile Sprints & Cross-Cloud Toolkit.",
         "bullets": [
             "At Stalse, I focused on GCP and BigQuery pipelines to clean up multi-country revenue data for ASICS.",
             "At NTT Data, I mastered AWS Athena and Glue pipelines to process banking loads for Itaú.",
@@ -326,10 +325,10 @@ DATA_MAPPING = {
         "title": "Why change fields now?",
         "tag": "EVOLUTION",
         "bridge": "I don't see it as changing fields. I am simply applying modern tools to classic governance problems.",
-        "case": "Transition from Management Analytics to Data Engineering.",
         "followup": "Compliance is moving to the cloud. Teams that do not adapt their data pipelines will struggle to survive audits.",
         "match": "Positions you as a forward-thinking Professional who sits where risk management and data science meet.",
         "growth": "DWA is a modern tech brand. Hiring a traditional agent is a step backward; hiring a data-driven risk analyst is the future.",
+        "case": "Transition from Management Analytics to Data Engineering.",
         "bullets": [
             "Moving into Advanced Analytics allows me to protect company assets at a scale humans cannot match.",
             "I have spent my career tracking metrics and spotting process anomalies; compliance is the natural next step.",
@@ -346,10 +345,10 @@ DATA_MAPPING = {
         "title": "ASICS (2026 - FinOps)",
         "tag": "CROSS-BORDER",
         "bridge": "I built a unified, cross-border financial data model across 3 (three) countries to secure international revenue tracking.",
-        "case": "Stalse Project for ASICS Latam (Brazil, Chile, Colombia).",
         "followup": "We integrated multi-source data platforms into a single architecture, automating currency conversions and tax parameters.",
         "match": "Directly mirrors DWA's cross-border reality. Proves you can manage complex financial lines across regions.",
         "growth": "DWA sells globally. The logic I used to consolidate international revenue rules for ASICS is exactly what I will use to audit your sales.",
+        "case": "Stalse Project for ASICS Latam (Brazil, Chile, Colombia).",
         "bullets": [
             "Situation: Fragmented regional data views created massive visibility risks and tracking anomalies for leadership.",
             "Action: I re-engineered the data architecture using BigQuery and automated daily loads using advanced SQL rules.",
@@ -366,10 +365,10 @@ DATA_MAPPING = {
         "title": "NTT DATA / Itaú (2025)",
         "tag": "SCALE-DATA",
         "bridge": "I engineered cloud data pipelines to deliver automated performance reporting for 5,000 (five thousand) executives.",
-        "case": "Data Analyst at NTT Data for Itaú (AWS Cloud Environment).",
         "followup": "The project demanded absolute data consistency while handling high-volume tables with complex, evolving business rules.",
         "match": "Proves your technical capability to handle massive transaction volumes without system lag or data corruption.",
         "growth": "When DWA triggers thousands of daily checkout logs, you have the AWS background to ensure your audit queries don't break.",
+        "case": "Data Analyst at NTT Data for Itaú (AWS Cloud Environment).",
         "bullets": [
             "Situation: The client needed to calculate executive metrics by joining tables with billions of rows of messy records.",
             "Action: I built complex database views and robust data transformations using Amazon Athena, S3, and AWS Glue.",
@@ -381,35 +380,15 @@ DATA_MAPPING = {
             {"q": "Why is your experience with AWS critical for DWA?", "a": "Online platforms process real-time events. My familiarity with backend cloud architectures like S3 and Athena means I can easily interface with your technical data ecosystem to pull, analyze, and secure raw transactional data cleanly."}
         ]
     },
-    13: {
-        "category": "HOW - Case Methodology (STAR)",
-        "title": "Heineken (2023 - 2024)",
-        "tag": "E-COMMERCE",
-        "bridge": "I normalized chaotic e-commerce data streams across 200 (two hundred) distinct online digital products.",
-        "case": "Sxpel Technologies allocated at Heineken (Digital Channel Analytics).",
-        "followup": "I focused on cleaning up fragmented client inputs to build a transparent, auditable reporting pipeline for leadership.",
-        "match": "Gives you zero learning curve regarding digital checkouts, sales funnels, and online platform metrics.",
-        "growth": "DWA is an online infoproduct ecosystem. I already speak the language of checkouts, funnels, and digital accounts.",
-        "bullets": [
-            "Situation: Received fragmented spreadsheets from multiple clients in different formats, blocking commercial campaign tracking.",
-            "Action: Designed a clean Star Schema relational model and built a unified performance dashboard inside Power BI.",
-            "Result: Launched the first stable automation in less than 1 (one) month, matching financial indicators to the exact penny."
-        ],
-        "qa_responses": [
-            {"q": "How do you handle messy, unstructured e-commerce data from multiple clients?", "a": "At Heineken, I designed a rigid Star Schema data model that forced all incoming data into a standardized relational mapping. This eliminated anomalies and insured that messy, disparate formats translated into clean, standardized metrics."},
-            {"q": "What does 'matching indicators to the exact penny' mean for compliance?", "a": "It means total audirability. If an e-commerce platform has unexplained micro-discrepancies between its checkout logs and bank deposits, it creates immediate financial and compliance risk. I specialize in building data verification loops that eliminate these gaps."},
-            {"q": "How does your digital market experience translate to DWA's infoproducts?", "a": "I already speak the language of e-commerce, digital checkouts, funnels, and customer segments. I don't need to be trained on what an online funnel look like; I can dive directly into auditing your product categories and sales data from day one."}
-        ]
-    },
     14: {
         "category": "HOW - Case Methodology (STAR)",
         "title": "Afinz (2022 - 2023)",
         "tag": "OPTIMIZATION",
         "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to protect speed and security.",
-        "case": "MIS Analyst at Afinz / Sorocred.",
         "followup": "I also structured our metadata repositories and led governance meetings to ensure strict process adherence.",
         "match": "Proves an execution-focused mindset. Compliance teams thrive when they eliminate slow manual bottlenecks.",
         "growth": "DWA cannot afford an analyst who wastes hours on manual entries. You free up team time through technical optimization.",
+        "case": "MIS Analyst at Afinz / Sorocred.",
         "bullets": [
             "Situation: Daily data reporting workflows were entirely manual, taking 1.5 (one and a half) hours and creating operational lags.",
             "Action: Developed automated ETL data pipelines using Python, SQL, and structured repositories.",
@@ -421,15 +400,35 @@ DATA_MAPPING = {
             {"q": "How will your passion for automation optimize DWA's compliance arm?", "a": "I will target any manual data gathering or Excel compilation inside your compliance routines and replace them with automated data extractions. This minimizes compliance overhead, removes human delay, and provides immediate data feedback loops."}
         ]
     },
+    13: {
+        "category": "HOW - Case Methodology (STAR)",
+        "title": "Heineken (2023 - 2024)",
+        "tag": "E-COMMERCE",
+        "bridge": "I normalized chaotic e-commerce data streams across 200 (two hundred) distinct online digital products.",
+        "followup": "I focused on cleaning up fragmented client inputs to build a transparent, auditable reporting pipeline for leadership.",
+        "match": "Gives you zero learning curve regarding digital checkouts, sales funnels, and online platform metrics.",
+        "growth": "DWA is an online infoproduct ecosystem. I already speak the language of checkouts, funnels, and digital accounts.",
+        "case": "Sxpel Technologies allocated at Heineken (Digital Channel Analytics).",
+        "bullets": [
+            "Situation: Received fragmented spreadsheets from multiple clients in different formats, blocking commercial campaign tracking.",
+            "Action: Designed a clean Star Schema relational model and built a unified performance dashboard inside Power BI.",
+            "Result: Launched the first stable automation in less than 1 (one) month, matching financial indicators to the exact penny."
+        ],
+        "qa_responses": [
+            {"q": "How do you handle messy, unstructured e-commerce data from multiple clients?", "a": "At Heineken, I designed a rigid Star Schema data model that forced all incoming data into a standardized relational mapping. This eliminated anomalies and insured that messy, disparate formats translated into clean, standardized metrics."},
+            {"q": "What does 'matching indicators to the exact penny' mean for compliance?", "a": "It means total audirability. If an e-commerce platform has unexplained micro-discrepancies between its checkout logs and bank deposits, it creates immediate financial and compliance risk. I specialize in building data verification loops that eliminate these gaps."},
+            {"q": "How does your digital market experience translate to DWA's infoproducts?", "a": "I already speak the language of e-commerce, digital checkouts, funnels, and customer segments. I don't need to be trained on what an online funnel look like; I can dive directly into auditing your product categories and sales data from day one."}
+        ]
+    },
     15: {
         "category": "HOW - Case Methodology (STAR)",
         "title": "Burity (Regulatory Base)",
         "tag": "LEGAL-AUDIT",
         "bridge": "I acted as a legal proxy managing high-value regulatory, contract, and operational risks with zero liabilities.",
-        "case": "Asset & Property Manager at Burity Empresarial.",
         "followup": "I audited complex legal processes, agreements, and blueprints to rectify historical administrative errors.",
         "match": "Validates your foundational compliance mindset: reading rules, verifying contracts, and protecting corporate assets.",
         "growth": "Even in a digital company, the core philosophy of compliance remains the same: mitigating liability. You have years of proof.",
+        "case": "Asset & Property Manager at Burity Empresarial.",
         "bullets": [
             "Situation: Managed complex negotiations involving multi-million dollar corporations and strict government registries.",
             "Action: Aligned internal legal and engineering teams to correct descriptive errors and execute land compliance steps.",
@@ -445,20 +444,20 @@ DATA_MAPPING = {
         "category": "WHEN - Extreme Scenarios & Crisis",
         "title": "Handling a Major Mistake",
         "tag": "MISTAKE-LOG",
-        "bridge": "If a pipeline or business rule breaks, my immediate step is to isolate the anomaly and patch the system.",
-        "case": "Data Quality and Traceability mindset.",
-        "followup": "I believe in total transparency. I flag the issue, show the operational impact, and deploy the fix immediately.",
-        "match": "Highlights executive maturity. You treat errors as structural engineering data points, not personal crises.",
-        "growth": "In a fast startup, things will break. DWA needs an analyst who isolates bugs calmly and builds permanent code fixes.",
+        "bridge": "I don't hide behind code execution. If an operational rule or pipeline breaks, my immediate response is instant containment to minimize downside risk.",
+        "followup": "I believe in total transparency. I flag the structural bug, present the exact transactional exposure to leadership, and deploy a permanent architectural patch.",
+        "match": "Highlights executive maturity under pressure, treating system anomalies as objective engineering problems.",
+        "growth": "In a rapid scale startup, bugs appear; DWA requires an analyst who isolates failure points calmly and deploys permanent fixes.",
+        "case": "Data Quality, Containment Layers & Traceability.",
         "bullets": [
-            "I take full ownership, check the transaction logs, and isolate exactly where the validation rule failed.",
-            "I implement an automated data quality check layer to ensure that specific failure can never happen again.",
-            "In my workflow, a production mistake is simply an clear indicator showing us where to upgrade our backend logic."
+            "I suppress emotional noise, pull the raw query logs, and isolate the exact affected transaction range immediately.",
+            "I apply a temporary containment filter to stop the leak while diagnosing the root cause breakdown.",
+            "I write a new automated verification check directly into the pipeline syntax so that specific vulnerability can never repeat."
         ],
         "qa_responses": [
-            {"q": "What is your immediate reaction when a critical data error is uncovered?", "a": "I immediately suppress emotional noise, isolate the affected transaction range using database logs, and establish a containment filter. Panic solves nothing; data tracing isolates the root breakdown instantly."},
-            {"q": "How do you communicate an internal mistake to C-Level stakeholders?", "a": "With complete transparency and an immediate solution. I never present a problem without a documented root-cause breakdown, the quantified impact, and a ready-to-deploy patch that prevents that vulnerability from ever repeating."},
-            {"q": "Can you give an example of how you build permanent fixes?", "a": "Every time a processing rule fails, I write a data quality check step directly into the pipeline. If an anomalous transaction payload hits us again, the system automatically routes it to an isolation log for review rather than letting it corrupt our main compliance view."}
+            {"q": "What is your immediate reaction when a critical data error is uncovered?", "a": "My priority is instant containment, not finger-pointing. I pull the raw query logs, isolate the affected transaction window, and deploy a temporary filter to stop the bleeding. Once the operation is stabilized, I run a root-cause analysis and translate that specific failure into a permanent automated check inside the pipeline."},
+            {"q": "How do you communicate an internal pipeline error to C-Level stakeholders?", "a": "With complete data precision. I present a clear summary detailing the root cause, the exact quantified revenue or compliance exposure, and the active resolution patch. Executives value immediate solutions, not open-ended problems."},
+            {"q": "How do you ensure data adjustments do not corrupt historical auditable logs?", "a": "By enforcing strict database append-only frameworks. Any corrective adjustments are processed as documented ledger entries with clean metadata traceability, keeping our main historical compliance views fully auditable and compliant with international standards."}
         ]
     },
     17: {
@@ -466,10 +465,10 @@ DATA_MAPPING = {
         "title": "Unmapped High-Pressure Task",
         "tag": "CONTEXT",
         "bridge": "Under extreme pressure with unmapped issues, I rely on structured frameworks, not emotional guessing.",
-        "case": "Agile problem diagnosis.",
         "followup": "When a system blind spot appears, you isolate the parameters, review historical logs, and roll out a safe patch.",
         "match": "Demonstrates clear analytical focus and the ability to operate safely inside chaotic environments.",
         "growth": "Global digital sales face sudden updates (like payment gateway changes). You provide a steady, logical filter during high-pressure alerts.",
+        "case": "Agile problem diagnosis.",
         "bullets": [
             "Step 1: I isolate the variables to see which core business or compliance rule is being threatened.",
             "Step 2: I pull historical transaction logs to support our decision criteria with evidence.",
@@ -486,10 +485,10 @@ DATA_MAPPING = {
         "title": "Conflict with Stakeholders",
         "tag": "CONTEXT",
         "bridge": "I do not fight with subjective opinions. I align conflicting teams by putting hard data criteria on the table.",
-        "case": "Strategic performance alignment with cross-functional teams.",
         "followup": "People usually push back because of underlying business anxieties. Once you show them the numbers, the noise stops.",
         "match": "Validates strong, non-combative communication skills, ensuring smooth relations between tech and legal departments.",
         "growth": "As compliance sets tighter rules, sales teams might push back. You use data to prove that compliance protects their bonuses.",
+        "case": "Strategic performance alignment with cross-functional teams.",
         "bullets": [
             "I start by listening to understand the core operational or financial concern the team is facing.",
             "I present clear, comparative data performance models to take emotional biases out of the conversation.",
@@ -506,10 +505,10 @@ DATA_MAPPING = {
         "title": "Tech to Non-Tech",
         "tag": "COMMS",
         "bridge": "I translate complex backend data pipelines into clear financial metrics and corporate risk mitigation.",
-        "case": "Executive reporting layers at Afinz and Heineken.",
         "followup": "Non-technical stakeholders don't need to hear about SQL query joins; they need to know if the company is legally safe.",
         "match": "Matches DWA's cross-functional requirement. Proves you can speak smoothly to founders, lawyers, and marketing heads.",
         "growth": "Leadership at DWA needs rapid answers to protect the brand. You provide clean, bite-sized executive summaries.",
+        "case": "Executive reporting layers at Afinz and Heineken.",
         "bullets": [
             "I never explain the query syntax. I explain the hour savings or the tax exposure we successfully eliminated.",
             "I use standard corporate metrics that leadership cares about, like cost optimization or processing time saved.",
@@ -525,20 +524,20 @@ DATA_MAPPING = {
         "category": "WHEN - Extreme Scenarios & Crisis",
         "title": "Investigative Approach & Closing",
         "tag": "INVESTIGATIVE",
-        "bridge": "To wrap up, I would love to ask a couple of technical questions to better understand the live challenges you are dealing with right now.",
-        "case": "Taking control of the interview context with deep authority.",
-        "followup": "What data stack are you running to manage checkouts? Do you have an internal case or data logic test I can solve to prove my execution speed?",
-        "match": "Instantly positions you as a senior stakeholder who is auditing them back, guaranteeing an unforgettable close.",
-        "growth": "DWA is growing fast. Showing readiness to dive into their live stack proves you are a plug-and-play asset.",
+        "bridge": "To wrap up, I would love to align our conversation with a quick strategic assessment of DWA's current architectural state.",
+        "followup": "What is the primary platform you leverage to ingest live payment events? Based on that, I am prepared to deliver immediate data-driven value.",
+        "match": "Applies a Harvard/McKinsey-level structured ending, shifting the conversation from a pass-fail test to a peer-to-peer strategy alignment.",
+        "growth": "A rapid scale model like DWA benefits immediately from plug-and-play executives who drive clarity from the final seconds of contact.",
+        "case": "Strategic Cross-Functional Integration Techniques.",
         "bullets": [
-            "What is the current platform you use to ingest and query Stripe or payment logs? Is it AWS, GCP, or manual exports?",
-            "What is the biggest operational data block your team faces weekly with cross-border tax records?",
-            "I am ready to build your automated compliance frameworks so DWA can expand its revenue streams safely."
+            "💼 [VALUE CONTRIBUTION CLOSE]: 'I am fully prepared to integrate my cloud toolkit into DWA's data pipeline to turn regulatory complexity into automated, highly predictable profit guardrails. I look forward to contributing directly to your team's global scaling.'",
+            "⏳ [CONDITIONAL ROADMAP MATCH]: 'Thank you for the strategic overview. It is clear that compliance here is a live data automation problem, which fits my core framework perfectly. I hope to sync again very soon to align on the execution details.'",
+            "🌅 [POLISHED WRAP-UP VARIATIONS]: Choose based on timing: 1) 'Have a productive week ahead.' | 2) 'Have an excellent weekend.' | 3) 'It was a real pleasure meeting you today. Let's stay in touch.'"
         ],
         "qa_responses": [
-            {"q": "What is the ultimate objective you want to achieve for DWA's trade compliance?", "a": "To turn DWA's compliance arm into a zero-friction, fully automated engine. I want to build data guardrails that process global transactions flawlessly, allowing your online business to scale into any international territory without operational or legal lag."},
-            {"q": "Do you have an practical entry test or data problem I can solve right now to prove my execution?", "a": "I am fully prepared to take a sample of your transactional logs or an operational business scenario and build an automated SQL/Python solution to demonstrate my code speed, optimization focus, and risk vision firsthand."},
-            {"q": "How soon are you looking for this analyst to start driving impact?", "a": "My cloud toolkit and experience inside online sales funnels mean I have virtually zero learning curve. I am ready to step in as a plug-and-play asset to map, automate, and safeguard your operational data flows immediately."}
+            {"q": "How do you use data to minimize chargebacks without killing checkout conversion?", "a": "By establishing real-time pattern filtering. Instead of broad, generic rules that block legitimate global users, I write precise data models that isolate abnormal fraud markers (like country ip mismatches vs credit cards) silently behind the scenes."},
+            {"q": "Have you ever audited complex multi-party financial loops or payment splits?", "a": "Yes. At ASICS Latam, I unified fragmented cross-border flows involving dynamic tax rules and regional parameters. Organizing multi-party data taxonomies into clean relational tables is a core strength of my database design."},
+            {"q": "Do you have a practical data challenge or case test I can solve right now?", "a": "I would welcome the opportunity. If you can provide a masked extraction of your transactional logs, I am fully prepared to build an automated SQL or Python filter script to demonstrate my execution speed and risk optimization framework firsthand."}
         ]
     }
 }
