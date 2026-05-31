@@ -141,26 +141,26 @@ div.stButton > button {
 </style>
 """, unsafe_allow_html=True)
 
-# 20 Strategic Framework Database Items - Rigorously Audited & Verified Item-by-Item
+# 20 Strategic Framework Database Items - Diplomatic, Anonymized, and Emotionally Neutral
 DATA_MAPPING = {
     1: {
         "category": "WHAT - Capabilities & Profile",
         "title": "Tell me about yourself",
         "tag": "PROFILE",
-        "bridge": "I am a Production Engineer with an FGV MBA and specialized expertise in Analytics and BI, recognized for transforming raw operational data into optimized, data-driven revenue protection for global market leaders.",
-        "followup": "My framework bridges engineering rigor with strategic risk mitigation. I help brands shift from chaotic spreadsheet dependencies into highly structured, automated architectures that scale safely.",
-        "match": "Establishes an elite corporate authority, linking data-driven decisions directly to DWA's financial security.",
-        "growth": "DWA requires infrastructure safety as transaction volume increases; my profile guarantees data predictability without performance bottlenecks.",
-        "case": "Engineering + MBA + Corporate Analytics (Heineken, Itaú, ASICS, NTT DATA).",
+        "bridge": "I am a Production Engineer with an FGV MBA and specialized expertise in Analytics and BI, recognized for transforming raw operational parameters into optimized revenue protection models.",
+        "followup": "My approach bridges technical architecture with strategic risk management, helping organizations replace fragmented spreadsheet manual processes with robust database single sources of truth.",
+        "match": "Establishes institutional authority, linking data validation processes to systemic financial security.",
+        "growth": "DWA requires infrastructure safety as transaction volume increases; my framework secures scalability by mapping and containing data risks.",
+        "case": "Engineering + MBA + High-Scale Data Governance architectures.",
         "bullets": [
-            "I leverage extensive analytical expertise from highly regulated, fast-moving corporate environments like Heineken, Itaú, NTT DATA, and ASICS Latam.",
-            "I solve data infrastructure friction, driving companies to become truly data-driven, maximizing existing resource allocation, and optimizing final results.",
-            "My primary focus sits exactly where risk management and advanced analytics meet—building automated check layers to dynamically protect corporate assets."
+            "I leverage structured analytical experience developed across market leaders in highly regulated domains like consumer goods (*Heineken*), banking (*Itaú*), and cross-border retail (*ASICS*).",
+            "I isolate data pipeline friction points, enabling executive teams to align critical decisions with solid database evidence.",
+            "My methodology prioritizes infrastructure resource optimization, asset preservation, and structural risk minimization."
         ],
         "qa_responses": [
-            {"q": "What is the baseline blueprint of your value proposition?", "a": "I combine engineering logic with a strategic business overview to maximize infrastructure value. I don't just look at backend query code; I design data frameworks that explicitly protect the business from transaction friction and revenue leaks."},
-            {"q": "How do you drive a scaling team to become truly data-driven?", "a": "By removing subjective guessing and human manual lag from the operational equation. True data-driven execution means translating regulatory and commercial rules into automated validation scripts embedded directly inside the cloud architecture."},
-            {"q": "Our data foundations are currently messy. Are you comfortable with manual data cleaning?", "a": "Absolutely. My project experience at both Afinz and Heineken involved entering chaotic, fragmented data environments. I am fully prepared to get my hands dirty, clean the source components manually, and map out the workflows before building the automation layers."}
+            {"q": "What is the baseline blueprint of your value proposition?", "a": "I combine process engineering logic with strategic corporate visibility to maximize resource efficiency. I don't just audit backend query lines; I establish analytical frameworks that proactively secure cross-border revenue and stabilize checkout log funnels."},
+            {"q": "How do you drive a scaling team to become truly data-driven?", "a": "By introducing structural automation that eliminates human verification lag. True data-driven clarity occurs when complex tax parameters and validation parameters are embedded directly within the database logic."},
+            {"q": "Our data foundations are currently messy. Are you comfortable with manual data cleaning?", "a": "Before any sustainable automation engine can be deployed, a thorough investigation of the raw components is mandatory. I am fully prepared to audit and clean initial data logs manually to completely map out the parameters before structuring long-term architectures."}
         ]
     },
     2: {
@@ -180,7 +180,7 @@ DATA_MAPPING = {
         "qa_responses": [
             {"q": "What specific risk do you see in our digital cross-border model?", "a": "With high transaction volumes across multiple borders, your biggest threats are international tax mismatching (like European VAT logic) and sudden payment processor holds due to pattern irregularities. Both stop cash flow instantly."},
             {"q": "How do you plan to help DWA scale?", "a": "By embedding automated validation scripts directly inside the data flow. As volume scales 10x, a manual team fractures. An automated pipeline processes millions of logs with the same processing speed and zero human errors."},
-            {"q": "You come from massive brands like Heineken and Itaú. Why join our ecosystem?", "a": "Large corporate environments are great for mastering governance at scale, but their structures move slowly. DWA has the velocity, agility, and modern tech-first mindset where my optimization scripts can generate real impact from week one."}
+            {"q": "You come from massive brands. Why join our ecosystem?", "a": "Large corporate environments are great for mastering governance at scale, but their structures move slowly. DWA has the velocity, agility, and modern tech-first mindset where my optimization scripts can generate real impact from week one."}
         ]
     },
     3: {
@@ -200,7 +200,7 @@ DATA_MAPPING = {
         "qa_responses": [
             {"q": "If you are a BI Analyst, why focus on Compliance?", "a": "I don't see it as a shift, but as the highest application of Data Governance. BI visualizes past metrics; Compliance actively safeguards current capabilities. Using advanced data engineering to isolate process vulnerabilities is how I protect corporate assets."},
             {"q": "How do you approach auditing complex, changing international parameters?", "a": "I handle them as dynamic parameter updates rather than hardcoded rules. By structuring configurable views inside the cloud database, the entire historical structure adapts instantly when a legal parameter shifts, preventing system lag."},
-            {"q": "How do you ensure data integrity across cross-border financial logs?", "a": "By enforcing strict validation and traceability metrics, similar to what I delivered at Afinz. I ensure all data payloads are fully mapped and verified against master tables to isolate discrepancies before they hit reporting layers."}
+            {"q": "How do you ensure data integrity across cross-border financial logs?", "a": "By enforcing strict validation and traceability metrics, similar to what I delivered in past projects (*Afinz*). I ensure all data payloads are fully mapped and verified against master tables to isolate discrepancies before they hit reporting layers."}
         ]
     },
     4: {
@@ -239,7 +239,7 @@ DATA_MAPPING = {
         ],
         "qa_responses": [
             {"q": "Is this number negotiable depending on the benefits package?", "a": "Yes, I am completely open to discussing the overall contract architecture, especially if there is alignment on long-term project growth, remote flexibility, and performance impact metrics."},
-            {"q": "Why should we invest this budget in your profile over a junior analyst?", "a": "A junior analyst will maintain your manual routines and spreadsheets. My profile pays for itself by implementing FinOps optimizations that slash processing costs—just like I did at ASICS—and preventing costly revenue blocks from international authorities."},
+            {"q": "Why should we invest this budget in your profile over a junior analyst?", "a": "A junior analyst will maintain your manual routines and spreadsheets. My profile pays for itself by implementing FinOps optimizations that slash processing costs—just like I did at *ASICS*—and preventing costly revenue blocks from international authorities."},
             {"q": "Are you comfortable with an international B2B contractor arrangement?", "a": "Absolutely. I operate with professional systems and my setup is engineered for seamless cross-border remote integration, which perfectly fits DWA's global operating model."}
         ]
     },
@@ -259,7 +259,7 @@ DATA_MAPPING = {
         ],
         "qa_responses": [
             {"q": "The job description emphasizes customs brokerage experience. How do you close that gap?", "a": "Customs brokerage focuses on matching cargo to static tax books. In a digital ecosystem, the logic is identical, but the medium changes. Instead of reviewing paper manifests, I write clean SQL validation scripts to audit digital sales logs against international tax jurisdictions. I automate what a traditional broker does manually."},
-            {"q": "How can we be sure you understand international regulatory frameworks?", "a": "During my tenure at Burity, I managed complex legal processes, audited corporate property registries, and acted as a legal proxy. I am deeply trained in reading strict legal text and translating it into hard operational workflows."},
+            {"q": "How can we be sure you understand international regulatory frameworks?", "a": "During my tenure at *Burity*, I managed complex legal processes, audited corporate property registries, and acted as a legal proxy. I am deeply trained in reading strict legal text and translating it into hard operational workflows."},
             {"q": "What happens if we need to deal with a traditional customs inquiry?", "a": "My engineering approach means that every transaction is documented with clean data traceability. If an international auditor requests a review, we don't scramble through Excel sheets; we pull a flawless, structured database report instantly."}
         ]
     },
@@ -280,7 +280,7 @@ DATA_MAPPING = {
         "qa_responses": [
             {"q": "How would you handle classifying a complex new infoproduct line using HTS?", "a": "I would treat the HTS taxonomy as a relational lookup table. By mapping our internal digital inventory metadata against the official classification matrix via automated scripts, we ensure instantaneous, programmatic categorization instead of manual guessing."},
             {"q": "What is the danger of relying on manual product classification?", "a": "Manual entry introduces human error, which triggers tax mismatches, transaction friction, and compliance audits. Automation guarantees that once a business rule is validated, it applies uniformly across thousands of global daily sales."},
-            {"q": "Have you worked with complex taxonomies before?", "a": "Yes. At Heineken, I consolidated and normalized fragmented data across 200 distinct digital products and multiple channels. I am highly accustomed to organizing messy product data into strict, auditable structures."}
+            {"q": "Have you worked with complex taxonomies before?", "a": "Yes. At a *major global beverage brand*, I consolidated and normalized fragmented data across 200 distinct digital products and multiple channels. I am highly accustomed to organizing messy product data into strict, auditable structures."}
         ]
     },
     8: {
@@ -313,14 +313,14 @@ DATA_MAPPING = {
         "growth": "DWA needs immediate solutions. Your experience executing rapid 4-month sprints means you deliver results without a long onboarding lag.",
         "case": "Agile Sprints & Cross-Cloud Toolkit.",
         "bullets": [
-            "At Stalse, I focused on GCP and BigQuery pipelines to clean up multi-country revenue data for ASICS.",
-            "At NTT Data, I mastered AWS Athena and Glue pipelines to process banking loads for Itaú.",
+            "At a *boutique data agency*, I focused on GCP pipelines to clean up multi-country revenue views for a *retail leader*.",
+            "At a *global tech consultancy*, I engineered data solutions to optimize transactional loads for a *tier-one banking client*.",
             "Now, I am looking for a long-term challenge to implement this complete cross-cloud arsenal."
         ],
         "qa_responses": [
-            {"q": "Why did you stay only 4 months at Stalse and NTT Data?", "a": "Both were structured as high-impact, temporary consulting contracts designed to solve a specific engineering bottleneck. Once the pipelines were automated, the dashboards launched, and documentation completed, the project concluded successfully."},
+            {"q": "Why did you stay only 4 months at these specific projects?", "a": "Both were structured as high-impact, temporary consulting contracts designed to solve a specific engineering bottleneck. Once the pipelines were automated, the dashboards launched, and documentation completed, the project concluded successfully."},
             {"q": "Are you looking for a long-term home or another short contract?", "a": "I am specifically looking for a permanent, long-term remote opportunity where I can embed myself into the core culture and continuously protect the operation as the brand scales internationally."},
-            {"q": "How does jumping across different projects help DWA?", "a": "It has hyper-accelerated my tech adaptability. In under a year, I engineered systems in GCP/BigQuery for ASICS and immediately shifted to AWS/Athena for Itaú. I can adapt to whatever tech stack DWA runs with zero friction."}
+            {"q": "How does jumping across different projects help DWA?", "a": "It has hyper-accelerated my tech adaptability. In under a year, I engineered systems in GCP/BigQuery for a *major consumer brand* and immediately shifted to AWS/Athena for a *banking institution*. I can adapt to whatever tech stack DWA runs with zero friction."}
         ]
     },
     10: {
@@ -358,9 +358,9 @@ DATA_MAPPING = {
             "Result: Slashed cloud data consumption from Gigabytes to Megabytes, optimizing performance and reducing query costs."
         ],
         "qa_responses": [
-            {"q": "How did you handle currency conversions and cross-border data mismatches for ASICS?", "a": "I engineered an automated ETL pipeline inside BigQuery that ingested local transaction streams, applied dynamic currency conversion lookup layers, and standardized regional tax definitions into a single, unified view for management."},
-            {"q": "What was the direct business impact of your FinOps optimization at ASICS?", "a": "By optimizing query syntax and refactoring legacy data tables, I reduced processing loads from Gigabytes to Megabytes. This didn't just maximize processing speed; it directly optimized cloud infrastructure spend and prevented system lag."},
-            {"q": "How does this ASICS experience help you protect DWA's checkout streams?", "a": "The exact logical engine I used to align Latin American regional revenue rules is what I will use to ingest DWA's cross-border Stripe or processor logs, guaranteeing that our automated dashboard matches regional tax laws perfectly."}
+            {"q": "How did you handle currency conversions and cross-border data mismatches?", "a": "I engineered an automated ETL pipeline inside BigQuery that ingested local transaction streams, applied dynamic currency conversion lookup layers, and standardized regional tax definitions into a single, unified view for management."},
+            {"q": "What was the direct business impact of your FinOps optimization?", "a": "By optimizing query syntax and refactoring legacy data tables, I reduced processing loads from Gigabytes to Megabytes. This didn't just maximize processing speed; it directly optimized cloud infrastructure spend and prevented system lag."},
+            {"q": "How does this experience help you protect DWA's checkout streams?", "a": "The exact logical engine I used to align Latin American regional revenue rules is what I will use to ingest DWA's cross-border Stripe or processor logs, guaranteeing that our automated dashboard matches regional tax laws perfectly."}
         ]
     },
     12: {
@@ -398,7 +398,7 @@ DATA_MAPPING = {
             "Result: Launched the first stable automation in less than 1 (one) month, matching financial indicators to the exact penny."
         ],
         "qa_responses": [
-            {"q": "How do you handle messy, unstructured e-commerce data from multiple clients?", "a": "At Heineken, I designed a rigid Star Schema data model that forced all incoming data into a standardized relational mapping. This eliminated anomalies and insured that messy, disparate formats translated into clean, standardized metrics."},
+            {"q": "How do you handle messy, unstructured e-commerce data from multiple clients?", "a": "I designed a rigid Star Schema data model that forced all incoming data into a standardized relational mapping. This eliminated anomalies and insured that messy, disparate formats translated into clean, standardized metrics."},
             {"q": "What does 'matching indicators to the exact penny' mean for compliance?", "a": "It means total audirability. If an e-commerce platform has unexplained micro-discrepancies between its checkout logs and bank deposits, it creates immediate financial and compliance risk. I specialize in building data verification loops that eliminate these gaps."},
             {"q": "How does your digital market experience translate to DWA's infoproducts?", "a": "I already speak the language of e-commerce, digital checkouts, funnels, and customer segments. I don't need to be trained on what an online funnel look like; I can dive directly into auditing your product categories and sales data from day one."}
         ]
@@ -407,8 +407,8 @@ DATA_MAPPING = {
         "category": "HOW - Case Methodology (STAR)",
         "title": "Afinz (2022 - 2023)",
         "tag": "OPTIMIZATION",
-        "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to protect speed and security.",
-        "followup": "I also structured our metadata repositories and led governance meetings to ensure strict process adherence.",
+        "bridge": "My methodology is engineered to isolate operational friction and optimize resource allocation through automated pipeline systems.",
+        "followup": "By mapping metadata structures and establishing strict automated validation layers, we protect data processing speed and prevent transactional lags simultaneously.",
         "match": "Proves an execution-focused mindset. Compliance teams thrive when they eliminate slow manual bottlenecks.",
         "growth": "DWA cannot afford an analyst who wastes hours on manual entries. You free up team time through technical optimization.",
         "case": "MIS Analyst at Afinz / Sorocred.",
@@ -419,8 +419,8 @@ DATA_MAPPING = {
         ],
         "qa_responses": [
             {"q": "How did you reduce a reporting workflow from 1.5 hours to 15 minutes?", "a": "By auditing the legacy routine, identifying repetitive human manual tasks, and rewriting the entire ingestion sequence into automated Python and SQL data pipelines. The system handled the heavy lifting, leaving humans to focus purely on anomaly analysis."},
-            {"q": "What was your approach to Data Governance at Afinz?", "a": "I structured metadata repositories and clear documentation models inside Confluence and SharePoint. This ensured that all definition metrics and data sources were fully governed, transparent, and aligned with internal process frameworks."},
-            {"q": "How will your passion for automation optimize DWA's compliance arm?", "a": "I will target any manual data gathering or Excel compilation inside your compliance routines and replace them with automated data extractions. This minimizes compliance overhead, removes human delay, and provides immediate data feedback loops."}
+            {"q": "What was your approach to Data Governance?", "a": "I structured metadata repositories and clear documentation models inside cloud platforms. This ensured that all definition metrics and data sources were fully governed, transparent, and aligned with internal process frameworks."},
+            {"q": "How will your focus on automation optimize DWA's compliance arm?", "a": "I will target any manual data gathering or Excel compilation inside your compliance routines and replace them with automated data extractions. This minimizes compliance overhead, removes human delay, and provides immediate data feedback loops."}
         ]
     },
     15: {
@@ -438,8 +438,8 @@ DATA_MAPPING = {
             "Result: Secured critical infrastructure expansions administratively, driving asset valuation up with zero lawsuits."
         ],
         "qa_responses": [
-            {"q": "How does real estate legal proxy experience translate to digital trade compliance?", "a": "The essence of compliance never changes: it is about risk mitigation, textual precision, and strict adherence to institutional rules. Auditing land registries and managing regulatory compliance at Burity trained my eye to ensure everything is aligned with legal frameworks."},
-            {"q": "Can you give an example of rectifying an administrative error?", "a": "At Burity, I audited historical technical blueprints and legal agreements to isolate descriptive errors that created major regulatory liabilities. By coordinating legal and operations teams, we rectified those records before any government penalties arose."},
+            {"q": "How does legal proxy experience translate to digital trade compliance?", "a": "The essence of compliance never changes: it is about risk mitigation, textual precision, and strict adherence to institutional rules. Auditing property registries and managing regulatory compliance trained my eye to ensure everything is aligned with legal frameworks."},
+            {"q": "Can you give an example of rectifying an administrative error?", "a": "I audited historical technical blueprints and legal agreements to isolate descriptive errors that created major regulatory liabilities. By coordinating cross-functional teams, we rectified those records before any penalties arose."},
             {"q": "How do you handle interactions with strict government regulatory frameworks?", "a": "With absolute data preparation and zero speculation. My extensive tenure managing property compliance taught me that regulators respond to indisputable, fully documented evidence. I apply that exact precision to digital transaction audits."}
         ]
     },
@@ -518,9 +518,9 @@ DATA_MAPPING = {
             "I make compliance visually obvious through clean dashboards rather than talking about backend data engineering."
         ],
         "qa_responses": [
-            {"q": "How do you present complex database structures to our non-technical founders?", "a": "I never present code, tables, or database syntax. I present business answers. I use intuitive Power BI or Looker dashboards to visualize risk trends, cost optimization metrics, and system adherence so they can digest operational safety at a glance."},
+            {"q": "How do you present complex database structures to our non-technical founders?", "a": "I never present code, tables, or database syntax. I present business answers. I use intuitive dashboards to visualize risk trends, cost optimization metrics, and system adherence so they can digest operational safety at a glance."},
             {"q": "What standard corporate metrics do you focus on during executive presentations?", "a": "I translate data into financial protection and efficiency gains: hours of manual work eliminated, processing cost reductions (FinOps), and the percentage of transactional data successfully verified against target international tax exposures."},
-            {"q": "How did you manage executive communication during your previous data projects?", "a": "At both Afinz and Heineken, I designed strategic management reports and led alignment meetings for diverse corporate audiences. My focus was always on delivering data-driven suggestions to support executive decision-making directly."}
+            {"q": "How did you manage executive communication during your previous data projects?", "a": "Across my engineering and analytical tenure, I designed strategic management reports and led alignment meetings for diverse corporate audiences. My focus was always on delivering data-driven suggestions to support executive decision-making directly."}
         ]
     },
     20: {
@@ -538,8 +538,8 @@ DATA_MAPPING = {
             "🌅 [POLISHED WRAP-UP VARIATIONS]: Choose based on timing: 1) 'Have a productive week ahead.' | 2) 'Have an excellent weekend.' | 3) 'It was a real pleasure meeting you today. Let's stay in touch.'"
         ],
         "qa_responses": [
-            {"q": "How do you use data to minimize chargebacks without killing checkout conversion?", "a": "By establishing real-time pattern filtering. Instead of broad, generic rules that block legitimate global users, I write precise data models that isolate abnormal fraud markers (like country ip mismatches vs credit cards) silently behind the scenes."},
-            {"q": "Have you ever audited complex multi-party financial loops or payment splits?", "a": "Yes. At ASICS Latam, I unified fragmented cross-border flows involving dynamic tax rules and regional parameters. Organizing multi-party data taxonomies into clean relational tables is a core strength of my database design."},
+            {"q": "How do you use data to minimize chargebacks without killing checkout conversion?", "a": "By establishing real-time pattern filtering. Instead of broad, generic rules that block legitimate global users, I write precise data models that isolate abnormal fraud markers silently behind the scenes."},
+            {"q": "Have you ever audited complex multi-party financial loops or payment splits?", "a": "Yes. In past regional unifications, I aligned fragmented cross-border flows involving dynamic tax rules and regional parameters. Organizing multi-party data taxonomies into clean relational tables is a core strength of my database design."},
             {"q": "Do you have a practical data challenge or case test I can solve right now?", "a": "I would welcome the opportunity. If you can provide a masked extraction of your transactional logs, I am fully prepared to build an automated SQL or Python filter script to demonstrate my code speed, optimization focus, and risk vision firsthand."}
         ]
     }
