@@ -138,35 +138,49 @@ div.stButton > button {
     margin-bottom: 0px !important;
 }
 
-/* Embedded Document Viewer Styles */
+/* Embedded Document Viewer Styles with Full Height capabilities */
 .doc-container {
     background-color: #ffffff;
     border: 1px solid #d5dbdb;
     border-radius: 6px;
-    padding: 20px !important;
+    padding: 24px !important;
     box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    max-height: 80vh;
+    overflow-y: auto !important;
 }
 .doc-title {
     color: #1b4f72;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     border-bottom: 3px solid #1b4f72;
-    padding-bottom: 6px;
-    margin-bottom: 15px !important;
+    padding-bottom: 8px;
+    margin-bottom: 18px !important;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 .doc-section {
     font-size: 13px;
     color: #2c3e50;
-    margin-bottom: 12px !important;
-    line-height: 1.4;
+    margin-bottom: 14px !important;
+    line-height: 1.5;
 }
 .doc-subtitle {
     font-size: 14px;
     color: #154360;
     font-weight: bold;
-    margin-top: 10px !important;
-    margin-bottom: 4px !important;
+    margin-top: 16px !important;
+    margin-bottom: 6px !important;
+    border-bottom: 1px solid #eaeded;
+    padding-bottom: 2px;
+}
+.commentary-box {
+    background-color: #ebf5fb;
+    border-left: 4px solid #2980b9;
+    padding: 10px !important;
+    margin-top: 6px !important;
+    margin-bottom: 12px !important;
+    border-radius: 4px;
+    font-size: 12.5px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -178,18 +192,18 @@ DATA_MAPPING = {
         "title": "Tell me about yourself",
         "tag": "PROFILE",
         "bridge": "I am a Production Engineer with an FGV MBA and specialized expertise in Analytics and BI, recognized for transforming raw operational parameters into optimized, data-driven revenue protection models.",
-        "followup": "My framework bridges engineering rigor with strategic risk mitigation. I help brands shift from chaotic spreadsheet dependencies into highly structured, automated architectures that scale safely.",
+        "followup": "My approach bridges technical architecture with strategic risk management, helping organizations replace fragmented spreadsheet manual processes with robust database single sources of truth.",
         "match": "Establishes institutional authority, linking data-driven decisions directly to global financial security.",
-        "growth": "Operational scalability requires infrastructure safety as transaction volume increases; my profile guarantees data predictability without performance bottlenecks.",
+        "growth": "DWA requires infrastructure safety as transaction volume increases; my profile guarantees data predictability without performance bottlenecks.",
         "case": "Engineering + MBA + Corporate Analytics (*Heineken*, *Itaú*, *ASICS*, *NTT DATA*).",
         "bullets": [
             "I leverage structured analytical experience developed across market leaders in highly regulated domains like consumer goods (*Heineken*), banking (*Itaú*), and cross-border retail (*ASICS*).",
-            "I isolate data infrastructure friction points, driving companies to become truly data-driven, maximizing existing resource allocation, and optimizing final results.",
-            "My primary focus sits exactly where risk management and advanced analytics meet—building automated check layers to dynamically protect corporate assets."
+            "I isolate data infrastructure friction points, enabling executive teams to align critical decisions with solid database evidence.",
+            "My methodology prioritizes infrastructure resource optimization, asset preservation, and structural risk minimization."
         ],
         "qa_responses": [
-            {"q": "What is the baseline blueprint of your value proposition?", "a": "I combine engineering logic with a strategic business overview to maximize infrastructure value. I don't just look at backend query code; I design data frameworks that explicitly protect the business from transaction friction and revenue leaks."},
-            {"q": "How do you drive a scaling team to become truly data-driven?", "a": "By removing subjective guessing and human manual lag from the operational equation. True data-driven execution means translating regulatory and commercial rules into automated validation scripts embedded directly inside the cloud architecture."},
+            {"q": "What is the baseline blueprint of your value proposition?", "a": "I combine process engineering logic with a strategic business overview to maximize infrastructure value. I don't just audit backend query lines; I establish analytical frameworks that proactively secure cross-border revenue and stabilize checkout log funnels."},
+            {"q": "How do you drive a scaling team to become truly data-driven?", "a": "By introducing structural automation that eliminates human verification lag. True data-driven clarity occurs when complex tax parameters and validation parameters are embedded directly within the database logic."},
             {"q": "Our data foundations are currently messy. Are you comfortable with manual data cleaning?", "a": "Before any sustainable automation engine can be deployed, a thorough investigation of the raw components is mandatory. I am fully prepared to audit and clean initial data logs manually to completely map out the parameters before structuring long-term architectures."}
         ]
     },
@@ -297,10 +311,10 @@ DATA_MAPPING = {
         "category": "WHAT - Capabilities & Profile",
         "title": "No HTS Code Mastery",
         "tag": "HTS-MAPPING",
-        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.",
-        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.",
-        "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.",
-        "growth": "As the product catalog expands, manual classification will fail. An automated script-based lookup engine scales instantly.",
+        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.[cite: 1]",
+        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.[cite: 1]",
+        "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.[cite: 1]",
+        "growth": "As the product catalog expands, manual classification will fail. An automated script-based lookup engine scales instantly.[cite: 1]",
         "case": "Amazon Athena / BigQuery View Structuring.",
         "bullets": [
             "I am highly comfortable setting up dynamic views that adapt when business parameters shift.",
@@ -588,11 +602,11 @@ with st.sidebar:
         st.session_state.view_mode = "Main Interview Board"
         st.rerun()
         
-    if st.button("📄 View: André Carvalho ENG.pdf", use_container_width=True):
+    if st.button("📄 View: André Carvalho ENG_2.pdf", use_container_width=True):
         st.session_state.view_mode = "CV Doc"
         st.rerun()
         
-    if st.button("📘 View: Academia de Riqueza Digital.pdf", use_container_width=True):
+    if st.button("📘 View: Academia de Riqueza Digital_2.pdf", use_container_width=True):
         st.session_state.view_mode = "Guide Doc"
         st.rerun()
     
@@ -607,66 +621,100 @@ with st.sidebar:
 # --- VIEW ROUTING ENGINE ---
 
 if st.session_state.view_mode == "CV Doc":
-    st.markdown('<div class="doc-container"><div class="doc-title">Document: André Carvalho — Resume</div>', unsafe_allow_html=True)
+    st.markdown('<div class="doc-container"><div class="doc-title">Document View: André Carvalho — Resume</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="doc-section">
         <strong>ANDRÉ CARVALHO</strong><br>
         Data Analyst | Business Intelligence Analyst — São Paulo, Brazil<br>
-        <em>Professional Summary:</em> Data Analyst and BI professional with proven experience in Analytics, FinOps, Machine Learning, ETL pipelines, Cloud Platforms, and Data Governance. Track record of delivering scalable analytical models for market leaders.
+        andrescfreitas@gmail.com | +55 11 97835-7986<br>
+        <a href="https://www.linkedin.com/in/eng-%C2%B0-andr%C3%A9-c-589437208/" target="_blank">LinkedIn Profile</a>
+    </div>
+    <div class="doc-subtitle">Professional Summary</div>
+    <div class="doc-section">
+        Data Analyst and Business Intelligence professional with experience in Analytics, FinOps, Machine Learning, ETL pipelines, Cloud Data Platforms, and Data Governance. Proven track record delivering scalable analytical solutions and strategic insights for companies including Heineken, Itaú, ASICS Latam, Fretebras, and FSB Comunicação. Strong expertise in SQL, Python, AWS, GCP, Power BI, BigQuery, Athena, and dashboard automation.
     </div>
     <div class="doc-subtitle">Professional Experience</div>
     <div class="doc-section">
         <strong>Business Intelligence Analyst :: Stalse (Hybrid Contract) | Jan 2026 - Apr 2026</strong><br>
-        • Delivered strategic analytics projects for <em>ASICS Latam</em>, <em>Fretebras</em>, and <em>FSB Comunicação</em> focused on operational efficiency and revenue predictability.<br>
-        • Optimized cloud data architecture using FinOps practices, significantly reducing storage consumption and query costs.<br>
-        • Automated executive dashboards for Latin America operations including dynamic currency conversion integration.
+        • Worked on strategic data projects for clients such as <em>ASICS Latam</em> and <em>Fretebras</em>, focusing on operational efficiency, financial predictability, and value generation.<br>
+        • Simplified data architecture, reducing cloud data consumption from Gigabytes to Megabytes, optimizing costs and performance.<br>
+        • Created a unified revenue view for Latin American operations (Brazil, Chile, and Colombia) and automated the management dashboard.<br>
+        • Conducted strategic SEO analysis, mitigating operational risks and impacts on Customer Acquisition Cost (CAC).
     </div>
     <div class="doc-section">
-        <strong>Data Analyst :: NTT Data / Itaú (Remote Contract) | Feb 2025 - May 2025</strong><br>
-        • Developed and optimized complex SQL views using Amazon Athena, consolidating dynamic business rules.<br>
-        • Supported cross-functional business squads with interactive analytical dashboards and QuickSight reporting.
+        <strong>Data Analyst :: NTT DATA (Remote Contract) | Feb 2025 - May 2025</strong><br>
+        • Worked within the AWS cloud environment, serving a major enterprise client in the corporate sector (*Itaú*).<br>
+        • Focused on Amazon Athena, executing complex SQL queries for data analysis and developing complex view transformations.<br>
+        • Collaborated with business units to understand and translate complex requirements into technical solutions under Agile methodologies.
     </div>
     <div class="doc-section">
-        <strong>BI Analyst :: Sxpel / Heineken (Remote) | Nov 2023 - Oct 2024</strong><br>
-        • Normalized large customer datasets improving analytical consistency and tracking e-commerce stockouts.<br>
-        • Designed relational data models using Star Schema methodologies to optimize reporting scalability.
+        <strong>Business Intelligence Analyst :: Sxpel Technologies (Remote) | Nov 2023 - Oct 2024</strong><br>
+        • Allocated at <em>Heineken</em>, focused on the Digital Area (eRetail, eCommerce).<br>
+        • Consolidated and normalized large customer datasets, designing analytical data models using Star Schema methodologies.<br>
+        • Implemented data quality validation and traceability processes increasing reporting reliability for executive decision-making.
     </div>
     <div class="doc-section">
-        <strong>Management Information Systems Analyst :: Afinz / Sorocred (Remote) | Sep 2022 - Jun 2023</strong><br>
-        • Developed ETL pipelines using Python and SQL, reducing data update routines from 1h30m down to 15 minutes.<br>
-        • Structured metadata repositories and KPI frameworks to ensure strict data governance adherence.
+        <strong>MIS (Management Information System) Analyst :: Afinz (Remote) | Sep 2022 - Jun 2023</strong><br>
+        • Improved performance of daily data update routines, reducing processing time from 1h30m to just 15 minutes via ETL automation.<br>
+        • Structured metadata organization and Data Governance layers using SQL, Python, and AWS tools (Athena, Glue, S3).
     </div>
-    <div class="doc-subtitle">Education & Qualifications</div>
+    <div class="doc-section">
+        <strong>Management / T&D Analyst :: Integral Desenvolvimento Humano Ltda | Jan 2005 - Sep 2022</strong><br>
+        • Conducted over 2,000 structured analyses, directly supporting corporate strategic decisions for enterprises like Gerdau and Sabesp.<br>
+        • Created comparative models for performance evaluation, increasing efficiency in identifying operational gaps.
+    </div>
+    <div class="doc-section">
+        <strong>Asset & Property Manager :: Burity Empresarial | Oct 1996 - Aug 2022</strong><br>
+        • Acted as a legal proxy (Procurador). Audited and verified legal processes, agreements, contracts, and technical blueprints to rectify administrative errors and mitigate risks with zero liabilities.
+    </div>
+    <div class="doc-subtitle">Education & Certifications</div>
     <div class="doc-section">
         • <strong>MBA in Business Administration</strong> — Fundação Getulio Vargas (FGV), Completed in 2006.<br>
         • <strong>Bachelor's Degree in Production Engineering</strong> — CREA-SP, Completed in 2021.<br>
-        • <strong>Languages:</strong> Portuguese (Native) | English (Advanced — Academic experience in London, UK).
+        • Data Analyst & BI Certifications — XPe / IGTI (148 hours each, 2022).<br>
+        • <strong>Languages:</strong> Portuguese (Native) | English (Advanced — Academic experience at St Giles International, London).
     </div>
     </div>
     """, unsafe_allow_html=True)
 
 elif st.session_state.view_mode == "Guide Doc":
-    st.markdown('<div class="doc-container"><div class="doc-title">Document: Academia de Riqueza Digital</div>', unsafe_allow_html=True)
+    st.markdown('<div class="doc-container"><div class="doc-title">Document View: Academia de Riqueza Digital</div>', unsafe_allow_html=True)
     st.markdown("""
+    <div class="doc-subtitle">4 Blocos Estratégicos de Preparação</div>
     <div class="doc-section">
-        <strong>Strategic Interview Mapping Engine</strong><br>
-        This blueprint maps the intersection between a high-growth cross-border digital business model and advanced data engineering logic.
+        <strong>Bloco 1: Os Pontos de Convergência</strong><br>
+        Para vencer esta entrevista, precisas de conectar o modelo de negócio deles à tua capacidade técnica.<br>
+        • <strong>Modelo Digital Transfronteiriço:</strong> Milhares de transações diárias via checkouts digitais (*Stripe* / PayPal).<br>
+        • <strong>A Dor Oculta:</strong> Riscos fiscais internacionais (regras de IVA/VAT europeu), bloqueios de checkout por padrões irregulares e colapso de auditorias manuais em Excel.<br>
+        • <strong>Convergência do Teu Perfil:</strong> O Compliance da DWA não se faz no porto, faz-se no banco de dados. Você é o analista que usa engenharia, SQL avançado e AWS para auditar e blindar esse fluxo.
     </div>
-    <div class="doc-subtitle">1. The Digital Cross-Border Architecture (DWA)</div>
-    <div class="doc-section">
-        • <strong>The Model:</strong> Global sales of digital assets and infoproducts recurring revenue (MRR) via international checkouts.<br>
-        • <strong>The Core Risk Hidden Layer:</strong> Rapid scaling triggers exposure to complex European digital tax laws (VAT/IVA lines), transaction payment filters, and payment processor holds.
+    <div class="commentary-box">
+        <strong>Onde está a maior aderência por experiência:</strong><br>
+        • <strong>Stalse (ASICS):</strong> Unificação de receita transfronteiriça (Brasil, Chile, Colômbia) e FinOps. Prova competência em dados financeiros internacionais.<br>
+        • <strong>NTT DATA (Itaú):</strong> Adaptação a regras de negócio mutáveis e processamento em nuvem AWS Athena.<br>
+        • <strong>Heineken:</strong> Zero curva de aprendizado sobre ecossistemas de e-commerce, funis digitais e contas online.<br>
+        • <strong>Afinz:</strong> Data Governance puro e eliminação de lags manuais (redução de 1h30 para 15 minutos).<br>
+        • <strong>Burity:</strong> Atuação formal como procurador, leitura minuciosa de contratos e conformidade legal normativa.
     </div>
-    <div class="doc-subtitle">2. Strategic Alignment Matrix</div>
+    <div class="doc-subtitle">Bloco 2: Roteiro Prático de Entrevista (Curto, Direto e Estruturado)</div>
     <div class="doc-section">
-        • <strong>The Shift:</strong> Modern compliance is no longer a physical legal paperwork challenge; it is an analytical data problem.<br>
-        • <strong>The Field Bridge:</strong> Traditional customs brokers review documentation manually container-by-container. A technical risk analyst writes SQL routines to audit 100% of live transaction data payloads in real-time.
+        1. <strong>Tell me about yourself:</strong> Foco imediato na fundação estrutural (MBA, Engenharia) e na centralização de fluxos caóticos em nuvem.<br>
+        2. <strong>Why DWA?:</strong> Demonstração profunda de conhecimento do modelo digital de recorrência. O desafio está nos dados transacionais, não em portos físicos.<br>
+        3. <strong>Why Trade Compliance Fit?:</strong> Transformação da falta de experiência tradicional em vantagem técnica: auditoria automatizada de 100% dos dados em tempo real.<br>
+        4. <strong>STAR Operational Risk Problem (ASICS Case):</strong> Apresentação de resultados concretos de eliminação de silos e redução de consumo de dados.<br>
+        5. <strong>Objection Handling (No Customs Exp):</strong> Reenquadramento das regulamentações complexas como regras lógicas de negócio traduzíveis em código.
     </div>
-    <div class="doc-subtitle">3. High-Performance Behavioral Strategy</div>
+    <div class="doc-subtitle">Bloco 3: Estratégias e Técnicas de Entrevista</div>
     <div class="doc-section">
-        • <strong>Bridging Method:</strong> Smoothly pivot from traditional shipping definitions to high-scale database query controls.<br>
-        • <strong>The Power of Silence:</strong> Suppress conversational fillers. Maintain a calm, structured, and deliberate speech rate to project complete analytical authority.<br>
-        • <strong>Business Translation:</strong> Avoid technical engineering slang when presenting to non-technical panels; reframe code scripts into risk mitigation and hours of workload saved.
+        • <strong>Técnica do Bridging (Ponte):</strong> Responder brevemente sobre o terreno tradicional desconhecido e conectar imediatamente a resposta ao seu domínio técnico (dados e processos).<br>
+        • <strong>The Power of Silence:</strong> Evitar ruídos conversacionais (*uhm, ah*). Pausar por 2 segundos para organizar frases curtas e concisas, transmitindo estabilidade e perfil analítico.<br>
+        • <strong>Linguagem de Negócio:</strong> Substituir termos puramente técnicos por indicadores executivos: falar sobre "automações para mitigação de riscos" em vez de "escrever scripts".
+    </div>
+    <div class="doc-subtitle">Bloco 4: Pontos de Atenção e Mitigação de Riscos</div>
+    <div class="doc-section">
+        • <strong>Alinhamento com Recrutador Literal:</strong> Caso o RH possua um checklist engessado, focar exaustivamente nas palavras-chave: <em>Auditoria, Processos, Organização e Controle de Riscos</em>.<br>
+        • <strong>Mitigação de Overqualification:</strong> Deixar claro que a infraestrutura eficiente de uma marca global em rápido crescimento representa um desafio intelectual altamente motivador para o seu perfil.<br>
+        • <strong>Inglês Prático:</strong> Priorizar frases curtas e diretas para eliminar desvios gramaticais e manter o tom sênior internacional.
     </div>
     </div>
     """, unsafe_allow_html=True)
@@ -747,6 +795,7 @@ else:
         )
 
     with col_out2:
+        # ULTRA-COMPACT CONTAINER: Reduced margins, font size and inline layout for the reference text
         bullets_list = active_data.get("bullets", [])
         bullets_html = "".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.25; margin-bottom:2px !important;">• {b}</p>' for b in bullets_list)
         
@@ -761,6 +810,7 @@ else:
             unsafe_allow_html=True
         )
         
+        # REFACTORED UX BOX: Dark Blue Accent & Symmetrical layout spacing with fallback control
         qa_list = active_data.get("qa_responses", [])
         qa_html_items = ""
         for qa in qa_list:
