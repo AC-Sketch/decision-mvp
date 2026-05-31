@@ -12,8 +12,8 @@ st.markdown("""
 <style>
 /* Reset main padding limits to prevent overlapping headers */
 .block-container {
-    padding-top: 1.2rem !important;
-    padding-bottom: 0.2rem !important;
+    padding-top: 1.0rem !important;
+    padding-bottom: 0.1rem !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     max-width: 100% !important;
@@ -25,7 +25,7 @@ st.markdown("""
 }
 
 div[data-testid="stVerticalBlock"] {
-    gap: 0.2rem !important;
+    gap: 0.15rem !important;
 }
 
 [data-testid="stSidebarUserContent"] {
@@ -74,14 +74,14 @@ div.stButton > button {
     letter-spacing: 0.3px;
 }
 
-/* Output Display Blocks - Engineered for Clear Single-Page Layout Reading */
+/* Output Display Blocks - Compressed & Symmetrical heights to eliminate scroll-down */
 .response-box {
     background-color: #e8f8f5;
     border-left: 4px solid #18bc9c;
     padding: 6px 10px !important;
     border-radius: 4px;
     margin-bottom: 0.3rem;
-    min-height: 50px;
+    min-height: 48px;
 }
 
 .followup-box {
@@ -90,7 +90,7 @@ div.stButton > button {
     padding: 6px 10px !important;
     border-radius: 4px;
     margin-bottom: 0.3rem;
-    min-height: 50px;
+    min-height: 48px;
 }
 
 .growth-box {
@@ -99,7 +99,7 @@ div.stButton > button {
     padding: 5px 10px !important;
     border-radius: 4px;
     margin-bottom: 0.3rem;
-    min-height: 45px;
+    min-height: 40px;
 }
 
 .match-box {
@@ -108,15 +108,15 @@ div.stButton > button {
     padding: 5px 10px !important;
     border-radius: 4px;
     margin-bottom: 0.3rem;
-    min-height: 45px;
+    min-height: 40px;
 }
 
 .bullet-container-box {
     background-color: #ffffff;
     border: 1px solid #e9ecef;
     border-radius: 4px;
-    padding: 8px 10px !important;
-    min-height: 195px;
+    padding: 6px 10px !important;
+    min-height: 120px; /* Reduced to bring Q&A box immediately upwards */
 }
 
 .qa-container-box {
@@ -124,14 +124,14 @@ div.stButton > button {
     border: 1px solid #d5dbdb;
     border-left: 4px solid #1b4f72;
     border-radius: 4px;
-    padding: 8px 10px !important;
-    margin-top: 4px;
-    min-height: 220px;
+    padding: 6px 10px !important;
+    margin-top: 3px;
+    min-height: 180px;
 }
 
 .qa-item {
-    margin-bottom: 5px !important;
-    padding-bottom: 4px;
+    margin-bottom: 4px !important;
+    padding-bottom: 3px;
     border-bottom: 1px dashed #d5dbdb;
 }
 .qa-item:last-child {
@@ -584,7 +584,7 @@ for idx, cat_name in enumerate(categories_list):
                 st.session_state.active_id = item_id
                 st.rerun()
 
-st.markdown("<div style='margin-top: 0.2rem; border-top: 1px solid #e9ecef; margin-bottom: 0.3rem;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-top: 0.15rem; border-top: 1px solid #e9ecef; margin-bottom: 0.25rem;'></div>", unsafe_allow_html=True)
 
 active_data = DATA_MAPPING[st.session_state.active_id]
 
@@ -633,18 +633,19 @@ with col_out1:
     )
 
 with col_out2:
+    # ULTRA-COMPACT CONTAINER: Reduced margins, font size and inline layout for the reference text
     st.markdown(
         f"""
         <div class="bullet-container-box">
             <span style="color:#2c3e50; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">Bulletproof Supporting Arguments:</span>
-            {"".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.3; margin-bottom:3px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
-            <p style='font-size:11px; color:#7f8c8d; margin-top:6px; border-top: 1px solid #e9ecef; padding-top:4px;'><strong>Baseline Case Reference:</strong> {active_data['case']}</p>
+            {"".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.25; margin-bottom:2px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
+            <p style='font-size:10px; color:#7f8c8d; margin-top:2px !important;'><strong>Baseline Case:</strong> {active_data['case']}</p>
         </div>
         """,
         unsafe_allow_html=True
     )
     
-    # Refactored UX Box: Dark Blue Accent & Compact Spacing to Prevent Vertical Scrolling
+    # REFACTORED UX BOX: Dark Blue Accent & Symmetrical layout spacing
     qa_html_items = ""
     for qa in active_data["qa_responses"]:
         qa_html_items += f"""
