@@ -138,19 +138,20 @@ div.stButton > button {
     margin-bottom: 0px !important;
 }
 
-/* Embedded Document Viewer Styles with Full Height capabilities */
+/* Embedded Document Viewer Styles with Header Protection Gap */
 .doc-container {
     background-color: #ffffff;
     border: 1px solid #d5dbdb;
     border-radius: 6px;
     padding: 24px !important;
+    padding-top: 25px !important; /* Fixed cutoff issue at the top border */
     box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    max-height: 80vh;
+    max-height: 78vh;
     overflow-y: auto !important;
 }
 .doc-title {
     color: #1b4f72;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     border-bottom: 3px solid #1b4f72;
     padding-bottom: 8px;
@@ -161,7 +162,7 @@ div.stButton > button {
 .doc-section {
     font-size: 13px;
     color: #2c3e50;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
     line-height: 1.5;
 }
 .doc-subtitle {
@@ -203,7 +204,7 @@ DATA_MAPPING = {
         ],
         "qa_responses": [
             {"q": "What is the baseline blueprint of your value proposition?", "a": "I combine process engineering logic with a strategic business overview to maximize infrastructure value. I don't just audit backend query lines; I establish analytical frameworks that proactively secure cross-border revenue and stabilize checkout log funnels."},
-            {"q": "How do you drive a scaling team to become truly data-driven?", "a": "By introducing structural automation that eliminates human verification lag. True data-driven clarity occurs when complex tax parameters and validation parameters are embedded directly within the database logic."},
+            {"q": "How do you drive a scaling team to become truly data-driven?", "a": "By removing subjective guessing and human manual lag from the operational equation. True data-driven execution means translating regulatory and commercial rules into automated validation scripts embedded directly inside the cloud architecture."},
             {"q": "Our data foundations are currently messy. Are you comfortable with manual data cleaning?", "a": "Before any sustainable automation engine can be deployed, a thorough investigation of the raw components is mandatory. I am fully prepared to audit and clean initial data logs manually to completely map out the parameters before structuring long-term architectures."}
         ]
     },
@@ -311,10 +312,10 @@ DATA_MAPPING = {
         "category": "WHAT - Capabilities & Profile",
         "title": "No HTS Code Mastery",
         "tag": "HTS-MAPPING",
-        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.[cite: 1]",
-        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.[cite: 1]",
-        "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.[cite: 1]",
-        "growth": "As the product catalog expands, manual classification will fail. An automated script-based lookup engine scales instantly.[cite: 1]",
+        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.",
+        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.",
+        "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.",
+        "growth": "As the product catalog expands, manual classification will fail. An automated script-based lookup engine scales instantly.",
         "case": "Amazon Athena / BigQuery View Structuring.",
         "bullets": [
             "I am highly comfortable setting up dynamic views that adapt when business parameters shift.",
@@ -451,8 +452,8 @@ DATA_MAPPING = {
         "category": "HOW - Case Methodology (STAR)",
         "title": "Heineken (2023 - 2024)",
         "tag": "E-COMMERCE",
-        "bridge": "I normalized chaotic e-commerce data streams across 200 (two hundred) distinct online digital products.",
-        "followup": "I focused on cleaning up fragmented client inputs to build a transparent, auditable reporting pipeline for leadership.",
+        "bridge": "I normalize chaotic e-commerce data streams across 200 distinct online digital products.",
+        "followup": "I focus on cleaning up fragmented client inputs to build a transparent, auditable reporting pipeline for leadership.",
         "match": "Gives you zero learning curve regarding digital checkouts, sales funnels, and online platform metrics.",
         "growth": "Operating inside digital infoproduct ecosystems requires familiarity with funnels, online platform checkouts, and transactional data logs.",
         "case": "Allocated at *Heineken* (Digital Channel Analytics).",
@@ -678,43 +679,60 @@ if st.session_state.view_mode == "CV Doc":
     """, unsafe_allow_html=True)
 
 elif st.session_state.view_mode == "Guide Doc":
-    st.markdown('<div class="doc-container"><div class="doc-title">Document View: Academia de Riqueza Digital</div>', unsafe_allow_html=True)
+    st.markdown('<div class="doc-container"><div class="doc-title">Document View: Academia de Riqueza Digital — Guia Integral</div>', unsafe_allow_html=True)
     st.markdown("""
-    <div class="doc-subtitle">4 Blocos Estratégicos de Preparação</div>
     <div class="doc-section">
-        <strong>Bloco 1: Os Pontos de Convergência</strong><br>
+        <strong>4 Blocos Estratégicos de Preparação</strong>
+    </div>
+    
+    <div class="doc-subtitle">Bloco 1: Os Pontos de Convergência</div>
+    <div class="doc-section">
         Para vencer esta entrevista, precisas de conectar o modelo de negócio deles à tua capacidade técnica.<br>
-        • <strong>Modelo Digital Transfronteiriço:</strong> Milhares de transações diárias via checkouts digitais (*Stripe* / PayPal).<br>
-        • <strong>A Dor Oculta:</strong> Riscos fiscais internacionais (regras de IVA/VAT europeu), bloqueios de checkout por padrões irregulares e colapso de auditorias manuais em Excel.<br>
-        • <strong>Convergência do Teu Perfil:</strong> O Compliance da DWA não se faz no porto, faz-se no banco de dados. Você é o analista que usa engenharia, SQL avançado e AWS para auditar e blindar esse fluxo.
+        • <strong>Modelo Digital Transfronteiriço:</strong> Venda global de infoprodutos (MRR). O cliente compra de qualquer lugar do mundo através de checkout digital (*Stripe*/PayPal). Milhares de transações diárias.<br>
+        • <strong>A Dor Oculta:</strong> Quando uma empresa digital cresce muito rápido internacionalmente, ela enfrenta problemas graves com Impostos Digitais (Regras de IVA/VAT na Europa, onde cada país tem uma taxa para produtos digitais), Bloqueios de Checkout (Processadores de pagamento bloqueiam contas se houver picos de transações sem validação de risco ou compliance de dados) e Auditoria Manual (Eles provavelmente estão a tentar gerir milhares de linhas de vendas em Excel e o processo está a quebrar).<br>
+        • <strong>A Visão Real da Vaga (Trade Compliance Analyst):</strong> Embora a descrição pareça tradicional (HTS, importação), no contexto da DWA, eles procuram alguém para garantir a conformidade regulatória e fiscal das vendas globais. Eles não precisam de alguém para lidar com navios; precisam de alguém para classificar os produtos digitais, auditar os dados de vendas e garantir que a operação está blindada contra o fisco internacional.<br>
+        • <strong>O Que Podes Entregar (A tua Proposta de Valor):</strong> Em vez de conferir papéis de importação, a tua entrega consiste em centralizar os dados de vendas globais, criar regras automatizadas (via SQL/Python) para detetar anomalias fiscais ou de risco, e gerar dashboards de visibilidade de compliance para a liderança.<br>
+        • <strong>Convergência do Teu Perfil:</strong> <em>"O Compliance da DWA não se faz no porto, faz-se no banco de dados. Eu sou o analista que audita e automatiza esse fluxo."</em> Engenharia e Estrutura (MBA) + SQL Avançado / BigQuery / AWS Athena + Automação de Processos e FinOps.
     </div>
+    
     <div class="commentary-box">
-        <strong>Onde está a maior aderência por experiência:</strong><br>
-        • <strong>Stalse (ASICS):</strong> Unificação de receita transfronteiriça (Brasil, Chile, Colômbia) e FinOps. Prova competência em dados financeiros internacionais.<br>
-        • <strong>NTT DATA (Itaú):</strong> Adaptação a regras de negócio mutáveis e processamento em nuvem AWS Athena.<br>
-        • <strong>Heineken:</strong> Zero curva de aprendizado sobre ecossistemas de e-commerce, funis digitais e contas online.<br>
-        • <strong>Afinz:</strong> Data Governance puro e eliminação de lags manuais (redução de 1h30 para 15 minutos).<br>
-        • <strong>Burity:</strong> Atuação formal como procurador, leitura minuciosa de contratos e conformidade legal normativa.
+        <strong>Mapeamento de Aderência por Experiência Corporativa (Gatilhos de Entrevista):</strong><br>
+        • <strong>Stalse (*ASICS*):</strong> A unificação de receita para múltiplos países (Brasil, Chile, Colômbia) prova que você sabe lidar com dados financeiros transfronteiriços (cross-border), que é o núcleo do compliance da DWA. O foco em reduzir custos de dados (FinOps) mostra preocupação com o caixa da empresa. <em>Destaque:</em> A lógica de consolidar regras de receita internacionais e mitigar riscos financeiros para a ASICS é o que você vai aplicar para auditar as vendas globais de infoprodutos deles.<br>
+        • <strong>NTT DATA (*Itaú*):</strong> A frase "adjusting them according to evolving business rules" (ajustando de acordo com a mudança das regras de negócio) é ouro para o compliance. As leis de impostos e taxas digitais mudam constantemente no mundo; você prova que sabe adaptar sistemas a regras mutáveis. <em>Destaque:</em> Mostre que você usa a AWS (Athena) para ler grandes volumes de logs de transações e auditar se as regras do negócio estão sendo seguidas à risca no banco de dados.<br>
+        • <strong>Heineken:</strong> O foco explícito em Digital Area, eRetail e eCommerce significa que você já entende a dinâmica, as métricas e a estrutura de dados de canais digitais de grandes marcas, o que reduz a sua curva de aprendizado sobre o modelo de negócio deles para quase zero.<br>
+        • <strong>Afinz:</strong> Duas palavras fundamentais aqui: Data Governance e Process Workflows. Compliance é, por definição, governança e respeito a processos. Reduzir o tempo de atualização de 1h30 para 15 minutos prova sua capacidade de otimização de tempo e processos. <em>Destaque:</em> Use este exemplo para mostrar que você foca em eficiência operacional. Explique que você gosta de documentar e estruturar processos (via SharePoint/Confluence) para garantir que a equipe siga os padrões regulatórios sem perder agilidade.<br>
+        • <strong>Integral Desenvolvimento Humano:</strong> Foco em pensamento estruturado (structured thinking). A realização de mais de 2.000 análises estruturadas e o foco em "identificar gaps operacionais" (erros ou falhas em processos) mostra olhar clínico para auditoria em ambientes regulados (*Gerdau* e *Sabesp*).<br>
+        • <strong>Burity:</strong> Termos como "Acted as a legal proxy" (Procurador), "Audited and verified legal processes, agreements, and contracts" são pura gestão de riscos e conformidade legal. <em>Destaque:</em> Se o recrutador for muito apegado ao lado jurídico/normativo, use a Burity para provar que você sabe o que significa ler contratos, seguir leis à risca e lidar com a burocracia governamental para mitigar riscos patrimoniais e legais.
     </div>
-    <div class="doc-subtitle">Bloco 2: Roteiro Prático de Entrevista (Curto, Direto e Estruturado)</div>
+    
+    <div class="doc-subtitle">Bloco 2: Roteiro Prático de Entrevista (Curto e Direto)</div>
     <div class="doc-section">
-        1. <strong>Tell me about yourself:</strong> Foco imediato na fundação estrutural (MBA, Engenharia) e na centralização de fluxos caóticos em nuvem.<br>
-        2. <strong>Why DWA?:</strong> Demonstração profunda de conhecimento do modelo digital de recorrência. O desafio está nos dados transacionais, não em portos físicos.<br>
-        3. <strong>Why Trade Compliance Fit?:</strong> Transformação da falta de experiência tradicional em vantagem técnica: auditoria automatizada de 100% dos dados em tempo real.<br>
-        4. <strong>STAR Operational Risk Problem (ASICS Case):</strong> Apresentação de resultados concretos de eliminação de silos e redução de consumo de dados.<br>
-        5. <strong>Objection Handling (No Customs Exp):</strong> Reenquadramento das regulamentações complexas como regras lógicas de negócio traduzíveis em código.
+        1. <strong>Tell me about yourself:</strong> <em>"I'm a Data and Business Intelligence professional with an engineering background and an MBA. Throughout my career, I've specialized in centralizing financial data, automating manual reporting, and mitigating operational risks. I help companies turn chaotic data into structured, compliant, and reliable workflows."</em> -> Define imediatamente o teu nível sênior e foca em estrutura e risco.<br>
+        2. <strong>Why DWA?:</strong> <em>"DWA is a fast-growing global digital business. Since you operate cross-border with digital products, your biggest compliance challenges aren't at a physical port—they are inside your transactional data. I want to apply my analytics background to help DWA scale its compliance framework smoothly."</em> -> Mostra que compreendes o desafio do modelo digital melhor do que um candidato tradicional.<br>
+        3. <strong>Why are you a good fit for Trade Compliance?:</strong> <em>"Because modern compliance is a data problem. I am analytical, process-oriented, and highly detail-oriented. My experience with data governance, financial validation, and advanced SQL allows me to audit 100% of transaction data in real-time, rather than doing manual, slow checks in Excel."</em> -> Transforma a falta de experiência aduaneira tradicional no maior argumento de venda.<br>
+        4. <strong>Tell me about a time you solved an operational risk problem (O Case Asics/Stalse):</strong> <em>"At my last project, we had fragmented financial and revenue data across multiple countries, which created huge visibility risks. I re-engineered the data architecture using BigQuery and automated the reporting pipeline. As a result, we eliminated data silos, reduced processing costs, and delivered a 100% reliable view of international revenue to leadership."</em> -> Prova que sabe lidar com o cenário internacional da DWA.<br>
+        5. <strong>Objection Handling: 'You don't have experience with Customs/HTS laws.':</strong> <em>"That's true regarding physical customs, but I view international regulations as complex business rules. My core strength is taking complex legal or financial rules, learning them quickly, and translating them into automated data controls to ensure the business is 100% compliant."</em> -> Desarma a objeção focando na adaptabilidade lógica.
     </div>
+    
     <div class="doc-subtitle">Bloco 3: Estratégias e Técnicas de Entrevista</div>
     <div class="doc-section">
-        • <strong>Técnica do Bridging (Ponte):</strong> Responder brevemente sobre o terreno tradicional desconhecido e conectar imediatamente a resposta ao seu domínio técnico (dados e processos).<br>
-        • <strong>The Power of Silence:</strong> Evitar ruídos conversacionais (*uhm, ah*). Pausar por 2 segundos para organizar frases curtas e concisas, transmitindo estabilidade e perfil analítico.<br>
-        • <strong>Linguagem de Negócio:</strong> Substituir termos puramente técnicos por indicadores executivos: falar sobre "automações para mitigação de riscos" em vez de "escrever scripts".
+        • <strong>Técnica do 'Bridging' (Ponte):</strong> Sempre que fizerem uma pergunta sobre comércio exterior tradicional que não domines, responde brevemente e faz a ponte para o teu terreno (dados e processos). Exemplo: <em>"I haven't used HTS for physical shipping, but what I do know deeply is how to classify digital assets for cross-border transactions..."</em><br>
+        • <strong>The Power of Silence:</strong> Como a entrevista é em inglês, se não souberes uma palavra, não preenchas o espaço com "uhmmm" ou "ahhh". Para, respira por 2 segundos, organiza a frase curta e responde. Passa uma imagem de alguém analítico e calmo.<br>
+        • <strong>Linguagem de Negócio:</strong> Substitui termos puramente técnicos por termos de negócio. Em vez de dizer "eu escrevo scripts em Python", diz "eu crio automações para reduzir riscos operacionais e trabalho manual".
     </div>
-    <div class="doc-subtitle">Bloco 4: Pontos de Atenção e Mitigação de Riscos</div>
+    
+    <div class="doc-subtitle">Bloco 4: Pontos de Atenção (Onde podes escorregar)</div>
     <div class="doc-section">
-        • <strong>Alinhamento com Recrutador Literal:</strong> Caso o RH possua um checklist engessado, focar exaustivamente nas palavras-chave: <em>Auditoria, Processos, Organização e Controle de Riscos</em>.<br>
-        • <strong>Mitigação de Overqualification:</strong> Deixar claro que a infraestrutura eficiente de uma marca global em rápido crescimento representa um desafio intelectual altamente motivador para o seu perfil.<br>
-        • <strong>Inglês Prático:</strong> Priorizar frases curtas e diretas para eliminar desvios gramaticais e manter o tom sênior internacional.
+        1. <strong>O Alinhamento do Recrutador:</strong> Se a primeira entrevista for com um RH terceirizado ou júnior, eles podem ter apenas um "checklist" de palavras-chave (como HTS, Alfândega, etc.). Atenção: Se sentires que o entrevistador é muito literal, foca nas palavras Auditoria, Processos, Organização e Controlo de Riscos. Não os assustes com termos pesados de Engenharia de Dados se eles não forem da área técnica.<br>
+        2. <strong>O 'Overqualification' (Excesso de Qualificação):</strong> O teu currículo tem Heineken, AWS, BigQuery e Machine Learning. O entrevistador pode pensar que vai achar o trabalho uma seca e sair rápido. Mitigação: Deixa claro que gostas da área de Risco e Estrutura e que o teu objetivo na DWA é construir uma infraestrutura eficiente, o que para ti é um desafio intelectual muito interessante.<br>
+        3. <strong>Foco no Inglês Prático:</strong> Não uses palavras difíceis ou frases longas. O inglês de negócios internacional valoriza a clareza e a concisão. Frases curtas evitam erros gramaticais e mantêm o tom profissional.
+    </div>
+    
+    <div class="doc-subtitle">About the Job & Qualifications Matrix</div>
+    <div class="doc-section">
+        • <strong>Company Description:</strong> Dedicated to empowering individuals to build successful online businesses through training programs covering email marketing, content production, and affiliate models.<br>
+        • <strong>Role Description:</strong> Full-time remote Trade Compliance Analyst. Responsible for ensuring compliance with international trade regulations, conducting audits, analyzing regulatory changes, and tracking the Harmonized Tariff Schedule (HTS).<br>
+        • <strong>Core Qualifications Required:</strong> Proficiency in Trade Compliance; Strong Analytical Skills to assess risks; Knowledge in Import Compliance; Understanding of HTS applications; Excellent attention to detail; Strong communication skills; Bachelor's degree preferred.
     </div>
     </div>
     """, unsafe_allow_html=True)
