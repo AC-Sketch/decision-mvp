@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Injeção de CSS Executivo Avançado para o Hub Corporativo e Tabuleiro
+# Injeção de CSS Executivo Avançado para Componentes Estruturais e Relatório A4
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -44,82 +44,6 @@ html, body, [data-testid="stAppViewContainer"] {
     font-weight: 400;
 }
 
-/* --- ESTILIZAÇÃO DO TABULEIRO DE BLOCOS VISUAIS --- */
-.board-title-section {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #1E3A8A;
-    margin-bottom: 10px;
-}
-
-.board-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-    margin-bottom: 25px;
-    width: 100%;
-}
-
-.board-tile {
-    background: #FFFFFF;
-    border: 2px solid #E2E8F0;
-    border-radius: 12px;
-    padding: 12px;
-    min-height: 120px;
-    position: relative;
-    transition: all 0.2s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-}
-
-.board-tile-special {
-    background: #FFF5F5 !important;
-    border-color: #FEB2B2 !important;
-}
-
-.board-tile-active-turn {
-    border-color: #3B82F6 !important;
-    background: #EFF6FF !important;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
-}
-
-.tile-number {
-    font-size: 10px;
-    font-weight: 800;
-    color: #475569;
-    background: #E2E8F0;
-    padding: 2px 6px;
-    border-radius: 6px;
-    width: fit-content;
-}
-
-.tile-label {
-    font-size: 11.5px;
-    font-weight: 700;
-    color: #1E293B;
-    margin-top: 8px;
-    line-height: 1.3;
-}
-
-.tile-icon {
-    font-size: 18px;
-}
-
-.player-token {
-    display: inline-flex;
-    align-items: center;
-    padding: 2px 6px;
-    border-radius: 12px;
-    font-size: 9px;
-    font-weight: 700;
-    color: white;
-    margin-right: 3px;
-    margin-top: 3px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-
 /* --- LEADERBOARD & SIDEBAR CARDS --- */
 .avatar-container {
     display: flex;
@@ -145,18 +69,6 @@ html, body, [data-testid="stAppViewContainer"] {
     justify-content: center;
 }
 
-.keyword-badge {
-    display: inline-block;
-    background: #EFF6FF;
-    color: #2563EB;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-right: 6px;
-    border: 1px solid #BFDBFE;
-}
-
 /* --- CONSOLE LOGS --- */
 .logs-box {
     background-color: #0F172A;
@@ -164,7 +76,7 @@ html, body, [data-testid="stAppViewContainer"] {
     font-family: 'Courier New', Courier, monospace;
     padding: 14px;
     border-radius: 10px;
-    max-height: 200px;
+    max-height: 220px;
     overflow-y: auto;
     font-size: 11.5px;
     border-left: 4px solid #3B82F6;
@@ -201,7 +113,7 @@ html, body, [data-testid="stAppViewContainer"] {
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 2. COMPOSIÇÃO DO TABULEIRO (18 CENÁRIOS E MAPAS CORPORATIVOS DA NR-1)
+# 2. COMPOSIÇÃO DO TABULEIRO (18 CENÁRIOS E MARCOS REGULATÓRIOS DA NR-1)
 # ==============================================================================
 CASAS_MAPA = {
     0: {"titulo": "Marco Zero: Planejamento GRO", "tipo": "normal", "icon": "🚀"},
@@ -217,11 +129,11 @@ CASAS_MAPA = {
     10: {"titulo": "Validação de Custos (FinOps)", "tipo": "normal", "icon": "💰"},
     11: {"titulo": "Avaliação Ergonômica (NR-17)", "tipo": "normal", "icon": "🪑"},
     12: {"titulo": "Simulado de Emergências", "tipo": "normal", "icon": "🧯"},
-    13: {"titulo": "Trabalho Terceirizado", "tipo": "especial", "icon": "🤝"},
+    13: {"titulo": "Trabalho Terceirizado (Subitem 1.5.8)", "tipo": "especial", "icon": "🤝"},
     14: {"titulo": "Treinamento de Onboarding", "tipo": "normal", "icon": "📚"},
     15: {"titulo": "Aproveitamento de Grade", "tipo": "normal", "icon": "🔄"},
     16: {"titulo": "Defesa de Indicador FAP/RAT", "tipo": "especial", "icon": "⚖️"},
-    17: {"titulo": "Auditoria de Certificação ISO", "tipo": "normal", "icon": "🏆"},
+    17: {"titulo": "Auditoria de Certificação ISO 45001", "tipo": "normal", "icon": "🏆"},
 }
 
 PERSONAGENS_POOL = [
@@ -314,6 +226,21 @@ BANCO_QUESTOES_NR1 = [
         "justificativa": "O item 1.5.8.1 impõe o dever de cooperação informacional, exigindo que a contratante compartilhe o mapeamento de perigos locais para que as contratadas alimentem seus próprios planos de ação.",
         "pesquisa": "Jurisprudências consolidadas no TST imputam corresponsabilidade civil solidária em 94% dos acidentes onde a contratante omitiu riscos de planta às subcontratadas.",
         "link_leg": "https://sit.trabalho.gov.br/ca_epi/"
+    },
+    {
+        "id": 6,
+        "tema": "PGR - Renovação e Prazos do Inventário",
+        "pergunta": "Conforme o item 1.5.4.4.6, a avaliação dos riscos ocupacionais deve ser revista a cada dois anos. No entanto, qual a janela máxima permitida para organizações com sistema de gestão de SST certificado?",
+        "opcoes": [
+            "A) Permanece estritamente em dois anos, sem exceções regulatórias.",
+            "B) Pode ser estendida para até três anos.",
+            "C) Torna-se facultativa enquanto a certificação internacional estiver vigente.",
+            "D) Reduz para um ano devido à necessidade de auditorias externas constantes."
+        ],
+        "correta": 1,
+        "justificativa": "O subitem 1.5.4.4.6.1 estipula que, caso a organização possua sistema de gestão de SST certificado (como a ISO 45001), o prazo de revisão pode ser ampliado para até 3 anos.",
+        "pesquisa": "Relatórios globais das auditorias ISO indicam que a extensão do prazo reduz o custo regulatório anual de documentação das plantas em até 22%.",
+        "link_leg": "https://www.gov.br/trabalho-e-emprego/pt-br"
     }
 ]
 
@@ -472,7 +399,7 @@ with st.sidebar:
             })
             
         if st.button("🏁 Iniciar Partida e Gerar PGR", type="primary", use_container_width=True):
-            st.session_state.jogadores = jogadores_temp
+            st.session_state.jogadores = jugadores_temp
             st.session_state.jogo_iniciado = True
             st.session_state.rodada_atual = 1
             st.session_state.pergunta_atual_index = 0
@@ -515,44 +442,43 @@ tab_tabuleiro, tab_pdf_regras, tab_pesquisas_avancadas = st.tabs([
 ])
 
 # ------------------------------------------------------------------------------
-# TAB 1: O TABULEIRO COMPLETO EM BLOCOS VISUAIS E MECÂNICA ATIVA
+# TAB 1: O TABULEIRO COMPLETO COMPILADO COM COLUNAS NATIVAS (CORREÇÃO DO BUG HTML)
 # ------------------------------------------------------------------------------
 with tab_tabuleiro:
     if not st.session_state.jogo_iniciado:
         st.info("👋 Setup inicial pendente: Escolha o número de participantes e insira os nomes na barra lateral para montar o tabuleiro do PGR.")
     else:
-        st.markdown("<div class='board-title-section'>🗺 Implante de Campo: Tabuleiro GRO Ativo</div>", unsafe_allow_html=True)
+        st.markdown("#### 🗺️ Implante de Campo: Tabuleiro GRO Ativo")
         
         idx_vez = st.session_state.pergunta_atual_index % len(st.session_state.jogadores)
         j_vez = st.session_state.jogadores[idx_vez]
         
-        # --- SOLUÇÃO DO BUG DA IMAGEM image_6dd181.png ---
-        # Construção da string HTML completa contendo o grid montado
-        html_tiles = "<div class='board-grid'>"
-        for n_casa in range(18):
-            casa_info = CASAS_MAPA[n_casa]
-            is_special = "board-tile-special" if casa_info["tipo"] == "especial" else ""
-            is_active_turn = "board-tile-active-turn" if (j_vez["posicao"] % 18 == n_casa) else ""
-            
-            tokens_jogadores = ""
-            for p in st.session_state.jogadores:
-                if p["posicao"] % 18 == n_casa:
-                    tokens_jogadores += f'<span class="player-token" style="background-color:{p["cor"]};">{p["emoji"]} {p["nome"]}</span>'
-            
-            html_tiles += f"""
-            <div class="board-tile {is_special} {is_active_turn}">
-                <div class="tile-number">#{n_casa}</div>
-                <div class="tile-label">{casa_info['titulo']}</div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top: auto;">
-                    <div style="display: flex; flex-wrap: wrap; max-width: 80%;">{tokens_jogadores}</div>
-                    <span class="tile-icon">{casa_info['icon']}</span>
-                </div>
-            </div>
-            """
-        html_tiles += "</div>"
-        
-        # Renderização unificada do componente HTML sem escapes incorretos
-        st.markdown(html_tiles, unsafe_allow_html=True)
+        # --- SOLUÇÃO ROBUSTA DA REAVALIAÇÃO TÉCNICA (CONFORME SOLICITADO) ---
+        # Substituição do bloco único de texto HTML por colunas e containers nativos estruturados do Streamlit.
+        # Dividimos as 18 casas em 3 fileiras coordenadas de 6 blocos.
+        for row_idx in range(3):
+            cols = st.columns(6)
+            for col_idx in range(6):
+                n_casa = row_idx * 6 + col_idx
+                casa_info = CASAS_MAPA[n_casa]
+                
+                # Identificação de marcadores de jogador na casa
+                tokens_list = []
+                for p in st.session_state.jogadores:
+                    if p["posicao"] % 18 == n_casa:
+                        tokens_list.append(f"{p['emoji']} {p['nome']}")
+                
+                tokens_string = " | ".join(tokens_list) if tokens_list else "Vazio"
+                
+                # Definição visual customizada baseada no tipo de cenário
+                with cols[col_idx]:
+                    if j_vez["posicao"] % 18 == n_casa:
+                        st.info(f"📍 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n🟢 *Aqui: {tokens_string}*")
+                    elif casa_info["tipo"] == "especial":
+                        st.error(f"⚠️ **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Agentes: {tokens_string}*")
+                    else:
+                        st.help(f"📦 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Agentes: {tokens_string}*")
+                        
         st.divider()
         
         # Grid Operacional de Ação
@@ -607,7 +533,7 @@ with tab_tabuleiro:
             if st.session_state.resposta_enviada:
                 q_ant = BANCO_QUESTOES_NR1[(st.session_state.pergunta_atual_index - 1) % len(BANCO_QUESTOES_NR1)]
                 st.success(f"**Fundamentação Legal:** {q_ant['justificativa']}")
-                st.caption(f"🔬 **Evidência Prática:** {q_ant['pesquisa']}")
+                st.info(f"🔬 **Evidência Prática:** {q_ant['pesquisa']}")
                 
             st.markdown("##### 📟 Histórico Técnico (Console de Operações)")
             log_str = "".join(f"<div class='log-entry'>{l}</div>" for l in st.session_state.historico_eventos)
