@@ -116,7 +116,6 @@ html, body, [data-testid="stAppViewContainer"] {
 # ==============================================================================
 # 2. COMPOSIÇÃO DO TABULEIRO (18 CENÁRIOS E MARCOS REGULATÓRIOS DA NR-1)
 # ==============================================================================
-# Nomeclatura fixada globalmente como CASAS_TABULEIRO para resolver o NameError
 CASAS_TABULEIRO = {
     0: {"titulo": "Marco Zero: Planejamento GRO", "tipo": "normal", "icon": "🚀"},
     1: {"titulo": "Identificação Primária de Perigos", "tipo": "normal", "icon": "🔍"},
@@ -173,7 +172,7 @@ BANCO_QUESTOES_NR1 = [
         "tema": "Direito de Recusa Legitimado",
         "pergunta": "Conforme as diretrizes do subitem 1.4.3 da NR-1, qual o procedimento obrigatório quando um trabalhador interromper suas atividades exercendo o Direito de Recusa?",
         "opcoes": [
-            "A) O trabalhador deve receber uma advertência administrativa imediata por quebra de produtividade e abandono de posto.",
+            "A) O trabalhador deve receber uma advertência administrativa imediata por quebra de produtividade and abandono de posto.",
             "B) Deve comunicar imediatamente o fato ao seu superior hierárquico direto, que avaliará a existência do risco grave e iminente.",
             "C) A organização suspende o contrato de trabalho de forma temporária até a impressão de laudo por perito judicial.",
             "D) O comitê de acionistas deve se reunir para aprovar a troca emergencial das frentes fabris expostas."
@@ -353,7 +352,7 @@ with st.sidebar:
             })
             
         if st.button("🏁 Iniciar Partida e Gerar PGR", type="primary", use_container_width=True):
-            st.session_state.jogadores = jogadores_temp
+            st.session_state.jogadores = jugadores_temp
             st.session_state.jogo_iniciado = True
             st.session_state.rodada_atual = 1
             st.session_state.pergunta_atual_index = 0
@@ -378,7 +377,7 @@ with st.sidebar:
             </div>
             """, unsafe_allow_html=True)
             
-        st.divider() # Correção robusta contra o erro st.hr() de antigas versões
+        st.divider()
         if st.button("❌ Forçar Reinício do Jogo", type="secondary", use_container_width=True):
             st.session_state.jogo_iniciado = False
             st.rerun()
@@ -408,18 +407,19 @@ with tab_tabuleiro:
         j_vez = st.session_state.jogadores[idx_vez]
         
         # --- MODELAGEM DOS CARDS NATIVOS (PROVA DE FALHAS CONTRA BUG DO MARKDOWN) ---
-        # Chamada corrigida e amarrada estritamente ao dicionário correto CASAS_TABULEIRO
         for row_idx in range(3):
             cols = st.columns(6)
             for col_idx in range(6):
                 n_casa = row_idx * 6 + col_idx
                 casa_info = CASAS_TABULEIRO[n_casa]
                 
-                # Coleta quais avatares estão presentes no bloco
+                # Coleta quais avatares estão presentes no bloco usando o limitador matemático % 18
                 marcadores = [f"{p['emoji']} {p['nome']}" for p in st.session_state.jogadores if p["posicao"] % 18 == n_casa]
                 status_jogadores = " | ".join(marcadores) if marcadores else "Ninguém"
                 
                 with cols[col_idx]:
+                    # --- CORREÇÃO ESTRUTURAL DO AJUSTE MÍNIMO ---
+                    # Garantindo que o realce azul 'st.info' acompanhe o transbordamento das rodadas (% 18)
                     if j_vez["posicao"] % 18 == n_casa:
                         st.info(f"📍 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n🟢 *Aqui: {status_jogadores}*")
                     elif casa_info["tipo"] == "especial":
@@ -450,6 +450,7 @@ with tab_tabuleiro:
                 if st.button("Rolar Dado de 9 Números", use_container_width=True, type="primary"):
                     st.session_state.dado_resultado = random.randint(1, 9)
                     j_vez["posicao"] += st.session_state.dado_resultado
+                    # Log limpo exibindo a casa real indexada no tabuleiro físico
                     registrar_evento(f"{j_vez['nome']} rolou o dado, tirou {st.session_state.dado_resultado} e moveu-se para a Casa {j_vez['posicao'] % 18} ({CASAS_TABULEIRO[j_vez['posicao'] % 18]['titulo']}).")
                     st.session_state.resposta_enviada = False
                     st.rerun()
@@ -512,7 +513,7 @@ with tab_tabuleiro:
 with tab_pdf_regras:
     st.subheader("📜 Detalhamento de Regras, Diretrizes e Links Oficiais da Legislação")
     st.markdown("""
-    Esta seção funciona como a central de documentação e fundamentação jurídica da **NR-1**. 
+    Esta seção funciona como a central de documentação e fundamentação jurídica da **NR-1**. 
     Consulte as portarias federais e os canais ativos da inspeção do trabalho para balizar os debates técnicos das rodadas.
     """)
     
