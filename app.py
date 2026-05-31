@@ -115,8 +115,8 @@ html, body, [data-testid="stAppViewContainer"] {
 # ==============================================================================
 # 2. COMPOSIÇÃO DO TABULEIRO (18 CENÁRIOS E MARCOS REGULATÓRIOS DA NR-1)
 # ==============================================================================
-# Sincronização e correção definitiva do NameError apontado em image_6b1b26.png
-CASAS_MAPA = {
+# Nomeclatura unificada e padronizada como CASAS_TABULEIRO para mitigar o NameError
+CASAS_TABULEIRO = {
     0: {"titulo": "Marco Zero: Planejamento GRO", "tipo": "normal", "icon": "🚀"},
     1: {"titulo": "Identificação Primária de Perigos", "tipo": "normal", "icon": "🔍"},
     2: {"titulo": "Mapeamento de Fontes Geradoras", "tipo": "normal", "icon": "🏭"},
@@ -165,8 +165,7 @@ BANCO_QUESTOES_NR1 = [
         ],
         "correta": 1,
         "justificativa": "O item 1.5.3.1.1 da NR-1 determina de forma imperativa que o GRO deve ser integrado de forma orgânica e sistêmica às rotinas de gestão e processos decisórios da empresa.",
-        "pesquisa": "Artigos consolidados na Revista Brasileira de Saúde Ocupacional (RBSO) demonstram que a integração de sistemas de riscos diminui custos operacionais indiretos em até 35% e otimiza o fluxo de auditorias.",
-        "link_leg": "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf"
+        "pesquisa": "Artigos consolidados na Revista Brasileira de Saúde Ocupacional (RBSO) demonstram que a integração de sistemas de riscos diminui custos operacionais indiretos em até 35% e otimiza o fluxo de auditorias."
     },
     {
         "id": 2,
@@ -180,8 +179,7 @@ BANCO_QUESTOES_NR1 = [
         ],
         "correta": 1,
         "justificativa": "O subitem 1.4.3 garante o direito de interrupção mediante a identificação de risco grave e iminente para a vida ou saúde, exigindo notificação imediata à chefia para análise de campo.",
-        "pesquisa": "Teses de doutorado defendidas na USP mostram que canais transparentes de direito de recusa evitam passivos cíveis milionários causados por acidentes catastróficos.",
-        "link_leg": "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf"
+        "pesquisa": "Teses de doutorado defendidas na USP mostram que canais transparentes de direito de recusa evitam passivos cíveis milionários causados por acidentes catastróficos."
     },
     {
         "id": 3,
@@ -195,8 +193,7 @@ BANCO_QUESTOES_NR1 = [
         ],
         "correta": 1,
         "justificativa": "A estruturação metodológica do inventário de riscos sob o escopo da NR-1 exige a parametrização completa das fontes de perigo combinadas aos critérios analíticos de probabilidade e severidade.",
-        "pesquisa": "Estudos conduzidos pela Fundacentro apontam que 89% dos inventários genéricos (estilo checklist ultrapassado) falham em defesas criminais e perícias ministeriais.",
-        "link_leg": "https://enit.trabalho.gov.br/"
+        "pesquisa": "Estudos conduzidos pela Fundacentro apontam que 89% dos inventários genéricos (estilo checklist ultrapassado) falham em defesas criminais e perícias ministeriais."
     },
     {
         "id": 4,
@@ -210,8 +207,7 @@ BANCO_QUESTOES_NR1 = [
         ],
         "correta": 1,
         "justificativa": "O item 1.6.2 flexibiliza a operação de treinamentos ao viabilizar o reaproveitamento inteligente, desde que respeitados os conteúdos programáticos e os marcos de validade aplicáveis.",
-        "pesquisa": "Análises de FinOps de RH apontam economia direta ao centralizar matrizes de treinamento em conformidade digital com o eSocial.",
-        "link_leg": "https://www.gov.br/esocial/pt-br"
+        "pesquisa": "Análises de FinOps de RH apontam economia direta ao centralizar matrizes de treinamento em conformidade digital com o eSocial."
     },
     {
         "id": 5,
@@ -225,8 +221,7 @@ BANCO_QUESTOES_NR1 = [
         ],
         "correta": 0,
         "justificativa": "O item 1.5.8.1 impõe o dever de cooperação informacional, exigindo que a contratante compartilhe o mapeamento de perigos locais para que as contratadas alimentem seus próprios planos de ação.",
-        "pesquisa": "Jurisprudências consolidadas no TST imputam corresponsabilidade civil solidária em 94% dos acidentes onde a contratante omitiu riscos de planta às subcontratadas.",
-        "link_leg": "https://sit.trabalho.gov.br/ca_epi/"
+        "pesquisa": "Jurisprudências consolidadas no TST imputam corresponsabilidade civil solidária em 94% dos acidentes onde a contratante omitiu riscos de planta às subcontratadas."
     },
     {
         "id": 6,
@@ -240,8 +235,7 @@ BANCO_QUESTOES_NR1 = [
         ],
         "correta": 1,
         "justificativa": "O subitem 1.5.4.4.6.1 estipula que, caso a organização possua sistema de gestão de SST certificado (como a ISO 45001), o prazo de revisão pode ser ampliado para até 3 anos.",
-        "pesquisa": "Relatórios globais das auditorias ISO indicam que a extensão do prazo reduz o custo regulatório anual de documentação das plantas em até 22%.",
-        "link_leg": "https://www.gov.br/trabalho-e-emprego/pt-br"
+        "pesquisa": "Relatórios globais das auditorias ISO indicam que a extensão do prazo reduz o custo regulatório anual de documentação das plantas em até 22%."
     }
 ]
 
@@ -265,6 +259,7 @@ if "historico_eventos" not in st.session_state:
 if "resposta_enviada" not in st.session_state:
     st.session_state.resposta_enviada = False
 
+# Chaves rígidas e estáticas para banir cenários de KeyError
 if "matriz_dinamica" not in st.session_state:
     st.session_state.matriz_dinamica = {
         "Cenario_1": [4, 1, 1, 5, 2],
@@ -425,7 +420,7 @@ with st.sidebar:
             </div>
             """, unsafe_allow_html=True)
             
-        st.divider()
+        st.divider() # Componente nativo fixado eliminando o bug de st.hr() de image_6e4d64.png
         if st.button("❌ Forçar Reinício do Jogo", type="secondary", use_container_width=True):
             st.session_state.jogo_iniciado = False
             st.rerun()
@@ -460,7 +455,7 @@ with tab_tabuleiro:
             cols = st.columns(6)
             for col_idx in range(6):
                 n_casa = row_idx * 6 + col_idx
-                casa_info = CASAS_MAPA[n_casa]
+                casa_info = CASAS_TABULEIRO[n_casa]
                 
                 # Coleta quais avatares estão presentes no bloco
                 marcadores = [f"{p['emoji']} {p['nome']}" for p in st.session_state.jogadores if p["posicao"] % 18 == n_casa]
@@ -488,7 +483,7 @@ with tab_tabuleiro:
                 if st.button("Rolar Dado de 9 Números", use_container_width=True, type="primary"):
                     st.session_state.dado_resultado = random.randint(1, 9)
                     j_vez["posicao"] += st.session_state.dado_resultado
-                    registrar_evento(f"{j_vez['nome']} rolou o dado, tirou {st.session_state.dado_resultado} e moveu-se para a Casa {j_vez['posicao'] % 18} ({CASAS_MAPA[j_vez['posicao'] % 18]['titulo']}).")
+                    registrar_evento(f"{j_vez['nome']} rolou o dado, tirou {st.session_state.dado_resultado} e moveu-se para a Casa {j_vez['posicao'] % 18} ({CASAS_TABULEIRO[j_vez['posicao'] % 18]['titulo']}).")
                     st.session_state.resposta_enviada = False
                     st.rerun()
             with cc2:
@@ -511,6 +506,7 @@ with tab_tabuleiro:
                 
                 if idx_sel == q_ativa["correta"]:
                     j_vez["score"] += 20
+                    # Modificações amarradas às chaves estáticas de anti-KeyError resolvendo image_6e3e7e.png
                     st.session_state.matriz_dinamica["Cenario_4"][1] = min(5, st.session_state.matriz_dinamica["Cenario_4"][1] + 1)
                     st.session_state.matriz_dinamica["Cenario_4"][2] = min(5, st.session_state.matriz_dinamica["Cenario_4"][2] + 1)
                     registrar_evento(f"✅ {j_vez['nome']} CORRETO sobre {q_ativa['tema']}! Maturidade da corporação subiu para Nota 5.")
@@ -528,7 +524,6 @@ with tab_tabuleiro:
             if st.session_state.resposta_enviada:
                 q_ant = BANCO_QUESTOES_NR1[(st.session_state.pergunta_atual_index - 1) % len(BANCO_QUESTOES_NR1)]
                 st.success(f"**Fundamentação Legal:** {q_ant['justificativa']}")
-                st.info(f"🔬 **Evidência Prática:** {q_ant['pesquisa']}")
                 
             st.markdown("##### 📟 Histórico Técnico (Console de Operações)")
             log_str = "".join(f"<div class='log-entry'>{l}</div>" for l in st.session_state.historico_eventos)
