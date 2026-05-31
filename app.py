@@ -115,7 +115,7 @@ html, body, [data-testid="stAppViewContainer"] {
 # ==============================================================================
 # 2. COMPOSIÇÃO DO TABULEIRO (18 CENÁRIOS E MARCOS REGULATÓRIOS DA NR-1)
 # ==============================================================================
-# Nomeclatura unificada e padronizada como CASAS_TABULEIRO para mitigar o NameError
+# Nomeclatura fixada globalmente como CASAS_TABULEIRO para resolver o NameError
 CASAS_TABULEIRO = {
     0: {"titulo": "Marco Zero: Planejamento GRO", "tipo": "normal", "icon": "🚀"},
     1: {"titulo": "Identificação Primária de Perigos", "tipo": "normal", "icon": "🔍"},
@@ -194,48 +194,6 @@ BANCO_QUESTOES_NR1 = [
         "correta": 1,
         "justificativa": "A estruturação metodológica do inventário de riscos sob o escopo da NR-1 exige a parametrização completa das fontes de perigo combinadas aos critérios analíticos de probabilidade e severidade.",
         "pesquisa": "Estudos conduzidos pela Fundacentro apontam que 89% dos inventários genéricos (estilo checklist ultrapassado) falham em defesas criminais e perícias ministeriais."
-    },
-    {
-        "id": 4,
-        "tema": "Capacitação - Aproveitamento de Cursos",
-        "pergunta": "Em conformidade com as regras de capacitação contidas no item 1.6.2 da NR-1, sob quais condições é permitido o aproveitamento de treinamentos realizados anteriormente na mesma empresa?",
-        "opcoes": [
-            "A) Não é permitido em nenhuma circunstância, sendo obrigatório refazer toda a carga horária em caso de promoção vertical.",
-            "B) Desde que o conteúdo ministrado atenda ao escopo programático exigido e tenha sido realizado dentro do prazo de validade técnica estabelecido.",
-            "C) Apenas se houver uma autenticação física de cada módulo realizada em junta comercial ou cartório público municipal.",
-            "D) Exclusivamente para profissionais terceirizados que possuam certificações de nível superior internacional."
-        ],
-        "correta": 1,
-        "justificativa": "O item 1.6.2 flexibiliza a operação de treinamentos ao viabilizar o reaproveitamento inteligente, desde que respeitados os conteúdos programáticos e os marcos de validade aplicáveis.",
-        "pesquisa": "Análises de FinOps de RH apontam economia direta ao centralizar matrizes de treinamento em conformidade digital com o eSocial."
-    },
-    {
-        "id": 5,
-        "tema": "PGR - Responsabilidade sobre Terceirizados",
-        "pergunta": "Nos termos do item 1.5.8.1, qual é a conduta obrigatória da organização contratante em relação às empresas contratadas prestadoras de serviços?",
-        "opcoes": [
-            "A) Fornecer às contratadas as informações sobre os riscos ocupacionais sob sua responsabilidade que possam afetar os trabalhadores terceiros.",
-            "B) Assumir integralmente a elaboração e assinatura do PGR de todas as subcontratadas, eximindo-as de qualquer ação.",
-            "C) Proibir a entrada de colaboradores terceirizados em áreas com classificação de risco acima do nível tolerável.",
-            "D) Realizar exames médicos admissionais complementares em substituição ao PCMSO da empresa prestadora."
-        ],
-        "correta": 0,
-        "justificativa": "O item 1.5.8.1 impõe o dever de cooperação informacional, exigindo que a contratante compartilhe o mapeamento de perigos locais para que as contratadas alimentem seus próprios planos de ação.",
-        "pesquisa": "Jurisprudências consolidadas no TST imputam corresponsabilidade civil solidária em 94% dos acidentes onde a contratante omitiu riscos de planta às subcontratadas."
-    },
-    {
-        "id": 6,
-        "tema": "PGR - Renovação e Prazos do Inventário",
-        "pergunta": "Conforme o item 1.5.4.4.6, a avaliação dos riscos ocupacionais deve ser revista a cada dois anos. No entanto, qual a janela máxima permitida para organizações com sistema de gestão de SST certificado?",
-        "opcoes": [
-            "A) Permanece estritamente em dois anos, sem exceções regulatórias.",
-            "B) Pode ser estendida para até três anos.",
-            "C) Torna-se facultativa enquanto a certificação internacional estiver vigente.",
-            "D) Reduz para um ano devido à necessidade de auditorias externas constantes."
-        ],
-        "correta": 1,
-        "justificativa": "O subitem 1.5.4.4.6.1 estipula que, caso a organização possua sistema de gestão de SST certificado (como a ISO 45001), o prazo de revisão pode ser ampliado para até 3 anos.",
-        "pesquisa": "Relatórios globais das auditorias ISO indicam que a extensão do prazo reduz o custo regulatório anual de documentação das plantas em até 22%."
     }
 ]
 
@@ -259,7 +217,6 @@ if "historico_eventos" not in st.session_state:
 if "resposta_enviada" not in st.session_state:
     st.session_state.resposta_enviada = False
 
-# Chaves rígidas e estáticas para banir cenários de KeyError
 if "matriz_dinamica" not in st.session_state:
     st.session_state.matriz_dinamica = {
         "Cenario_1": [4, 1, 1, 5, 2],
@@ -289,7 +246,7 @@ def registrar_evento(texto):
 # ==============================================================================
 # 5. GERADOR DO COMPLIANCE INTERACTIVE REPORT (HTML / IMPRESSO A4 PAISAGEM)
 # ==============================================================================
-def gerar_html_boardgame(titulo, objetivo, contexto, matriz_dados, logs_jogo):
+def gerar_html_boardgame(titulo, objective, contexto, matriz_dados, logs_jogo):
     medias = {k: round(mean(v), 2) for k, v in matriz_dados.items()}
     ranking = sorted(medias.items(), key=lambda x: x[1], reverse=True)
     
@@ -334,7 +291,7 @@ td {{ padding: 8px; border: 1px solid #E2E8F0; }}
 <div class="wrapper">
     <header>
         <div class="title">{html.escape(titulo)}</div>
-        <div style="color: #64748B; font-weight: 500; margin-top: 4px;">Escopo e Alvo: {html.escape(objetivo)}</div>
+        <div style="color: #64748B; font-weight: 500; margin-top: 4px;">Escopo e Alvo: {html.escape(objective)}</div>
     </header>
     <div class="grid">
         <div>
@@ -420,7 +377,7 @@ with st.sidebar:
             </div>
             """, unsafe_allow_html=True)
             
-        st.divider() # Componente nativo fixado eliminando o bug de st.hr() de image_6e4d64.png
+        st.divider() # Correção robusta contra o erro st.hr() de antigas versões
         if st.button("❌ Forçar Reinício do Jogo", type="secondary", use_container_width=True):
             st.session_state.jogo_iniciado = False
             st.rerun()
@@ -450,7 +407,7 @@ with tab_tabuleiro:
         j_vez = st.session_state.jogadores[idx_vez]
         
         # --- MODELAGEM DOS CARDS NATIVOS (PROVA DE FALHAS CONTRA BUG DO MARKDOWN) ---
-        # Sincronização exata de CASAS_MAPA corrigindo o NameError da linha 341
+        # Chamada corrigida e amarrada estritamente ao dicionário correto CASAS_TABULEIRO
         for row_idx in range(3):
             cols = st.columns(6)
             for col_idx in range(6):
@@ -506,10 +463,9 @@ with tab_tabuleiro:
                 
                 if idx_sel == q_ativa["correta"]:
                     j_vez["score"] += 20
-                    # Modificações amarradas às chaves estáticas de anti-KeyError resolvendo image_6e3e7e.png
                     st.session_state.matriz_dinamica["Cenario_4"][1] = min(5, st.session_state.matriz_dinamica["Cenario_4"][1] + 1)
                     st.session_state.matriz_dinamica["Cenario_4"][2] = min(5, st.session_state.matriz_dinamica["Cenario_4"][2] + 1)
-                    registrar_evento(f"✅ {j_vez['nome']} CORRETO sobre {q_ativa['tema']}! Maturidade da corporação subiu para Nota 5.")
+                    registrar_evento(f"✅ {j_vez['nome']} CORRETO sobre {q_ativa['tema']}! Computado bônus na Matriz.")
                 else:
                     j_vez["score"] = max(0, j_vez["score"] - 10)
                     st.session_state.matriz_dinamica["Cenario_1"][1] = max(1, st.session_state.matriz_dinamica["Cenario_1"][1] - 1)
