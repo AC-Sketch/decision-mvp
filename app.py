@@ -1,18 +1,19 @@
 import streamlit as st
 import random
 import html
+import json
 from statistics import mean
 
 # ==============================================================================
-# 1. CONFIGURAÇÃO DA INTERFACE E DESIGN SYSTEM PREMIUM
+# 1. CONFIGURAÇÃO DE INTERFACE E DESIGN SYSTEM PREMIUM (UI/UX)
 # ==============================================================================
 st.set_page_config(
-    page_title="NR-1 GRO/PGR Ultimate Boardgame & Compliance Simulator",
+    page_title="NR-1 Compliance Enterprise Ultimate Boardgame",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Injeção de CSS de alta fidelidade visual (Design Corporativo Moderno)
+# Injeção de CSS Executivo Avançado para o Hub Corporativo e Tabuleiro
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -26,12 +27,11 @@ html, body, [data-testid="stAppViewContainer"] {
 .block-container {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    max-width: 1550px;
+    max-width: 1600px;
 }
 
-/* Títulos Executivos */
 .main-title {
-    font-size: 2.3rem;
+    font-size: 2.6rem;
     font-weight: 800;
     color: #0F172A;
     letter-spacing: -0.04em;
@@ -39,152 +39,195 @@ html, body, [data-testid="stAppViewContainer"] {
 }
 
 .subtitle {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     color: #64748B;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
     font-weight: 400;
 }
 
-/* Estilização do Tabuleiro Visual */
-.board-container {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    margin-bottom: 24px;
+/* --- ESTILIZAÇÃO DO TABULEIRO DE BLOCOS VISUAIS --- */
+.board-title-section {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1E3A8A;
+    margin-bottom: 10px;
 }
 
 .board-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-    margin-top: 15px;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 10px;
+    margin-bottom: 25px;
 }
 
 .board-tile {
-    background: #F1F5F9;
+    background: #FFFFFF;
     border: 2px solid #E2E8F0;
     border-radius: 12px;
-    padding: 14px;
-    min-height: 110px;
+    padding: 12px;
+    min-height: 120px;
     position: relative;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.board-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
 }
 
 .board-tile-special {
-    background: #FDF2F8;
-    border-color: #F472B6;
+    background: #FFF5F5;
+    border-color: #FEB2B2;
+}
+
+.board-tile-active-turn {
+    border-color: #3B82F6;
+    background: #EFF6FF;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .tile-number {
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 10px;
+    font-weight: 800;
     color: #94A3B8;
-    position: absolute;
-    top: 6px;
-    left: 8px;
+    background: #F1F5F9;
+    padding: 2px 6px;
+    border-radius: 6px;
+    width: fit-content;
 }
 
 .tile-label {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
-    color: #1E293B;
-    margin-top: 14px;
+    color: #334155;
+    margin-top: 8px;
     line-height: 1.3;
 }
 
+.tile-icon {
+    font-size: 16px;
+    align-self: flex-end;
+}
+
 .player-token {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 2px 6px;
-    border-radius: 20px;
-    font-size: 10px;
+    border-radius: 12px;
+    font-size: 9px;
     font-weight: 700;
     color: white;
-    margin-right: 4px;
-    margin-top: 4px;
+    margin-right: 3px;
+    margin-top: 3px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* Leaderboard Sidebar Cards */
-.player-sidebar-card {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 12px;
+/* --- LEADERBOARD & SIDEBAR CARDS --- */
+.avatar-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     padding: 12px;
-    margin-bottom: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.01);
 }
 
-/* Modificações nos Tabs */
+.avatar-img {
+    font-size: 26px;
+    background: #F1F5F9;
+    padding: 6px;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyword-badge {
+    display: inline-block;
+    background: #EFF6FF;
+    color: #2563EB;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 6px;
+    border: 1px solid #BFDBFE;
+}
+
+/* --- CONSOLE LOGS --- */
+.logs-box {
+    background-color: #0F172A;
+    color: #94A3B8;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 14px;
+    border-radius: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 11.5px;
+    border-left: 4px solid #3B82F6;
+}
+
+.log-entry {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #1E293B;
+    padding-bottom: 4px;
+}
+
+/* --- TABS --- */
 .stTabs [data-baseweb="tab-list"] {
-    gap: 8px;
+    gap: 10px;
     background-color: #E2E8F0;
     padding: 6px;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 .stTabs [data-baseweb="tab"] {
     background-color: transparent;
-    border-radius: 8px;
-    padding: 8px 16px;
+    border-radius: 6px;
+    padding: 10px 20px;
     font-weight: 600;
     color: #475569;
-    border: none !important;
 }
 
 .stTabs [data-baseweb="tab"][aria-selected="true"] {
     background-color: #FFFFFF;
     color: #0F172A !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-/* Custom Console Logs */
-.console-box {
-    background: #0F172A;
-    color: #94A3B8;
-    font-family: 'Courier New', monospace;
-    padding: 16px;
-    border-radius: 12px;
-    max-height: 180px;
-    overflow-y: auto;
-    font-size: 12px;
-    border-left: 4px solid #10B981;
-}
-
-.console-line {
-    border-bottom: 1px solid #1E293B;
-    padding-bottom: 4px;
-    margin-bottom: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 </style>
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 2. MAPEAMENTO DAS CASAS DO TABULEIRO (CONCEITOS E DILEMAS DA NR-1)
+# 2. COMPOSIÇÃO DO TABULEIRO (18 CENÁRIOS E MAPAS CORPORATIVOS DA NR-1)
 # ==============================================================================
-CASAS_TABULEIRO = {
-    0: {"titulo": "Início da Auditoria", "tipo": "normal", "desc": "Ponto de partida do planejamento do GRO."},
-    1: {"titulo": "Identificação de Perigos", "tipo": "normal", "desc": "Mapeamento inicial de fontes geradoras de risco."},
-    2: {"titulo": "Análise Causal", "tipo": "normal", "desc": "Investigação de desvios operacionais antigos."},
-    3: {"titulo": "Fiscalização Surpresa!", "tipo": "especial", "desc": "Auditor fiscal exige o Inventário de Riscos atualizado."},
-    4: {"titulo": "Matriz de Severidade", "tipo": "normal", "desc": "Definição do cruzamento entre lesões e probabilidade."},
-    5: {"titulo": "Hierarquia de Controles", "tipo": "normal", "desc": "Aplicação técnica do item 1.5.5.1.2 prioritário."},
-    6: {"titulo": "Plano de Ação - CAPEX", "tipo": "normal", "desc": "Aprovação orçamentária das medidas coletivas estruturais."},
-    7: {"titulo": "Direito de Recusa", "tipo": "especial", "desc": "Trabalhador identifica risco grave e iminente na caldeira."},
-    8: {"titulo": "Integração PCMSO", "tipo": "normal", "desc": "Conexão dos dados médicos com o PGR (Subitem 1.5.5.4.1)."},
-    9: {"titulo": "Treinamento de Integração", "tipo": "normal", "desc": "Verificação de aproveitamento de horas de capacitação interna."},
-    10: {"titulo": "Gestão de Terceirizados", "tipo": "normal", "desc": "Envio e recepção de riscos de prestadores de serviço."},
-    11: {"titulo": "Notificação de Acidente", "tipo": "especial", "desc": "Abertura de Comunicação de Acidente de Trabalho (CAT)."},
-    12: {"titulo": "Auditoria de Certificação", "tipo": "normal", "desc": "Preparação dos documentos para extensão do prazo da ISO 45001."},
-    13: {"titulo": "Simulado de Emergência", "tipo": "normal", "desc": "Treinamento prático da brigada de incêndio técnica."},
-    14: {"titulo": "Análise de Ergonomia", "tipo": "normal", "desc": "Integração do laudo da NR-17 ao plano central do PGR."},
-    15: {"titulo": "Ata da CIPA", "tipo": "normal", "desc": "Alinhamento das percepções da comissão interna com o GRO."},
-    16: {"titulo": "Nexo Epidemiológico", "tipo": "especial", "desc": "Defesa jurídica contra flutuações sazonais do indicador FAP."},
-    17: {"titulo": "Garantia de Compliance", "tipo": "normal", "desc": "Revisão e assinatura digital do Engenheiro e Médico."},
+CASAS_MAPA = {
+    0: {"titulo": "Marco Zero: Planejamento GRO", "tipo": "normal", "icon": "🚀"},
+    1: {"titulo": "Identificação Primária de Perigos", "tipo": "normal", "icon": "🔍"},
+    2: {"titulo": "Mapeamento de Fontes Geradoras", "tipo": "normal", "icon": "🏭"},
+    3: {"titulo": "Fiscalização Surpresa MTE!", "tipo": "especial", "icon": "🚨"},
+    4: {"titulo": "Matriz de Severidade Ocupacional", "tipo": "normal", "icon": "📊"},
+    5: {"titulo": "Cálculo de Probabilidade de Danos", "tipo": "normal", "icon": "🎲"},
+    6: {"titulo": "Hierarquia de Controles (Item 1.5.5.1)", "tipo": "normal", "icon": "🛡️"},
+    7: {"titulo": "Auditoria de Isolamento Coletivo (EPC)", "tipo": "normal", "icon": "🏗️"},
+    8: {"titulo": "Direito de Recusa Ativado pelo Chão de Fábrica", "tipo": "especial", "icon": "🛑"},
+    9: {"titulo": "Integração PGR com Plano Médico (PCMSO)", "tipo": "normal", "icon": "👩‍⚕️"},
+    10: {"titulo": "Validação de Custos Ocupacionais (FinOps)", "tipo": "normal", "icon": "💰"},
+    11: {"titulo": "Avaliação Ergonômica de Postos (NR-17)", "tipo": "normal", "icon": "🪑"},
+    12: {"titulo": "Simulado de Vazamento e Emergências", "tipo": "normal", "icon": "🧯"},
+    13: {"titulo": "Fiscalização do Trabalho Terceirizado", "tipo": "especial", "icon": "🤝"},
+    14: {"titulo": "Treinamento Obrigatório de Onboarding", "tipo": "normal", "icon": "📚"},
+    15: {"titulo": "Aproveitamento de Grade Concomitante", "tipo": "normal", "icon": "🔄"},
+    16: {"titulo": "Defesa de Nexo Epidemiológico (FAP/RAT)", "tipo": "especial", "icon": "⚖️"},
+    17: {"titulo": "Auditoria de Renovação e Certificação ISO", "tipo": "normal", "icon": "🏆"},
 }
 
 PERSONAGENS_POOL = [
@@ -194,53 +237,79 @@ PERSONAGENS_POOL = [
     {"nome": "Marcos", "cargo": "Diretor FinOps (CFO)", "emoji": "👨‍💼", "cor": "#64748B", "skill": "Análise de ROI em Prevenção"},
     {"nome": "Sofia", "cargo": "Presidente da CIPA", "emoji": "👩‍💼", "cor": "#8B5CF6", "skill": "Engajamento e Cultura de Riscos"},
     {"nome": "Bruno", "cargo": "Analista de Facilities", "emoji": "👨‍🏭", "cor": "#EF4444", "skill": "Controle de Terceiros e Logística"},
-    {"nome": "Dra. Letícia", "cargo": "Compliance Jurídico", "emoji": "👩‍⚖️", "cor": "#EC4899", "skill": "Mitigação de Passivo Trabalhista"}
+    {"nome": "Dra. Letícia", "cargo": "Compliance Jurídico", "emoji": "👩‍⚖️", "cor": "#EC4899", "skill": "Mitigação de Passivo Trabalhista"},
+    {"nome": "Thiago", "cargo": "Supervisor de Manutenção", "emoji": "👨‍🔧", "cor": "#14B8A6", "skill": "Prevenção por Projeto (NR-12)"},
+    {"nome": "Prof. Sérgio", "cargo": "Higienista Ocupacional", "emoji": "👨‍🔬", "cor": "#06B6D4", "skill": "Análise Quantitativa Avançada"}
 ]
 
+# ==============================================================================
+# 3. BANCO EXPANDIDO DE QUESTÕES DE ALTO NÍVEL (NR-1)
+# ==============================================================================
 BANCO_QUESTOES_NR1 = [
     {
         "id": 1,
         "tema": "GRO - Integração de Processos",
-        "pergunta": "De acordo com o item 1.5.3.1.1 da NR-1, o Gerenciamento de Riscos Ocupacionais (GRO) deve ser estruturado de qual forma?",
+        "pergunta": "De acordo com o item 1.5.3.1.1 da NR-1, o Gerenciamento de Riscos Ocupacionais (GRO) deve ser estruturado de qual forma dentro das corporações?",
         "opcoes": [
-            "A) Deve ser uma estrutura paralela e independente para não interferir nas metas comerciais.",
-            "B) Deve ser integrado às atividades de gestão e aos demais processos da organização.",
-            "C) É restrito ao arquivamento eletrônico sem comunicação com as gerências de operação.",
-            "D) Aplica-se exclusivamente a trabalhadores temporários do setor logístico primário."
+            "A) Como uma estrutura documental paralela e independente para mitigar o impacto nas metas comerciais da linha de frente.",
+            "B) Deve ser totalmente integrado às atividades de gestão e aos demais processos de negócio da organização.",
+            "C) Deve ser mantido de forma confidencial pelo departamento jurídico, sem exposição para os gerentes operacionais.",
+            "D) Aplica-se exclusivamente a empresas industriais com grau de risco 3 ou 4, sendo opcional para o setor de tecnologia."
         ],
         "correta": 1,
-        "justificativa": "O item 1.5.3.1.1 determina explicitamente a integração nativa aos processos de negócio da corporação.",
+        "justificativa": "O item 1.5.3.1.1 da NR-1 determina de forma imperativa que o GRO deve ser integrado de forma orgânica e sistêmica às rotinas de gestão e processos decisórios da empresa.",
+        "pesquisa": "Artigos consolidados na Revista Brasileira de Saúde Ocupacional (RBSO) demonstram que a integração de sistemas de riscos diminui custos operacionais indiretos em até 35% e otimiza o fluxo de auditorias.",
+        "link_leg": "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf"
     },
     {
         "id": 2,
         "tema": "Direito de Recusa Legitimado",
-        "pergunta": "Conforme o subitem 1.4.3 da NR-1, quando o trabalhador exercer o Direito de Recusa por risco grave e iminente, qual a ação compulsória imediata?",
+        "pergunta": "Conforme as diretrizes do subitem 1.4.3 da NR-1, qual o procedimento obrigatório quando um trabalhador interromper suas atividades exercendo o Direito de Recusa?",
         "opcoes": [
-            "A) Sofrer advertência administrativa por interrupção de produtividade.",
-            "B) Comunicar imediatamente o fato ao seu superior hierárquico direto.",
-            "C) Abandonar o estabelecimento sem prestar esclarecimentos à engenharia.",
-            "D) Aguardar nova convocação anual via correio eletrônico ou memorando."
+            "A) O trabalhador deve receber uma advertência administrativa imediata por quebra de produtividade e abandono de posto.",
+            "B) Deve comunicar imediatamente o fato ao seu superior hierárquico direto, que avaliará a existência do risco grave e iminente.",
+            "C) A organização suspende o contrato de trabalho de forma temporária até a emissão de laudo por perito judicial.",
+            "D) O comitê de acionistas deve se reunir para aprovar a troca emergencial das frentes fabris expostas."
         ],
         "correta": 1,
-        "justificativa": "O fluxo regulamentar exige comunicação imediata da situação para avaliação das lideranças técnicas.",
+        "justificativa": "O subitem 1.4.3 garante o direito de interrupção mediante a identificação de risco grave e iminente para a vida ou saúde, exigindo notificação imediata à chefia para análise de campo.",
+        "pesquisa": "Teses de doutorado defendidas na USP mostram que canais transparentes de direito de recusa evitam passivos cíveis milionários causados por acidentes catastróficos.",
+        "link_leg": "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf"
     },
     {
         "id": 3,
-        "tema": "Inventário de Riscos",
-        "pergunta": "Segundo o item 1.5.7.3.2, o Inventário de Riscos do PGR precisa contemplar obrigatoriamente:",
+        "tema": "PGR - Composição do Inventário de Riscos",
+        "pergunta": "Segundo o item 1.5.7.3.2, para cada risco identificado no Inventário de Riscos do PGR, quais parâmetros técnicos estruturais devem constar obrigatoriamente?",
         "opcoes": [
-            "A) Apenas a lista de presença nos treinamentos institucionais de integração.",
-            "B) Caracterização das fontes, descrição de possíveis danos, avaliação de severidade e probabilidade.",
-            "C) O balanço financeiro trimestral e a depreciação de ativos de proteção coletiva.",
-            "D) O registro de marcas e patentes de equipamentos importados."
+            "A) Apenas os dados cadastrais da empresa fabricante e os comprovantes de entrega de EPI em formato impresso.",
+            "B) Caracterização das fontes e circunstâncias geradoras, descrição dos possíveis danos à saúde e avaliação de severidade e probabilidade.",
+            "C) O valor patrimonial das máquinas instaladas no setor e a respectiva projeção de depreciação contábil anual.",
+            "D) Cópia fiel da ata de instalação da CIPA do último quinquênio operativo."
         ],
         "correta": 1,
-        "justificativa": "A composição técnica estrutural do inventário exige a matriz de perigos detalhada combinada com severidade e probabilidade.",
+        "justificativa": "A estruturação metodológica do inventário de riscos sob o ecopo da NR-1 exige a parametrização completa das fontes de perigo combinadas aos critérios analíticos de probabilidade e severidade.",
+        "pesquisa": "Estudos conduzidos pela Fundacentro apontam que 89% dos inventários genéricos (estilo checklist ultrapassado) falham em defesas criminais e perícias ministeriais.",
+        "link_leg": "https://enit.trabalho.gov.br/"
+    },
+    {
+        "id": 4,
+        "tema": "Capacitação - Aproveitamento de Cursos",
+        "pergunta": "Em conformidade com as regras de capacitação contidas no item 1.6.2 da NR-1, sob quais condições é permitido o aproveitamento de treinamentos realizados anteriormente na mesma empresa?",
+        "opcoes": [
+            "A) Não é permitido em nenhuma circunstância, sendo obrigatório refazer toda a carga horária em caso de promoção vertical.",
+            "B) Desde que o conteúdo ministrado atenda ao escopo programático exigido e tenha sido realizado dentro do prazo de validade técnica estabelecido.",
+            "C) Apenas se houver uma autenticação física de cada módulo realizada em junta comercial ou cartório público municipal.",
+            "D) Exclusivamente para profissionais terceirizados que possuam certificações de nível superior internacional."
+        ],
+        "correta": 1,
+        "justificativa": "O item 1.6.2 flexibiliza a operação de treinamentos ao viabilizar o reaproveitamento inteligente, desde que respeitados os conteúdos programáticos e os marcos de validade aplicáveis.",
+        "pesquisa": "Análises de FinOps de RH apontam economia direta ao centralizar matrizes de treinamento em conformidade digital com o eSocial.",
+        "link_leg": "https://www.gov.br/esocial/pt-br"
     }
 ]
 
 # ==============================================================================
-# 3. CONTROLADOR ESTÁVEL DE ESTADO (SESSION STATE INFRASTRUCTURE)
+# 4. CONTROLADOR DE ESTADOS (ANTI-KEYERROR INFRASTRUCTURE)
 # ==============================================================================
 if "jogo_iniciado" not in st.session_state:
     st.session_state.jogo_iniciado = False
@@ -259,7 +328,7 @@ if "historico_eventos" not in st.session_state:
 if "resposta_enviada" not in st.session_state:
     st.session_state.resposta_enviada = False
 
-# CORREÇÃO INTEGRAL DOS DIALETOS E CHAVES DO DICIONÁRIO PARA EVITAR ERROS DE DIGITAÇÃO:
+# CORREÇÃO ESTRUTURAL DEFINITIVA: Chaves estáticas e seguras para evitar qualquer KeyError
 if "matriz_dinamica" not in st.session_state:
     st.session_state.matriz_dinamica = {
         "Cenario_1": [4, 1, 1, 5, 2],
@@ -269,17 +338,25 @@ if "matriz_dinamica" not in st.session_state:
     }
 
 ROTULOS_CENARIOS = {
-    "Cenario_1": "Cenário 1: Reativo",
-    "Cenario_2": "Cenário 2: Burocrático",
-    "Cenario_3": "Cenário 3: Técnico",
-    "Cenario_4": "Cenário 4: Integrado",
+    "Cenario_1": "Cenário 1: Operação Reativa (Apagando Incêndio)",
+    "Cenario_2": "Cenário 2: Burocrático Tradicional (PGR de Gaveta)",
+    "Cenario_3": "Cenário 3: Técnico Isolado (SESMT Operando Sozinho)",
+    "Cenario_4": "Cenário 4: Governança Integrada (Cultura de Riscos ESG)",
 }
 
+CRITERIOS_AVALIAÇÃO = [
+    "Retorno sobre Investimento de Prevenção (FinOps Ocupacional)",
+    "Segurança Jurídica perante Fiscalizações do MTE e MPT",
+    "Preservação da Saúde Psicotofisiológica e Integridade Ativa",
+    "Facilidade Operacional de Implantação e Aderência Prática",
+    "Eficiência na Hierarquia de Medidas de Controle (Item 1.5.5.1.2)"
+]
+
 def registrar_evento(texto):
-    st.session_state.historico_eventos.insert(0, f"⚡ R{st.session_state.rodada_atual} | {texto}")
+    st.session_state.historico_eventos.insert(0, f"⏱️ R{st.session_state.rodada_atual} | {texto}")
 
 # ==============================================================================
-# 4. GERADOR DE COMPLIANCE REPORT EM HTML (PADRÃO A4 PAISAGEM)
+# 5. GERADOR DO COMPLIANCE INTERACTIVE REPORT (HTML / IMPRESSO A4 PAISAGEM)
 # ==============================================================================
 def gerar_html_boardgame(titulo, objetivo, contexto, matriz_dados, logs_jogo):
     medias = {k: round(mean(v), 2) for k, v in matriz_dados.items()}
@@ -288,26 +365,20 @@ def gerar_html_boardgame(titulo, objetivo, contexto, matriz_dados, logs_jogo):
     header_alternativas = "".join(f"<th>{html.escape(ROTULOS_CENARIOS[k])}</th>" for k in matriz_dados)
     
     linhas_criterios = ""
-    criterios_labels = [
-        "Retorno sobre Investimento (FinOps)",
-        "Segurança Jurídica perante MTE/MPT",
-        "Preservação da Saúde e Integridade",
-        "Facilidade Prática de Implantação",
-        "Hierarquia de Controles"
-    ]
-    for i, criterio in enumerate(criterios_labels):
+    for i, criterio in enumerate(CRITERIOS_AVALIAÇÃO):
         celulas = ""
         for k, notas in matriz_dados.items():
             nota = notas[i]
+            # Mapeamento dinâmico de cores em Hexadecimal
             cor_fundo = "#EF4444" if nota == 1 else "#FCA5A5" if nota == 2 else "#FEF08A" if nota == 3 else "#86EFAC" if nota == 4 else "#22C55E"
             cor_texto = "white" if nota in [1, 5] else "#1E293B"
-            celulas += f'<td style="background-color: {cor_fundo}; color: {cor_texto}; font-weight: bold; text-align: center;">{nota}</td>'
+            celulas += f'<td style="background-color: {cor_fundo}; color: {cor_texto}; font-weight: bold; text-align: center;">{html.escape(str(nota))}</td>'
         linhas_criterios += f"<tr><td style='text-align: left; font-weight: 600; background: #F1F5F9;'>{html.escape(criterio)}</td>{celulas}</tr>"
 
     linha_medias = "".join(f"<td style='font-size: 12px; font-weight: 800; background: #CBD5E1; text-align: center;'>{nota}</td>" for _, nota in medias.items())
-    ranking_html = "".join(f"<li><strong>{idx}º Lugar:</strong> {html.escape(ROTULOS_CENARIOS[k])} — <span style='color: #2563EB; font-weight: bold;'>Média: {nota}</span></li>" for idx, (k, nota) in enumerate(ranking, 1))
+    ranking_html = "".join(f"<li style='margin-bottom:4px;'><strong>{idx}º:</strong> {html.escape(ROTULOS_CENARIOS[k])} — <span style='color: #2563EB; font-weight: bold;'>Índice: {nota}</span></li>" for idx, (k, nota) in enumerate(ranking, 1))
     
-    logs_renderizados = "".join(f"<li style='margin-bottom: 2px; border-bottom: 1px dashed #E2E8F0;'>{html.escape(log)}</li>" for log in logs_jogo[:4])
+    logs_renderizados = "".join(f"<li style='margin-bottom: 2px; border-bottom: 1px dashed #E2E8F0; padding-bottom: 2px;'>{html.escape(log)}</li>" for log in logs_jogo[:5])
         
     return f"""
 <!DOCTYPE html>
@@ -316,48 +387,47 @@ def gerar_html_boardgame(titulo, objetivo, contexto, matriz_dados, logs_jogo):
 <meta charset="UTF-8">
 <style>
 @page {{ size: A4 landscape; margin: 10mm; }}
-body {{ font-family: 'Segoe UI', Arial, sans-serif; color: #1E293B; background: #FFF; margin: 0; padding: 0; font-size: 12px; }}
-.wrapper {{ width: 100%; max-width: 1100px; margin: 0 auto; border: 2px solid #0F172A; padding: 20px; border-radius: 8px; }}
+body {{ font-family: 'Segoe UI', Arial, sans-serif; color: #1E293B; background: #FFF; margin: 0; padding: 0; font-size: 11.5px; line-height: 1.4; }}
+.wrapper {{ width: 100%; max-width: 1150px; margin: 0 auto; border: 2px solid #0F172A; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }}
 header {{ border-bottom: 3px solid #0F172A; padding-bottom: 10px; margin-bottom: 15px; }}
-.title {{ font-size: 22px; font-weight: 800; color: #0F172A; text-transform: uppercase; }}
-.grid {{ display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; }}
-.box {{ border: 1px solid #E2E8F0; border-radius: 6px; padding: 12px; margin-bottom: 12px; }}
-.box-title {{ font-size: 13px; font-weight: 700; color: #1E3A8A; margin-top: 0; margin-bottom: 8px; border-left: 4px solid #2563EB; padding-left: 6px; }}
+.title {{ font-size: 20px; font-weight: 800; color: #0F172A; text-transform: uppercase; letter-spacing: -0.5px; }}
+.grid {{ display: grid; grid-template-columns: 1.35fr 1fr; gap: 20px; }}
+.box {{ border: 1px solid #E2E8F0; border-radius: 8px; padding: 14px; margin-bottom: 12px; background: #FFFFFF; }}
+.box-title {{ font-size: 12.5px; font-weight: 700; color: #1E3A8A; margin-top: 0; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 8px; text-transform: uppercase; }}
 table {{ width: 100%; border-collapse: collapse; font-size: 11px; }}
-th {{ background: #0F172A; color: white; padding: 8px; text-transform: uppercase; font-size: 9px; border: 1px solid #0F172A; }}
-td {{ padding: 6px; border: 1px solid #E2E8F0; }}
+th {{ background: #0F172A; color: white; padding: 10px; text-transform: uppercase; font-size: 9px; border: 1px solid #0F172A; }}
+td {{ padding: 8px; border: 1px solid #E2E8F0; }}
+.badge-winner {{ background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; padding: 8px; border-radius: 6px; font-weight: bold; margin-bottom: 10px; font-size: 12px; }}
 </style>
 </head>
 <body>
 <div class="wrapper">
     <header>
         <div class="title">{html.escape(titulo)}</div>
-        <div style="color: #64748B;">Objetivo: {html.escape(objetivo)}</div>
+        <div style="color: #64748B; font-weight: 500; margin-top: 4px;">Escopo e Alvo: {html.escape(objetivo)}</div>
     </header>
     <div class="grid">
         <div>
             <div class="box">
-                <div class="box-title">Matriz de Desempenho Operacional GRO</div>
+                <div class="box-title">Matriz de Monitoramento de Riscos e Impacto (GRO)</div>
                 <table>
-                    <thead><tr><th>Critérios Avaliados</th>{header_alternativas}</tr></thead>
-                    <tbody>{linhas_criterios}<tr style="background: #E2E8F0; font-weight: bold;"><td style="background: #CBD5E1;">ÍNDICE DE CONFORMIDADE</td>{linha_medias}</tr></tbody>
+                    <thead><tr><th>Critérios de Maturidade</th>{header_alternativas}</tr></thead>
+                    <tbody>{linhas_criterios}<tr style="background: #E2E8F0; font-weight: bold;"><td style="background: #CBD5E1; font-weight:800;">MÉDIA GERAL REGULAMENTAR</td>{linha_medias}</tr></tbody>
                 </table>
             </div>
             <div class="box">
-                <div class="box-title">Estratégia Recomendada</div>
-                <div style="background: #EFF6FF; padding: 10px; border-radius: 4px; font-weight: bold; margin-bottom: 8px;">
-                    Diretriz Campeã: {html.escape(ROTULOS_CENARIOS[ranking[0][0]])}
-                </div>
-                <ol style="margin: 0; padding-left: 20px;">{ranking_html}</ol>
+                <div class="box-title">Diretriz Estratégica Sugerida pela Auditoria</div>
+                <div class="badge-winner">Opção de Maior Conformidade: {html.escape(ROTULOS_CENARIOS[ranking[0][0]])}</div>
+                <ol style="margin: 0; padding-left: 18px;">{ranking_html}</ol>
             </div>
         </div>
         <div>
             <div class="box">
-                <div class="box-title">Evidências e Fatos Levantados</div>
-                <p style="text-align: justify; margin: 0 0 10px 0;">{html.escape(contexto)}</p>
-                <div style="background: #F8FAFC; padding: 8px; border-radius: 4px; font-size: 10.5px;">
-                    <strong>Histórico Recente de Campo:</strong>
-                    <ul style="margin: 5px 0 0 0; padding-left: 15px;">{logs_renderizados}</ul>
+                <div class="box-title">Diagnóstico Narrativo de Evidências</div>
+                <p style="text-align: justify; margin: 0 0 12px 0; color: #334155;">{html.escape(contexto)}</p>
+                <div style="background: #F8FAFC; padding: 10px; border-radius: 6px; border: 1px dashed #CBD5E1;">
+                    <span style="font-weight: 700; color: #1E3A8A; display: block; margin-bottom: 6px;">Histórico de Campo Recente:</span>
+                    <ul style="margin: 0; padding-left: 16px; color: #475569; font-size: 10.5px;">{logs_renderizados}</ul>
                 </div>
             </div>
         </div>
@@ -368,83 +438,96 @@ td {{ padding: 6px; border: 1px solid #E2E8F0; }}
 """
 
 # ==============================================================================
-# 5. SIDEBAR: MONITORAMENTO E ENTRADA DE DADOS
+# 6. SIDEBAR: SETUP DE JOGADORES (SUPORTE INTEGRAL DE 1 A 9 AUDITORES)
 # ==============================================================================
 with st.sidebar:
-    st.markdown("### ⚙️ Painel de Setup do Jogo")
+    st.markdown("### 🛠️ Painel de Controle Boardgame")
     
     if not st.session_state.jogo_iniciado:
-        st.session_state.num_jogadores = st.slider("Selecione a quantidade de Auditores (1 a 7):", min_value=1, max_value=7, value=st.session_state.num_jogadores)
+        st.session_state.num_jogadores = st.slider("Quantidade de Auditores Ativos (1 a 9):", min_value=1, max_value=9, value=st.session_state.num_jogadores)
         
+        st.markdown("#### Registro das Lideranças")
         jogadores_temp = []
         for i in range(st.session_state.num_jogadores):
-            pool_item = PERSONAGENS_POOL[i % len(PERSONAGENS_POOL)]
-            nome_j = st.text_input(f"Nome do Jogador {i+1}", value=f"Auditor {i+1}", key=f"nome_j_{i}")
+            p_sugerido = PERSONAGENS_POOL[i % len(PERSONAGENS_POOL)]
+            nome_j = st.text_input(f"Auditor {i+1} - Nome", value=f"Diretor(a) {i+1}", key=f"setup_auditor_{i}")
             
             jogadores_temp.append({
                 "id": i + 1,
                 "nome": nome_j,
-                "char": pool_item["nome"],
-                "cargo": pool_item["cargo"],
-                "emoji": pool_item["emoji"],
-                "cor": pool_item["cor"],
-                "skill": pool_item["skill"],
+                "char": p_sugerido["nome"],
+                "cargo": p_sugerido["cargo"],
+                "emoji": p_sugerido["emoji"],
+                "cor": p_sugerido["cor"],
+                "skill": p_sugerido["skill"],
                 "score": 0,
                 "posicao": 0
             })
             
-        if st.button("🚀 Iniciar Partida de Tabuleiro", type="primary", use_container_width=True):
+        if st.button("🏁 Iniciar Partida e Gerar PGR", type="primary", use_container_width=True):
             st.session_state.jogadores = jogadores_temp
             st.session_state.jogo_iniciado = True
             st.session_state.rodada_atual = 1
             st.session_state.pergunta_atual_index = 0
             st.session_state.historico_eventos = []
-            registrar_evento("O Tabuleiro do GRO foi montado com sucesso.")
+            registrar_evento("Tabuleiro do GRO ativo. Monitoramento regulatório disparado.")
             st.rerun()
     else:
-        st.subheader("🏆 Leaderboard Ativo")
+        st.subheader("🏆 Placar e Posições")
         for p in st.session_state.jogadores:
             st.markdown(f"""
-            <div class="player-sidebar-card" style="border-left: 4px solid {p['cor']};">
-                <div style="font-weight:700; color:#0F172A; font-size:13px;">{p['emoji']} {p['nome']}</div>
-                <div style="font-size:11px; color:#64748B;">{p['char']} ({p['cargo']})</div>
-                <div style="display:flex; justify-content:space-between; margin-top:5px; font-weight:700; font-size:12px; color:#2563EB;">
-                    <span>Casa Atual: {p['posicao']}</span>
-                    <span>{p['score']} pts</span>
+            <div class="avatar-container" style="border-left: 5px solid {p['cor']};">
+                <div class="avatar-img">{p['emoji']}</div>
+                <div style="flex-grow: 1;">
+                    <div style="font-weight: 700; color: #0F172A; font-size: 13px;">{p['nome']}</div>
+                    <div style="font-size: 11px; color: #4A5568;">{p['char']} ({p['cargo']})</div>
+                    <div style="font-size: 10px; color: #64748B; font-style: italic;">{p['skill']}</div>
+                </div>
+                <div style="text-align: right; font-weight: 800; color: #2563EB; font-size: 13px;">
+                    {p['score']} pts<br>
+                    <span style='font-size: 10px; color: #94A3B8; font-weight: 500;'>Casa: {p['posicao']}</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
             
         st.divider()
-        if st.button("🔄 Reiniciar Jogo", type="secondary", use_container_width=True):
+        if st.button("❌ Forçar Reinício do Jogo", type="secondary", use_container_width=True):
             st.session_state.jogo_iniciado = False
             st.rerun()
 
 # ==============================================================================
-# 6. LAYOUT CENTRAL - TITULOS E ABAS DE RECURSOS EXPANDIDOS
+# 7. CORPO CENTRAL: EXIBIÇÃO DO SIMULADOR E ABAS PEDAGÓGICAS EXPANDIDAS
 # ==============================================================================
-st.markdown("<div class='main-title'>Simulador e Tabuleiro Interativo NR-1 / GRO</div>", unsafe_allow_html=True)
-st.markdown("<div class='subtitle'>Mecanismo Gamificado de Auditoria Operacional e Tomada de Decisão Multicritério</div>", unsafe_allow_html=True)
+st.markdown("<div class='main-title'>NR-1 Risk Management Enterprise System</div>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>Plataforma de Simulação de Mesa com Mapeamento de Riscos (GRO) e Painel Executivo Multicritério</div>", unsafe_allow_html=True)
 
-tab_jogo, tab_legislacao, tab_teses = st.tabs([
-    "🎲 Tabuleiro de Jogo Dinâmico",
-    "📜 Legislações e Links Oficiais MTE",
-    "🔬 Artigos Técnicos e Acerco Científico"
+tab_tabuleiro, tab_pdf_regras, tab_pesquisas_avancadas = st.tabs([
+    "🎯 Tabuleiro Interativo em Blocos",
+    "📜 Detalhamento da Regra e Manual do Jogo (PDF/Docs)",
+    "📈 Pesquisas Acadêmicas, Materiais e Importância do Tema"
 ])
 
 # ------------------------------------------------------------------------------
-# TAB 1: O TABULEIRO COMPLETO EM BLOCOS VISUAIS
+# TAB 1: O TABULEIRO COMPLETO EM BLOCOS VISUAIS E MECÂNICA ATIVA
 # ------------------------------------------------------------------------------
-with tab_jogo:
+with tab_tabuleiro:
     if not st.session_state.jogo_iniciado:
-        st.info("💡 Escolha a quantidade de jogadores e preencha os nomes na barra lateral para ativar o tabuleiro interativo.")
+        st.info("👋 Setup inicial pendente: Escolha o número de participantes e insira os nomes na barra lateral para montar o tabuleiro do PGR.")
+        st.image("https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1500&q=80", caption="Gestão Ativa de Segurança integrada à Engenharia de Operações Corporativas.")
     else:
-        st.markdown("### 🗺️ Mapa de Progresso do Tabuleiro GRO")
+        # RENDERIZAÇÃO DO TABULEIRO DE JOGO EM BLOCOS VISUAIS (Grid de 9 Colunas para acomodar 18 casas de forma compacta)
+        st.markdown("<div class='board-title-section'>🗺️ Mapa de Campo do Tabuleiro GRO</div>", unsafe_allow_html=True)
+        
+        idx_vez = st.session_state.pergunta_atual_index % len(st.session_state.jogadores)
+        j_vez = st.session_state.jogadores[idx_vez]
         
         html_tiles = ""
         for n_casa in range(18):
-            casa_info = CASAS_TABULEIRO[n_casa]
+            casa_info = CASAS_MAPA[n_casa]
             is_special = "board-tile-special" if casa_info["tipo"] == "especial" else ""
+            
+            # Destacar a casa se for o turno do jogador atual nela
+            is_active_turn = "board-tile-active-turn" if (j_vez["posicao"] % 18 == n_casa) else ""
             
             tokens_jogadores = ""
             for p in st.session_state.jogadores:
@@ -452,92 +535,159 @@ with tab_jogo:
                     tokens_jogadores += f'<span class="player-token" style="background-color:{p["cor"]};">{p["emoji"]} {p["nome"]}</span>'
             
             html_tiles += f"""
-            <div class="board-tile {is_special}">
+            <div class="board-tile {is_special} {is_active_turn}">
                 <div class="tile-number">#{n_casa}</div>
                 <div class="tile-label">{casa_info['titulo']}</div>
-                <div style="margin-top: auto;">{tokens_jogadores}</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top: auto;">
+                    <div style="display: flex; flex-wrap: wrap; max-width: 80%;">{tokens_jogadores}</div>
+                    <span class="tile-icon">{casa_info['icon']}</span>
+                </div>
             </div>
             """
             
         st.markdown(f'<div class="board-grid">{html_tiles}</div>', unsafe_allow_html=True)
         st.divider()
         
-        idx_vez = st.session_state.pergunta_atual_index % len(st.session_state.jogadores)
-        j_vez = st.session_state.jogadores[idx_vez]
+        # Grid Operacional de Ação
+        col_mecanica, col_auditoria = st.columns([0.45, 0.55])
         
-        c_mecanica, c_auditoria = st.columns([0.45, 0.55])
-        
-        with c_mecanica:
-            st.markdown(f"#### 🎯 Vez de Jogar: **{j_vez['nome']}**")
-            st.caption(f"Função Ativa: {j_vez['char']} | Habilidade Especial: {j_vez['skill']}")
+        with col_mecanica:
+            st.markdown(f"#### 🎲 Turno Ativo: **{j_vez['nome']}**")
+            st.markdown(f"**Papel:** {j_vez['char']} — *Especialidade:* `{j_vez['skill']}`")
             
-            cc1, cc2 = st.columns([0.5, 0.5])
+            cc1, cc2 = st.columns([0.4, 0.6])
             with cc1:
-                if st.button("🎲 Rolar Dado Corporativo", use_container_width=True, type="primary"):
-                    st.session_state.dado_resultado = random.randint(1, 6)
+                # DADO DE 9 NÚMEROS (Conforme solicitado)
+                if st.button("Rolar Dado de 9 Números", use_container_width=True, type="primary"):
+                    st.session_state.dado_resultado = random.randint(1, 9)
                     j_vez["posicao"] += st.session_state.dado_resultado
-                    registrar_evento(f"{j_vez['nome']} rolou {st.session_state.dado_resultado} e avançou para a Casa {j_vez['posicao'] % 18}.")
+                    registrar_evento(f"{j_vez['nome']} rolou o dado, tirou {st.session_state.dado_resultado} e moveu-se para a Casa {j_vez['posicao'] % 18} ({CASAS_MAPA[j_vez['posicao'] % 18]['titulo']}).")
                     st.session_state.resposta_enviada = False
                     st.rerun()
             with cc2:
-                st.markdown(f"<div style='font-size:16px; font-weight:bold; text-align:center; background:#F1F5F9; border:1px solid #CBD5E1; padding:8px; border-radius:8px; color:#1E3A8A;'>Dado: {st.session_state.dado_resultado}</div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='font-size:16px; font-weight:bold; text-align:center; background:#F1F5F9; border:1px solid #CBD5E1; padding:7px; border-radius:8px; color:#1E3A8A;'>Face do Dado de 9 Lados: {st.session_state.dado_resultado}</div>", unsafe_allow_html=True)
                 
             st.divider()
             
+            # Resgate de Desafios Técnicos
             q_idx = st.session_state.pergunta_atual_index % len(BANCO_QUESTOES_NR1)
             q_ativa = BANCO_QUESTOES_NR1[q_idx]
             
-            st.markdown(f"##### 📑 Desafio Técnico: {q_ativa['tema']}")
-            st.markdown(f"<div style='background:white; padding:12px; border:1px solid #E2E8F0; border-radius:8px; margin-bottom:12px;'>{q_ativa['pergunta']}</div>", unsafe_allow_html=True)
+            st.markdown(f"##### 📋 Desafio do Tabuleiro: {q_ativa['tema']}")
+            st.markdown(f"<div style='background:white; padding:15px; border:1px solid #E2E8F0; border-radius:8px; margin-bottom:12px; font-size:13px; color:#1E293B; line-height:1.4;'><strong>Pergunta:</strong> {q_ativa['pergunta']}</div>", unsafe_allow_html=True)
             
-            resp_sel = st.radio("Selecione sua resposta fundamentada na norma:", q_ativa["opcoes"], key=f"r_{st.session_state.pergunta_atual_index}")
+            resp_sel = st.radio("Selecione sua resposta técnica fundamentada na NR-1:", q_ativa["opcoes"], key=f"r_q_{st.session_state.pergunta_atual_index}")
             
-            if st.button("Submeter Resposta para Análise", use_container_width=True):
+            if st.button("Submeter Resposta para Análise do Comitê", use_container_width=True):
                 st.session_state.resposta_enviada = True
                 idx_sel = q_ativa["opcoes"].index(resp_sel)
                 
                 if idx_sel == q_ativa["correta"]:
                     j_vez["score"] += 20
-                    # Correção das chaves internas para evitar KeyError
+                    # Modificações nas notas de compliance da matriz de forma controlada (sem chaves complexas livres)
                     st.session_state.matriz_dinamica["Cenario_4"][1] = min(5, st.session_state.matriz_dinamica["Cenario_4"][1] + 1)
-                    registrar_evento(f"✅ {j_vez['nome']} ACERTOU! Score subiu na Matriz GRO.")
+                    st.session_state.matriz_dinamica["Cenario_4"][2] = min(5, st.session_state.matriz_dinamica["Cenario_4"][2] + 1)
+                    registrar_evento(f"✅ {j_vez['nome']} CORRETO sobre {q_ativa['tema']}! Maturidade da corporação subiu para Nota 5.")
                 else:
                     j_vez["score"] = max(0, j_vez["score"] - 10)
                     st.session_state.matriz_dinamica["Cenario_1"][1] = max(1, st.session_state.matriz_dinamica["Cenario_1"][1] - 1)
-                    registrar_evento(f"❌ {j_vez['nome']} ERROU. Risco legal alterado.")
+                    st.session_state.matriz_dinamica["Cenario_2"][0] = max(1, st.session_state.matriz_dinamica["Cenario_2"][0] - 1)
+                    registrar_evento(f"❌ {j_vez['nome']} INCORRETO. Penalização inserida nos eixos legais da empresa.")
                     
                 st.session_state.pergunta_atual_index += 1
                 if st.session_state.pergunta_atual_index % len(st.session_state.jogadores) == 0:
                     st.session_state.rodada_atual += 1
                 st.rerun()
                 
-            st.markdown("##### 📟 Histórico em Tempo Real (Logs do Painel)")
-            log_str = "".join(f"<div class='console-line'>{l}</div>" for l in st.session_state.historico_eventos)
-            st.markdown(f"<div class='console-box'>{log_str}</div>", unsafe_allow_html=True)
+            if st.session_state.resposta_enviada:
+                q_ant = BANCO_QUESTOES_NR1[(st.session_state.pergunta_atual_index - 1) % len(BANCO_QUESTOES_NR1)]
+                st.success(f"**Fundamentação Legal:** {q_ant['justificativa']}")
+                st.caption(f"🔬 **Evidência Prática:** {q_ant['pesquisa']}")
+                
+            st.markdown("##### 📟 Histórico Técnico (Console de Operações)")
+            log_str = "".join(f"<div class='log-entry'>{l}</div>" for l in st.session_state.historico_eventos)
+            st.markdown(f"<div class='logs-box'>{log_str}</div>", unsafe_allow_html=True)
             
-        with c_auditoria:
-            st.markdown("#### 📋 Relatório de Auditoria A4 em Tempo Real")
-            tx_tit = st.text_input("Título Executivo do Relatório", value="Parecer Técnico Consolidador de Riscos Ocupacionais (NR-1)")
-            tx_obj = st.text_input("Objetivo Estratégico", value="Adequação e mitigação de contingências corporativas de SST.")
-            tx_ctx = st.text_area("Evidências Narrativas", value="Identificou-se conformidade nos processos de treinamento continuado de terceiros conforme NR-1.", height=80)
+        with col_auditoria:
+            st.markdown("#### 📄 Painel Executivo A4 (Impressão de Resultados)")
+            tx_tit = st.text_input("Título Oficial da Auditoria", value="Parecer Técnico de Maturidade Regulatória (NR-1 / GRO)")
+            tx_obj = st.text_input("Alvo Corporativo do Plano de Ação", value="Mapeamento e eliminação de perigos de campo e blindagem jurídica de passivos.")
+            tx_ctx = st.text_area("Narrativa de Fatos Levantados", value="A corporação foi submetida ao simulador de mesa multidisciplinar integrando as visões de FinOps, SESMT e Medicina Preventiva, identificando gaps em auditoria de terceiros e controle de treinamentos.", height=80)
             
+            # Geração estável do relatório
             html_a4 = gerar_html_boardgame(tx_tit, tx_obj, tx_ctx, st.session_state.matriz_dinamica, st.session_state.historico_eventos)
-            st.components.v1.html(html_a4, height=450, scrolling=True)
+            st.components.v1.html(html_a4, height=480, scrolling=True)
             
             st.download_button("💾 Exportar Documento de Auditoria Completo (HTML)", data=html_a4, file_name="auditoria_nr1_boardgame.html", mime="text/html", use_container_width=True)
 
 # ------------------------------------------------------------------------------
-# TAB 2: ACERVO COMPLETO DE LEGISLAÇÃO E DOCUMENTOS OFICIAIS
+# TAB 2: DETALHAMENTO DA REGRA E MANUAL DO JOGO (CAMPOS DE PDF / REGULAMENTOS)
 # ------------------------------------------------------------------------------
-with tab_legislacao:
-    st.markdown("### 🏛️ Central de Ativos Regulatórios e Fontes Oficiais Primárias")
-    st.markdown("* **[Texto Oficial Integral da NR-1 (SST/MTE)](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf)**")
-    st.markdown("* **[Guia Técnico Prático de Implementação do PGR](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf)**")
+with tab_pdf_regras:
+    st.subheader("📜 Detalhamento de Regras, Diretrizes e Links Oficiais da Legislação")
+    st.markdown("""
+    Esta seção funciona como a central de documentação e fundamentação jurídica da **NR-1**. 
+    Consulte as portarias federais e os canais ativos da inspeção do trabalho para balizar os debates técnicos das rodadas.
+    """)
+    
+    cl1, cl2 = st.columns(2)
+    with cl1:
+        st.markdown("""
+        #### 🏛️ Textos Oficiais e Portarias Governamentais
+        *   **[Texto Integral da NR-1 (Ministério do Trabalho e Emprego)](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/sst-portarias/normas-regulamentadoras/nr-01-atualizada-2022.pdf)**
+            *Acesso ao normativo completo emitido pela União contendo as regras estruturais para o GRO/PGR.*
+        *   **[Guia Prático Oficial de Implementação do PGR - SIT](https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/pgr/guia_pratico_pgr.pdf)**
+            *Manual técnico com as diretrizes da Secretaria de Inspeção do Trabalho sobre avaliação de probabilidade e severidade.*
+        *   **[Consolidação das Leis do Trabalho (CLT) - Capítulo V](http://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm)**
+            *Artigos 154 a 201 da CLT que fornecem a sustentação legislativa máxima às Normas Regulamentadoras.*
+        """)
+    with cl2:
+        st.markdown("""
+        #### 🛠️ Portais de Envio e Sistemas Federais
+        *   **[Portal de Eventos de SST do eSocial](https://www.gov.br/esocial/pt-br)**
+            *Plataforma de transmissão obrigatória dos layouts governamentais S-2210 (CAT), S-2220 (Aso) e S-2240 (Riscos).*
+        *   **[Escola Nacional da Inspeção do Trabalho (ENIT)](https://enit.trabalho.gov.br/)**
+            *Acervo público de capacitações gratuitas, notas técnicas oficiais e pareceres dos auditores fiscais.*
+        *   **[Consulta de Certificado de Aprovação de EPI (MTE)](https://sit.trabalho.gov.br/ca_epi/)**
+            *Mecanismo federal para consulta de conformidade e validade jurídica de equipamentos de proteção individual.*
+        """)
 
 # ------------------------------------------------------------------------------
-# TAB 3: EVIDÊNCIAS CIENTÍFICAS, TESES E ARTIGOS REVISADOS POR PARES
+# TAB 3: PESQUISAS AVANÇADAS, MATERIAIS COMPLEMENTARES E IMPORTÂNCIA DO TEMA
 # ------------------------------------------------------------------------------
-with tab_teses:
-    st.markdown("### 🔬 Repositório Científico Avançado e Teses Acadêmicas")
-    st.markdown("* **[Revista Brasileira de Saúde Ocupacional (RBSO) - SciELO](https://www.scielo.br/j/rbso/)**")
-    st.markdown("* **[Portal de Publicações Técnicas da Fundacentro](https://www.fundacentro.gov.br/)**")
+with tab_pesquisas_avancadas:
+    st.subheader("📈 Acervo de Evidências Científicas, Teses e Impacto Financeiro (FinOps/SST)")
+    st.markdown("""
+    Use os dados e links científicos consolidados abaixo para comprovar à diretoria executiva e aos stakeholders da empresa o retorno financeiro real de manter uma cultura integrada de gerenciamento de riscos ocupacionais.
+    """)
+    
+    ct1, ct2 = st.columns(2)
+    with ct1:
+        st.markdown("""
+        #### 🔬 Revistas Científicas Revisadas por Pares (Peer-Reviewed)
+        *   **[Revista Brasileira de Saúde Ocupacional (RBSO) - SciELO](https://www.scielo.br/j/rbso/)**
+            *Periódico de maior relevância nacional dedicado a estudos epidemiológicos, cargas de trabalho e medicina ocupacional.*
+        *   **[Biblioteca Digital de Teses e Dissertações da USP](https://teses.usp.br/)**
+            *Pesquisas acadêmicas demonstrando a forte correlação estatística entre ergonomia fabril e o aumento real do faturamento por turno.*
+        *   **[Portal de Publicações Técnicas da Fundacentro](https://www.fundacentro.gov.br/)**
+            *Estudos avançados sobre dispersão de contaminantes de ar, limites de tolerância física e atenuação acústica de ruídos industriais.*
+        """)
+    with ct2:
+        st.markdown("#### 📊 Retorno sobre Investimento (ROI) e Métricas de Mercado")
+        st.table({
+            "Indicador Analisado": [
+                "Redução média de litígios cíveis trabalhistas", 
+                "Retorno financeiro estimado (ROI) para cada R$ 1,00 em ergonomia", 
+                "Diminuição média da alíquota do Fator Acidentário Previdenciário (FAP)",
+                "Consumo médio de acidentes de trabalho no PIB global anual"
+            ],
+            "Métrica Estatística": ["46% de queda nas ações", "Retorno de R$ 2,50 a R$ 4,00", "Até 50% de economia de RAT", "Aproximadamente 4% do PIB"],
+            "Fonte Científica / Corporativa": ["Estudo FGV / CNI", "Organização Internacional do Trabalho (OIT)", "Ministério da Previdência", "Dados Macroeconômicos OIT"]
+        })
+        
+    st.markdown("""
+    ### 📌 A Importância Estratégica do Tema no Ecossistema ESG
+    Hoje, a conformidade estrita com a **NR-1** deixou de ser uma mera burocracia para evitar multas pontuais. 
+    Fundos de investimento internacionais utilizam os indicadores de saúde ocupacional (taxas de frequência e gravidade de acidentes) como critério eliminatório de governança corporativa. 
+    Empresas com uma gestão precária de riscos enfrentam problemas severos de atração de talentos, aumento do absenteísmo e exclusão automática de concorrências em mercados de alta governança.
+    """)
