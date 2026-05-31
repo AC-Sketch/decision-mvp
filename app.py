@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import random
 import html
 from statistics import mean
@@ -424,7 +425,16 @@ with tab_tabuleiro:
                     elif casa_info["tipo"] == "especial":
                         st.error(f"🚨 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Risco: {status_jogadores}*")
                     else:
-                        st.help(f"📦 **#{n_casa} {casa_info['icon']}**\n\n**{casa_info['titulo']}**\n\n*Status: {status_jogadores}*")
+                        st.markdown(
+                            f"""
+                            <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:13px; min-height:150px;">
+                                <div style="font-weight:700; color:#334155; margin-bottom:10px;">📦 #{n_casa} {casa_info['icon']}</div>
+                                <div style="font-weight:800; color:#0F172A; margin-bottom:14px;">{html.escape(casa_info['titulo'])}</div>
+                                <div style="font-style:italic; color:#475569; font-size:13px;">Status: {html.escape(status_jogadores)}</div>
+                            </div>
+                            """,
+                            unsafe_allow_html=True
+                        )
                         
         st.divider()
         
@@ -492,7 +502,7 @@ with tab_tabuleiro:
             tx_ctx = st.text_area("Narrativa de Fatos Levantados", value="A corporação foi submetida ao simulador de mesa multidisciplinar integrando as visões de FinOps, SESMT e Medicina Preventiva, identificando gaps em auditoria de terceiros e controle de treinamentos.", height=80)
             
             html_a4 = gerar_html_boardgame(tx_tit, tx_obj, tx_ctx, st.session_state.matriz_dinamica, st.session_state.historico_eventos)
-            st.components.v1.html(html_a4, height=480, scrolling=True)
+            components.html(html_a4, height=480, scrolling=True)
             
             st.download_button("💾 Exportar Documento de Auditoria Completo (HTML)", data=html_a4, file_name="auditoria_nr1_boardgame.html", mime="text/html", use_container_width=True)
 
