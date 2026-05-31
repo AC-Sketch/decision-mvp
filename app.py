@@ -100,10 +100,10 @@ div[data-testid="stMetric"] {
 </style>
 """, unsafe_allow_html=True)
 
-# Complete DATA_MAPPING with exactly 20 blocks renumerated and aligned to business rules
+# DATA_MAPPING structured by Framework Intent (WHAT, WHY, HOW, WHEN, INVESTIGATE)
 DATA_MAPPING = {
     1: {
-        "category": "Core & Fit",
+        "category": "WHAT - Capabilities & Profile",
         "title": "1. Tell me about yourself",
         "tag": "PROFILE",
         "bridge": "I take messy, unmapped data pipelines and structure them so global digital businesses can scale without risk.",
@@ -118,10 +118,10 @@ DATA_MAPPING = {
         ]
     },
     2: {
-        "category": "Core & Fit",
+        "category": "WHY - Intent & Fit",
         "title": "2. Why DWA?",
         "tag": "STRATEGY",
-        "bridge": "Your compliance risks are not waiting at a physical shipping dock. They are living inside your live checkout database.",
+        "bridge": "Your main compliance risks are not waiting at a physical shipping dock. They are living inside your live checkout database.",
         "followup": "When a digital brand scales cross-border via Stripe, the real bottlenecks are digital tax lines and payment gateway holds.",
         "match": "Proves you understand their exact digital business model (MRR/Infoproducts) better than traditional candidates.",
         "growth": "DWA operates globally with high velocity; they need a data expert who secures cash flow, not a traditional logistics agent.",
@@ -133,7 +133,7 @@ DATA_MAPPING = {
         ]
     },
     3: {
-        "category": "Core & Fit",
+        "category": "WHY - Intent & Fit",
         "title": "3. Why Trade Compliance?",
         "tag": "COMPLIANCE",
         "bridge": "Modern trade compliance is no longer a legal paperwork task. It is a pure data analytics problem.",
@@ -141,13 +141,13 @@ DATA_MAPPING = {
         "match": "Turns a lack of legacy customs experience into a modern technical advantage for a cloud-first company.",
         "case": "Data Governance & Process Workflows.",
         "bullets": [
-            "Traditional compliance relies on slow Excel lookups. I build automated scripts to audit data in bulk.",
+            "Traditional customs analysts check papers one by one. I build automated scripts to audit data in bulk.",
             "My experience with data frameworks allows me to track and categorize digital transactions in real time.",
             "I ensure operational compliance is embedded directly into the code pipeline to prevent penalties."
         ]
     },
     4: {
-        "category": "Core & Fit",
+        "category": "WHAT - Capabilities & Profile",
         "title": "4. Your Value Proposition",
         "tag": "VALUE",
         "bridge": "I bring technical scale and pipeline automation to a department that traditionally works with manual tools.",
@@ -161,10 +161,10 @@ DATA_MAPPING = {
         ]
     },
     5: {
-        "category": "Core & Fit",
+        "category": "WHY - Intent & Fit",
         "title": "5. Salary Expectations",
         "tag": "ANCHOR",
-        "bridge": "My financial target is structured based on the infrastructure value and cloud savings I deliver.",
+        "bridge": "My financial target is based on the data infrastructure scale and cost savings I can deliver.",
         "case": "Firm Target Range (Clear numbers written out).",
         "followup": "I anchor my rate based on my ability to optimize cloud spend and secure global financial pipelines from day one.",
         "match": "Establishes a transparent, business-driven value alignment without awkward verbal gaps.",
@@ -176,7 +176,7 @@ DATA_MAPPING = {
         ]
     },
     6: {
-        "category": "Handling Objections",
+        "category": "WHAT - Capabilities & Profile",
         "title": "6. No Physical Customs Exp",
         "tag": "OBJECTION",
         "bridge": "That is true for physical shipping, but I view international trade regulations as logical database rules.",
@@ -191,7 +191,7 @@ DATA_MAPPING = {
         ]
     },
     7: {
-        "category": "Handling Objections",
+        "category": "WHAT - Capabilities & Profile",
         "title": "7. No HTS Code Mastery",
         "tag": "HTS-MAPPING",
         "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.",
@@ -206,7 +206,7 @@ DATA_MAPPING = {
         ]
     },
     8: {
-        "category": "Handling Objections",
+        "category": "WHY - Intent & Fit",
         "title": "8. You are Overqualified",
         "tag": "RETENTION",
         "bridge": "Honestly, I am specifically looking for a complex risk architecture challenge, not a comfortable routine.",
@@ -221,7 +221,7 @@ DATA_MAPPING = {
         ]
     },
     9: {
-        "category": "Handling Objections",
+        "category": "WHAT - Capabilities & Profile",
         "title": "9. Short Tenures (Stalse/NTT)",
         "tag": "PROJECTS",
         "bridge": "These were strategic, fast-paced contract projects brought in to unlock specific data architecture blocks.",
@@ -236,7 +236,7 @@ DATA_MAPPING = {
         ]
     },
     10: {
-        "category": "Handling Objections",
+        "category": "WHY - Intent & Fit",
         "title": "10. Why change fields now?",
         "tag": "EVOLUTION",
         "bridge": "I don't see it as changing fields. I am simply applying modern tools to classic governance problems.",
@@ -251,7 +251,7 @@ DATA_MAPPING = {
         ]
     },
     11: {
-        "category": "Core Cases (STAR)",
+        "category": "HOW - Case Methodology (STAR)",
         "title": "11. ASICS (2026 - FinOps)",
         "tag": "CROSS-BORDER",
         "bridge": "I built a unified, cross-border financial data model across 3 (three) countries to secure international revenue tracking.",
@@ -266,7 +266,7 @@ DATA_MAPPING = {
         ]
     },
     12: {
-        "category": "Core Cases (STAR)",
+        "category": "HOW - Case Methodology (STAR)",
         "title": "12. NTT DATA / Itaú (2025)",
         "tag": "SCALE-DATA",
         "bridge": "I engineered cloud data pipelines to deliver automated performance reporting for 5,000 (five thousand) executives.",
@@ -281,7 +281,7 @@ DATA_MAPPING = {
         ]
     },
     13: {
-        "category": "Core Cases (STAR)",
+        "category": "HOW - Case Methodology (STAR)",
         "title": "13. Heineken (2023 - 2024)",
         "tag": "E-COMMERCE",
         "bridge": "I normalized chaotic e-commerce data streams across 200 (two hundred) distinct online digital products.",
@@ -296,7 +296,7 @@ DATA_MAPPING = {
         ]
     },
     14: {
-        "category": "Core Cases (STAR)",
+        "category": "HOW - Case Methodology (STAR)",
         "title": "14. Afinz (2022 - 2023)",
         "tag": "OPTIMIZATION",
         "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to protect speed and security.",
@@ -311,7 +311,7 @@ DATA_MAPPING = {
         ]
     },
     15: {
-        "category": "Core Cases (STAR)",
+        "category": "HOW - Case Methodology (STAR)",
         "title": "15. Burity (Regulatory Base)",
         "tag": "LEGAL-AUDIT",
         "bridge": "I acted as a legal proxy managing high-value regulatory, contract, and operational risks with zero liabilities.",
@@ -326,7 +326,7 @@ DATA_MAPPING = {
         ]
     },
     16: {
-        "category": "Extreme Scenarios",
+        "category": "WHEN - Extreme Scenarios & Crisis",
         "title": "16. Handling a Major Mistake",
         "tag": "MISTAKE-LOG",
         "bridge": "If a pipeline or business rule breaks, my immediate step is to isolate the anomaly and patch the system.",
@@ -341,7 +341,7 @@ DATA_MAPPING = {
         ]
     },
     17: {
-        "category": "Extreme Scenarios",
+        "category": "WHEN - Extreme Scenarios & Crisis",
         "title": "17. Unmapped High-Pressure Task",
         "bridge": "Under extreme pressure with unmapped issues, I rely on structured frameworks, not emotional guessing.",
         "case": "Agile problem diagnosis.",
@@ -355,9 +355,9 @@ DATA_MAPPING = {
         ]
     },
     18: {
-        "category": "Extreme Scenarios",
+        "category": "WHEN - Extreme Scenarios & Crisis",
         "title": "18. Conflict with Stakeholders",
-        "bridge": "I do not fight with subjective opinions. I align conflicting teams by putting clear data on the table.",
+        "bridge": "I do not fight with subjective opinions. I align conflicting teams by putting hard data criteria on the table.",
         "case": "Strategic performance alignment with cross-functional teams.",
         "followup": "People usually push back because of underlying business anxieties. Once you show them the numbers, the noise stops.",
         "match": "Validates strong, non-combative communication skills, ensuring smooth relations between tech and legal departments.",
@@ -369,12 +369,13 @@ DATA_MAPPING = {
         ]
     },
     19: {
-        "category": "Extreme Scenarios",
+        "category": "WHEN - Extreme Scenarios & Crisis",
         "title": "19. Tech to Non-Tech",
+        "tag": "COMMS",
         "bridge": "I translate complex backend data pipelines into clear financial metrics and corporate risk mitigation.",
         "case": "Executive reporting layers at Afinz and Heineken.",
         "followup": "Non-technical stakeholders don't need to hear about SQL query joins; they need to know if the company is legally safe.",
-        "match": "Matches DWA's cross-functional reality. Proves you can speak smoothly to founders, lawyers, and marketing heads.",
+        "match": "Matches DWA's cross-functional requirement. Proves you can speak smoothly to founders, lawyers, and marketing heads.",
         "growth": "Leadership at DWA needs rapid answers to protect the brand. You provide clean, bite-sized executive summaries.",
         "bullets": [
             "I never explain the query syntax. I explain the hour savings or the tax exposure we successfully eliminated.",
@@ -383,18 +384,18 @@ DATA_MAPPING = {
         ]
     },
     20: {
-        "category": "Extreme Scenarios",
-        "title": "20. Closing Statement / Final Approach",
-        "tag": "CLOSING",
-        "bridge": "To wrap up, I am not looking for a traditional, comfortable routine. I am here to build your automated compliance engine.",
-        "case": "Perfect Elo Between André's Background & DWA's Moment.",
-        "followup": "My goal is to combine my Engineering structure, my MBA business vision, and my Advanced SQL toolkit to protect your growth.",
-        "match": "The ultimate strategic pitch. Ties your entire professional summary directly to DWA's core digital scaling needs.",
-        "growth": "DWA is at a turning point: continuing with slow manual checkouts or automating data governance. I am the analyst for that automation.",
+        "category": "INVESTIGATE - Reverse Interview & Closing",
+        "title": "20. Investigative Approach & Closing",
+        "tag": "INVESTIGATIVE",
+        "bridge": "To wrap up, I would love to ask a couple of technical questions to better understand the live challenges you are dealing with right now.",
+        "case": "Taking control of the interview context with deep authority.",
+        "followup": "What data stack are you running to manage checkouts? Do you have an internal case or data logic test I can solve to prove my execution speed?",
+        "match": "Instantly positions you as a senior stakeholder who is auditing them back, guaranteeing an unforgettable close.",
+        "growth": "DWA is growing fast. Showing readiness to dive into their live stack proves you are a plug-and-play asset.",
         "bullets": [
-            "I bring cross-cloud experience (AWS/GCP) to a department that traditionally operates manually in Excel.",
-            "I will ensure your checkout funnels experience zero friction, and your global sales face zero compliance risk.",
-            "I am ready to secure your transaction pipelines long-term so DWA can focus on scaling its revenue safely."
+            "What is the current platform you use to ingest and query Stripe or payment logs? Is it AWS, GCP, or manual exports?",
+            "What is the biggest operational data block your team faces weekly with cross-border tax records?",
+            "I am ready to build your automated compliance frameworks so DWA can expand its revenue streams safely."
         ]
     }
 }
@@ -407,16 +408,29 @@ with st.sidebar:
     st.caption("• André Carvalho ENG.pdf")
     st.caption("• Academia de Riqueza Digital.pdf")
     
+    st.markdown("### Strategic Framework")
+    st.info("**WHY:** Intent, Motivation & Culture\n\n**WHAT:** Scope, Value & Experience\n\n**HOW:** STAR Core Methodology\n\n**WHEN:** Crisis & Scenarios")
+    
     st.markdown("### Match Analytics")
     st.metric(label="Interview Adherence Score", value="98%", delta="Elite Match")
     st.caption("**Target:** DWA · Trade Compliance Analyst")
 
-categories_list = ["Core & Fit", "Handling Objections", "Core Cases (STAR)", "Extreme Scenarios"]
-cols = st.columns(4)
+# Grouped by the new mental trigger mapping
+categories_list = [
+    "WHAT - Capabilities & Profile", 
+    "WHY - Intent & Fit", 
+    "HOW - Case Methodology (STAR)", 
+    "WHEN - Extreme Scenarios & Crisis",
+    "INVESTIGATE - Reverse Interview & Closing"
+]
 
-for idx, cat_name in enumerate(categories_list):
+# Filtering non-empty categories dynamically for layout stability
+active_categories = [cat for cat in categories_list if any(v["category"] == cat for v in DATA_MAPPING.values())]
+cols = st.columns(len(active_categories))
+
+for idx, cat_name in enumerate(active_categories):
     with cols[idx]:
-        st.markdown(f'<div class="category-header">{cat_name}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="category-header">{cat_name.split(" - ")[0]}</div>', unsafe_allow_html=True)
         cat_items = {k: v for k, v in DATA_MAPPING.items() if v["category"] == cat_name}
         
         for item_id, item_data in cat_items.items():
