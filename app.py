@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 import html
-import json
 from statistics import mean
 
 # ==============================================================================
@@ -55,9 +54,10 @@ html, body, [data-testid="stAppViewContainer"] {
 
 .board-grid {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
     margin-bottom: 25px;
+    width: 100%;
 }
 
 .board-tile {
@@ -74,43 +74,37 @@ html, body, [data-testid="stAppViewContainer"] {
     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-.board-tile:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-}
-
 .board-tile-special {
-    background: #FFF5F5;
-    border-color: #FEB2B2;
+    background: #FFF5F5 !important;
+    border-color: #FEB2B2 !important;
 }
 
 .board-tile-active-turn {
-    border-color: #3B82F6;
-    background: #EFF6FF;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    border-color: #3B82F6 !important;
+    background: #EFF6FF !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
 }
 
 .tile-number {
     font-size: 10px;
     font-weight: 800;
-    color: #94A3B8;
-    background: #F1F5F9;
+    color: #475569;
+    background: #E2E8F0;
     padding: 2px 6px;
     border-radius: 6px;
     width: fit-content;
 }
 
 .tile-label {
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 700;
-    color: #334155;
+    color: #1E293B;
     margin-top: 8px;
     line-height: 1.3;
 }
 
 .tile-icon {
-    font-size: 16px;
-    align-self: flex-end;
+    font-size: 18px;
 }
 
 .player-token {
@@ -218,16 +212,16 @@ CASAS_MAPA = {
     5: {"titulo": "Cálculo de Probabilidade de Danos", "tipo": "normal", "icon": "🎲"},
     6: {"titulo": "Hierarquia de Controles (Item 1.5.5.1)", "tipo": "normal", "icon": "🛡️"},
     7: {"titulo": "Auditoria de Isolamento Coletivo (EPC)", "tipo": "normal", "icon": "🏗️"},
-    8: {"titulo": "Direito de Recusa Ativado pelo Chão de Fábrica", "tipo": "especial", "icon": "🛑"},
-    9: {"titulo": "Integração PGR com Plano Médico (PCMSO)", "tipo": "normal", "icon": "👩‍⚕️"},
-    10: {"titulo": "Validação de Custos Ocupacionais (FinOps)", "tipo": "normal", "icon": "💰"},
-    11: {"titulo": "Avaliação Ergonômica de Postos (NR-17)", "tipo": "normal", "icon": "🪑"},
-    12: {"titulo": "Simulado de Vazamento e Emergências", "tipo": "normal", "icon": "🧯"},
-    13: {"titulo": "Fiscalização do Trabalho Terceirizado", "tipo": "especial", "icon": "🤝"},
-    14: {"titulo": "Treinamento Obrigatório de Onboarding", "tipo": "normal", "icon": "📚"},
-    15: {"titulo": "Aproveitamento de Grade Concomitante", "tipo": "normal", "icon": "🔄"},
-    16: {"titulo": "Defesa de Nexo Epidemiológico (FAP/RAT)", "tipo": "especial", "icon": "⚖️"},
-    17: {"titulo": "Auditoria de Renovação e Certificação ISO", "tipo": "normal", "icon": "🏆"},
+    8: {"titulo": "Direito de Recusa Ativado", "tipo": "especial", "icon": "🛑"},
+    9: {"titulo": "Integração PGR com Plano PCMSO", "tipo": "normal", "icon": "👩‍⚕️"},
+    10: {"titulo": "Validação de Custos (FinOps)", "tipo": "normal", "icon": "💰"},
+    11: {"titulo": "Avaliação Ergonômica (NR-17)", "tipo": "normal", "icon": "🪑"},
+    12: {"titulo": "Simulado de Emergências", "tipo": "normal", "icon": "🧯"},
+    13: {"titulo": "Trabalho Terceirizado", "tipo": "especial", "icon": "🤝"},
+    14: {"titulo": "Treinamento de Onboarding", "tipo": "normal", "icon": "📚"},
+    15: {"titulo": "Aproveitamento de Grade", "tipo": "normal", "icon": "🔄"},
+    16: {"titulo": "Defesa de Indicador FAP/RAT", "tipo": "especial", "icon": "⚖️"},
+    17: {"titulo": "Auditoria de Certificação ISO", "tipo": "normal", "icon": "🏆"},
 }
 
 PERSONAGENS_POOL = [
@@ -243,7 +237,7 @@ PERSONAGENS_POOL = [
 ]
 
 # ==============================================================================
-# 3. BANCO EXPANDIDO DE QUESTÕES DE ALTO NÍVEL (NR-1)
+# 3. BANCO EXPANDIDO E COMPLETO DE QUESTÕES (NR-1 TÉCNICA)
 # ==============================================================================
 BANCO_QUESTOES_NR1 = [
     {
@@ -287,7 +281,7 @@ BANCO_QUESTOES_NR1 = [
             "D) Cópia fiel da ata de instalação da CIPA do último quinquênio operativo."
         ],
         "correta": 1,
-        "justificativa": "A estruturação metodológica do inventário de riscos sob o ecopo da NR-1 exige a parametrização completa das fontes de perigo combinadas aos critérios analíticos de probabilidade e severidade.",
+        "justificativa": "A estruturação metodológica do inventário de riscos sob o escopo da NR-1 exige a parametrização completa das fontes de perigo combinadas aos critérios analíticos de probabilidade e severidade.",
         "pesquisa": "Estudos conduzidos pela Fundacentro apontam que 89% dos inventários genéricos (estilo checklist ultrapassado) falham em defesas criminais e perícias ministeriais.",
         "link_leg": "https://enit.trabalho.gov.br/"
     },
@@ -305,6 +299,21 @@ BANCO_QUESTOES_NR1 = [
         "justificativa": "O item 1.6.2 flexibiliza a operação de treinamentos ao viabilizar o reaproveitamento inteligente, desde que respeitados os conteúdos programáticos e os marcos de validade aplicáveis.",
         "pesquisa": "Análises de FinOps de RH apontam economia direta ao centralizar matrizes de treinamento em conformidade digital com o eSocial.",
         "link_leg": "https://www.gov.br/esocial/pt-br"
+    },
+    {
+        "id": 5,
+        "tema": "PGR - Responsabilidade sobre Terceirizados",
+        "pergunta": "Nos termos do item 1.5.8.1, qual é a conduta obrigatória da organização contratante em relação às empresas contratadas prestadoras de serviços?",
+        "opcoes": [
+            "A) Fornecer às contratadas as informações sobre os riscos ocupacionais sob sua responsabilidade que possam afetar os trabalhadores terceiros.",
+            "B) Assumir integralmente a elaboração e assinatura do PGR de todas as subcontratadas, eximindo-as de qualquer ação.",
+            "C) Proibir a entrada de colaboradores terceirizados em áreas com classificação de risco acima do nível tolerável.",
+            "D) Realizar exames médicos admissionais complementares em substituição ao PCMSO da empresa prestadora."
+        ],
+        "correta": 0,
+        "justificativa": "O item 1.5.8.1 impõe o dever de cooperação informacional, exigindo que a contratante compartilhe o mapeamento de perigos locais para que as contratadas alimentem seus próprios planos de ação.",
+        "pesquisa": "Jurisprudências consolidadas no TST imputam corresponsabilidade civil solidária em 94% dos acidentes onde a contratante omitiu riscos de planta às subcontratadas.",
+        "link_leg": "https://sit.trabalho.gov.br/ca_epi/"
     }
 ]
 
@@ -328,7 +337,6 @@ if "historico_eventos" not in st.session_state:
 if "resposta_enviada" not in st.session_state:
     st.session_state.resposta_enviada = False
 
-# CORREÇÃO ESTRUTURAL DEFINITIVA: Chaves estáticas e seguras para evitar qualquer KeyError
 if "matriz_dinamica" not in st.session_state:
     st.session_state.matriz_dinamica = {
         "Cenario_1": [4, 1, 1, 5, 2],
@@ -369,7 +377,6 @@ def gerar_html_boardgame(titulo, objetivo, contexto, matriz_dados, logs_jogo):
         celulas = ""
         for k, notas in matriz_dados.items():
             nota = notas[i]
-            # Mapeamento dinâmico de cores em Hexadecimal
             cor_fundo = "#EF4444" if nota == 1 else "#FCA5A5" if nota == 2 else "#FEF08A" if nota == 3 else "#86EFAC" if nota == 4 else "#22C55E"
             cor_texto = "white" if nota in [1, 5] else "#1E293B"
             celulas += f'<td style="background-color: {cor_fundo}; color: {cor_texto}; font-weight: bold; text-align: center;">{html.escape(str(nota))}</td>'
@@ -513,20 +520,18 @@ tab_tabuleiro, tab_pdf_regras, tab_pesquisas_avancadas = st.tabs([
 with tab_tabuleiro:
     if not st.session_state.jogo_iniciado:
         st.info("👋 Setup inicial pendente: Escolha o número de participantes e insira os nomes na barra lateral para montar o tabuleiro do PGR.")
-        st.image("https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1500&q=80", caption="Gestão Ativa de Segurança integrada à Engenharia de Operações Corporativas.")
     else:
-        # RENDERIZAÇÃO DO TABULEIRO DE JOGO EM BLOCOS VISUAIS (Grid de 9 Colunas para acomodar 18 casas de forma compacta)
-        st.markdown("<div class='board-title-section'>🗺️ Mapa de Campo do Tabuleiro GRO</div>", unsafe_allow_html=True)
+        st.markdown("<div class='board-title-section'>🗺 Implante de Campo: Tabuleiro GRO Ativo</div>", unsafe_allow_html=True)
         
         idx_vez = st.session_state.pergunta_atual_index % len(st.session_state.jogadores)
         j_vez = st.session_state.jogadores[idx_vez]
         
-        html_tiles = ""
+        # --- SOLUÇÃO DO BUG DA IMAGEM image_6dd181.png ---
+        # Construção da string HTML completa contendo o grid montado
+        html_tiles = "<div class='board-grid'>"
         for n_casa in range(18):
             casa_info = CASAS_MAPA[n_casa]
             is_special = "board-tile-special" if casa_info["tipo"] == "especial" else ""
-            
-            # Destacar a casa se for o turno do jogador atual nela
             is_active_turn = "board-tile-active-turn" if (j_vez["posicao"] % 18 == n_casa) else ""
             
             tokens_jogadores = ""
@@ -544,20 +549,21 @@ with tab_tabuleiro:
                 </div>
             </div>
             """
-            
-        st.markdown(f'<div class="board-grid">{html_tiles}</div>', unsafe_allow_html=True)
+        html_tiles += "</div>"
+        
+        # Renderização unificada do componente HTML sem escapes incorretos
+        st.markdown(html_tiles, unsafe_allow_html=True)
         st.divider()
         
         # Grid Operacional de Ação
         col_mecanica, col_auditoria = st.columns([0.45, 0.55])
         
         with col_mecanica:
-            st.markdown(f"#### 🎲 Turno Ativo: **{j_vez['nome']}**")
+            st.markdown(f"#### 🎯 Turno Ativo: **{j_vez['nome']}**")
             st.markdown(f"**Papel:** {j_vez['char']} — *Especialidade:* `{j_vez['skill']}`")
             
             cc1, cc2 = st.columns([0.4, 0.6])
             with cc1:
-                # DADO DE 9 NÚMEROS (Conforme solicitado)
                 if st.button("Rolar Dado de 9 Números", use_container_width=True, type="primary"):
                     st.session_state.dado_resultado = random.randint(1, 9)
                     j_vez["posicao"] += st.session_state.dado_resultado
@@ -584,7 +590,6 @@ with tab_tabuleiro:
                 
                 if idx_sel == q_ativa["correta"]:
                     j_vez["score"] += 20
-                    # Modificações nas notas de compliance da matriz de forma controlada (sem chaves complexas livres)
                     st.session_state.matriz_dinamica["Cenario_4"][1] = min(5, st.session_state.matriz_dinamica["Cenario_4"][1] + 1)
                     st.session_state.matriz_dinamica["Cenario_4"][2] = min(5, st.session_state.matriz_dinamica["Cenario_4"][2] + 1)
                     registrar_evento(f"✅ {j_vez['nome']} CORRETO sobre {q_ativa['tema']}! Maturidade da corporação subiu para Nota 5.")
@@ -614,7 +619,6 @@ with tab_tabuleiro:
             tx_obj = st.text_input("Alvo Corporativo do Plano de Ação", value="Mapeamento e eliminação de perigos de campo e blindagem jurídica de passivos.")
             tx_ctx = st.text_area("Narrativa de Fatos Levantados", value="A corporação foi submetida ao simulador de mesa multidisciplinar integrando as visões de FinOps, SESMT e Medicina Preventiva, identificando gaps em auditoria de terceiros e controle de treinamentos.", height=80)
             
-            # Geração estável do relatório
             html_a4 = gerar_html_boardgame(tx_tit, tx_obj, tx_ctx, st.session_state.matriz_dinamica, st.session_state.historico_eventos)
             st.components.v1.html(html_a4, height=480, scrolling=True)
             
@@ -684,10 +688,3 @@ with tab_pesquisas_avancadas:
             "Métrica Estatística": ["46% de queda nas ações", "Retorno de R$ 2,50 a R$ 4,00", "Até 50% de economia de RAT", "Aproximadamente 4% do PIB"],
             "Fonte Científica / Corporativa": ["Estudo FGV / CNI", "Organização Internacional do Trabalho (OIT)", "Ministério da Previdência", "Dados Macroeconômicos OIT"]
         })
-        
-    st.markdown("""
-    ### 📌 A Importância Estratégica do Tema no Ecossistema ESG
-    Hoje, a conformidade estrita com a **NR-1** deixou de ser uma mera burocracia para evitar multas pontuais. 
-    Fundos de investimento internacionais utilizam os indicadores de saúde ocupacional (taxas de frequência e gravidade de acidentes) como critério eliminatório de governança corporativa. 
-    Empresas com uma gestão precária de riscos enfrentam problemas severos de atração de talentos, aumento do absenteísmo e exclusão automática de concorrências em mercados de alta governança.
-    """)
