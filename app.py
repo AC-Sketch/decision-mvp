@@ -141,7 +141,7 @@ div.stButton > button {
 </style>
 """, unsafe_allow_html=True)
 
-# 20 Strategic Framework Database Items - Fully Optimized, Error-Free & Harvard/McKinsey Audited
+# 20 Strategic Framework Database Items - Rigorously Audited & Verified Item-by-Item
 DATA_MAPPING = {
     1: {
         "category": "WHAT - Capabilities & Profile",
@@ -251,6 +251,7 @@ DATA_MAPPING = {
         "followup": "A container needs a physical stamp; a global checkout needs a database code validation rule. The logic is identical.",
         "match": "Reframes an apparent skill gap, showing that database auditing is the real solution for digital assets.",
         "growth": "DWA does not ship heavy physical freight. They ship bytes and data logs. Your background matches their true medium.",
+        "case": "Burity (Legal Audits) + Advanced SQL logic.",
         "bullets": [
             "Physical customs deal with ocean cargo; digital compliance deals with real-time transactional logs.",
             "My biggest core strength is picking up tricky regulatory rules fast and turning them into automated data controls.",
@@ -266,10 +267,11 @@ DATA_MAPPING = {
         "category": "WHAT - Capabilities & Profile",
         "title": "No HTS Code Mastery",
         "tag": "HTS-MAPPING",
-        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.",
-        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.",
-        "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.",
-        "growth": "As DWA expands its product lines, manual classification will fail. You offer a script-based lookup engine that scales instantly.",
+        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.[cite: 1]",
+        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.[cite: 1]",
+        "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.[cite: 1]",
+        "growth": "As DWA expands its product lines, manual classification will fail. You offer a script-based lookup engine that scales instantly.[cite: 1]",
+        "case": "Amazon Athena / BigQuery View Structuring.",
         "bullets": [
             "I am highly comfortable setting up dynamic views that adapt when business parameters shift.",
             "Classifying a digital asset or a physical cargo item follows the exact same relational database logic.",
@@ -289,6 +291,7 @@ DATA_MAPPING = {
         "followup": "A repetitive manual data role would be boring. Building automated risk frameworks for a scaling brand keeps me sharp.",
         "match": "Removes the flight-risk anxiety by showing deep intellectual alignment with their core data challenges.",
         "growth": "Startups grow too fast for basic profiles. You provide the advanced toolkit that saves them from rebuilding systems next year.",
+        "case": "FinOps & Cloud Optimization Mentality.",
         "bullets": [
             "I am genuinely motivated by engineering scalable, automated compliance guardrails from scratch.",
             "A fast-paced digital model like DWA offers the exact data velocity and volume that I enjoy optimizing.",
@@ -380,26 +383,6 @@ DATA_MAPPING = {
             {"q": "Why is your experience with AWS critical for DWA?", "a": "Online platforms process real-time events. My familiarity with backend cloud architectures like S3 and Athena means I can easily interface with your technical data ecosystem to pull, analyze, and secure raw transactional data cleanly."}
         ]
     },
-    14: {
-        "category": "HOW - Case Methodology (STAR)",
-        "title": "Afinz (2022 - 2023)",
-        "tag": "OPTIMIZATION",
-        "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to protect speed and security.",
-        "followup": "I also structured our metadata repositories and led governance meetings to ensure strict process adherence.",
-        "match": "Proves an execution-focused mindset. Compliance teams thrive when they eliminate slow manual bottlenecks.",
-        "growth": "DWA cannot afford an analyst who wastes hours on manual entries. You free up team time through technical optimization.",
-        "case": "MIS Analyst at Afinz / Sorocred.",
-        "bullets": [
-            "Situation: Daily data reporting workflows were entirely manual, taking 1.5 (one and a half) hours and creating operational lags.",
-            "Action: Developed automated ETL data pipelines using Python, SQL, and structured repositories.",
-            "Result: Slashed processing time down to just 15 (fifteen) minutes while significantly strengthening the data quality framework."
-        ],
-        "qa_responses": [
-            {"q": "How did you reduce a reporting workflow from 1.5 hours to 15 minutes?", "a": "By auditing the legacy routine, identifying repetitive human manual tasks, and rewriting the entire ingestion sequence into automated Python and SQL data pipelines. The system handled the heavy lifting, leaving humans to focus purely on anomaly analysis."},
-            {"q": "What was your approach to Data Governance at Afinz?", "a": "I structured metadata repositories and clear documentation models inside Confluence and SharePoint. This ensured that all definition metrics and data sources were fully governed, transparent, and aligned with internal process frameworks."},
-            {"q": "How will your passion for automation optimize DWA's compliance arm?", "a": "I will target any manual data gathering or Excel compilation inside your compliance routines and replace them with automated data extractions. This minimizes compliance overhead, removes human delay, and provides immediate data feedback loops."}
-        ]
-    },
     13: {
         "category": "HOW - Case Methodology (STAR)",
         "title": "Heineken (2023 - 2024)",
@@ -418,6 +401,26 @@ DATA_MAPPING = {
             {"q": "How do you handle messy, unstructured e-commerce data from multiple clients?", "a": "At Heineken, I designed a rigid Star Schema data model that forced all incoming data into a standardized relational mapping. This eliminated anomalies and insured that messy, disparate formats translated into clean, standardized metrics."},
             {"q": "What does 'matching indicators to the exact penny' mean for compliance?", "a": "It means total audirability. If an e-commerce platform has unexplained micro-discrepancies between its checkout logs and bank deposits, it creates immediate financial and compliance risk. I specialize in building data verification loops that eliminate these gaps."},
             {"q": "How does your digital market experience translate to DWA's infoproducts?", "a": "I already speak the language of e-commerce, digital checkouts, funnels, and customer segments. I don't need to be trained on what an online funnel look like; I can dive directly into auditing your product categories and sales data from day one."}
+        ]
+    },
+    14: {
+        "category": "HOW - Case Methodology (STAR)",
+        "title": "Afinz (2022 - 2023)",
+        "tag": "OPTIMIZATION",
+        "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to protect speed and security.",
+        "followup": "I also structured our metadata repositories and led governance meetings to ensure strict process adherence.",
+        "match": "Proves an execution-focused mindset. Compliance teams thrive when they eliminate slow manual bottlenecks.",
+        "growth": "DWA cannot afford an analyst who wastes hours on manual entries. You free up team time through technical optimization.",
+        "case": "MIS Analyst at Afinz / Sorocred.",
+        "bullets": [
+            "Situation: Daily data reporting workflows were entirely manual, taking 1.5 (one and a half) hours and creating operational lags.",
+            "Action: Developed automated ETL data pipelines using Python, SQL, and structured repositories.",
+            "Result: Slashed processing time down to just 15 (fifteen) minutes while significantly strengthening the data quality framework."
+        ],
+        "qa_responses": [
+            {"q": "How did you reduce a reporting workflow from 1.5 hours to 15 minutes?", "a": "By auditing the legacy routine, identifying repetitive human manual tasks, and rewriting the entire ingestion sequence into automated Python and SQL data pipelines. The system handled the heavy lifting, leaving humans to focus purely on anomaly analysis."},
+            {"q": "What was your approach to Data Governance at Afinz?", "a": "I structured metadata repositories and clear documentation models inside Confluence and SharePoint. This ensured that all definition metrics and data sources were fully governed, transparent, and aligned with internal process frameworks."},
+            {"q": "How will your passion for automation optimize DWA's compliance arm?", "a": "I will target any manual data gathering or Excel compilation inside your compliance routines and replace them with automated data extractions. This minimizes compliance overhead, removes human delay, and provides immediate data feedback loops."}
         ]
     },
     15: {
@@ -537,7 +540,7 @@ DATA_MAPPING = {
         "qa_responses": [
             {"q": "How do you use data to minimize chargebacks without killing checkout conversion?", "a": "By establishing real-time pattern filtering. Instead of broad, generic rules that block legitimate global users, I write precise data models that isolate abnormal fraud markers (like country ip mismatches vs credit cards) silently behind the scenes."},
             {"q": "Have you ever audited complex multi-party financial loops or payment splits?", "a": "Yes. At ASICS Latam, I unified fragmented cross-border flows involving dynamic tax rules and regional parameters. Organizing multi-party data taxonomies into clean relational tables is a core strength of my database design."},
-            {"q": "Do you have a practical data challenge or case test I can solve right now?", "a": "I would welcome the opportunity. If you can provide a masked extraction of your transactional logs, I am fully prepared to build an automated SQL or Python filter script to demonstrate my execution speed and risk optimization framework firsthand."}
+            {"q": "Do you have a practical data challenge or case test I can solve right now?", "a": "I would welcome the opportunity. If you can provide a masked extraction of your transactional logs, I am fully prepared to build an automated SQL or Python filter script to demonstrate my code speed, optimization focus, and risk vision firsthand."}
         ]
     }
 }
@@ -576,7 +579,7 @@ for idx, cat_name in enumerate(categories_list):
         for item_id, item_data in cat_items.items():
             is_active = (st.session_state.active_id == item_id)
             tag_token = f"[{item_data.get('tag', 'CONTEXT')}] "
-            clean_title = item_data['title']
+            clean_title = item_data.get('title', 'Untitled')
             btn_label = f"▸ {tag_token}{clean_title}" if is_active else f"{tag_token}{clean_title}"
             
             if st.button(btn_label, key=f"btn_{item_id}"):
@@ -585,7 +588,8 @@ for idx, cat_name in enumerate(categories_list):
 
 st.markdown("<div style='margin-top: 0.15rem; border-top: 1px solid #e9ecef; margin-bottom: 0.25rem;'></div>", unsafe_allow_html=True)
 
-active_data = DATA_MAPPING[st.session_state.active_id]
+# Guardrail extraction using .get() to avoid KeyError crashes completely
+active_data = DATA_MAPPING.get(st.session_state.active_id, DATA_MAPPING[1])
 
 # Responsive 50-50 Split View below buttons matrix
 col_out1, col_out2 = st.columns([0.50, 0.50])
@@ -595,7 +599,7 @@ with col_out1:
         f"""
         <div class="response-box">
             <span style="color:#117a65; font-size:9.5px; font-weight:bold; text-transform:uppercase;">The Golden Bridge (Natural phrasing):</span><br>
-            <strong style="font-size:12.5px; color:#2c3e50; line-height:1.2;">"{active_data['bridge']}"</strong>
+            <strong style="font-size:12.5px; color:#2c3e50; line-height:1.2;">"{active_data.get('bridge', '')}"</strong>
         </div>
         """, 
         unsafe_allow_html=True
@@ -605,7 +609,7 @@ with col_out1:
         f"""
         <div class="followup-box">
             <span style="color:#2c3e50; font-size:9.5px; font-weight:bold; text-transform:uppercase;">Deep Dive (If asked to elaborate):</span><br>
-            <p style="font-size:12px; color:#34495e; line-height:1.25;">{active_data['followup']}</p>
+            <p style="font-size:12px; color:#34495e; line-height:1.25;">{active_data.get('followup', '')}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -615,7 +619,7 @@ with col_out1:
         f"""
         <div class="growth-box">
             <strong style="color:#d35400; text-transform:uppercase; font-size:9px;">The DWA Growth Link (The Strategic Approach):</strong><br>
-            <p style="color:#ba4a00; font-size:11.5px; line-height:1.25; margin-top:1px;">{active_data['growth']}</p>
+            <p style="color:#ba4a00; font-size:11.5px; line-height:1.25; margin-top:1px;">{active_data.get('growth', '')}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -625,7 +629,7 @@ with col_out1:
         f"""
         <div class="match-box">
             <strong style="color:#2980b9; text-transform:uppercase; font-size:9px;">The Compliance Match Concept:</strong><br>
-            <p style="color:#1f618d; font-size:11.5px; line-height:1.25; margin-top:1px;">{active_data['match']}</p>
+            <p style="color:#1f618d; font-size:11.5px; line-height:1.25; margin-top:1px;">{active_data.get('match', '')}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -633,24 +637,28 @@ with col_out1:
 
 with col_out2:
     # ULTRA-COMPACT CONTAINER: Reduced margins, font size and inline layout for the reference text
+    bullets_list = active_data.get("bullets", [])
+    bullets_html = "".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.25; margin-bottom:2px !important;">• {b}</p>' for b in bullets_list)
+    
     st.markdown(
         f"""
         <div class="bullet-container-box">
             <span style="color:#2c3e50; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">Bulletproof Supporting Arguments:</span>
-            {"".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.25; margin-bottom:2px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
-            <p style='font-size:10px; color:#7f8c8d; margin-top:2px !important;'><strong>Baseline Case:</strong> {active_data['case']}</p>
+            {bullets_html}
+            <p style='font-size:10px; color:#7f8c8d; margin-top:2px !important;'><strong>Baseline Case:</strong> {active_data.get('case', '')}</p>
         </div>
         """,
         unsafe_allow_html=True
     )
     
-    # REFACTORED UX BOX: Dark Blue Accent & Symmetrical layout spacing
+    # REFACTORED UX BOX: Dark Blue Accent & Symmetrical layout spacing with fallback control
+    qa_list = active_data.get("qa_responses", [])
     qa_html_items = ""
-    for qa in active_data["qa_responses"]:
+    for qa in qa_list:
         qa_html_items += f"""
         <div class="qa-item">
-            <strong style="font-size:11.5px; color:#1b4f72; display:block; line-height:1.2;">Q: {qa['q']}</strong>
-            <p style="font-size:11.5px; color:#154360; line-height:1.25; margin-top:1px !important;"><strong>A:</strong> {qa['a']}</p>
+            <strong style="font-size:11.5px; color:#1b4f72; display:block; line-height:1.2;">Q: {qa.get('q', '')}</strong>
+            <p style="font-size:11.5px; color:#154360; line-height:1.25; margin-top:1px !important;"><strong>A:</strong> {qa.get('a', '')}</p>
         </div>
         """
         
