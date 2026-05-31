@@ -7,22 +7,34 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Custom Ultra-Compact & Responsive UX Injection
 st.markdown("""
 <style>
+/* Eliminates padding to enforce single-page dashboard constraints */
 .block-container {
-    padding-top: 1.5rem !important;
-    padding-bottom: 0.5rem !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-top: 0.4rem !important;
+    padding-bottom: 0rem !important;
+    padding-left: 0.8rem !important;
+    padding-right: 0.8rem !important;
     max-width: 100% !important;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Hide global scrollbars for clean hardware-app feel */
+::-webkit-scrollbar {
+    display: none !important;
+}
+html, body {
+    overflow: hidden !important;
 }
 
 div[data-testid="stVerticalBlock"] {
-    gap: 0.3rem !important;
+    gap: 0.15rem !important;
 }
 
 [data-testid="stSidebarUserContent"] {
-    padding-top: 1rem !important;
+    padding-top: 0.8rem !important;
 }
 
 h3, p, div {
@@ -32,79 +44,104 @@ h3, p, div {
 
 div[data-testid="stMetric"] {
     background-color: #f8f9fa;
-    padding: 6px !important;
+    padding: 4px !important;
     border-radius: 4px;
     border: 1px solid #e9ecef;
     text-align: center;
 }
 
+/* Flexbox Uniform Button Grid Layout Optimization */
+div.stButton > button {
+    width: 100% !important;
+    height: 42px !important; /* Fixed symmetric height */
+    white-space: normal !important; /* Allow elegant wrapping */
+    word-break: keep-all !important;
+    overflow: hidden !important;
+    font-size: calc(9px + 0.1vw) !important; /* Responsive fluid micro-text */
+    line-height: 1.1 !important;
+    padding: 0.2rem 0.3rem !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 5px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
+}
+
+/* Symmetric Grid Row Wrapping Blocks */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    width: 100%;
+}
+
+.category-header {
+    font-size: 10.5px !important;
+    font-weight: bold !important;
+    color: #2c3e50;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 2px;
+    margin-bottom: 0.2rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-align: center;
+}
+
+/* Output Display Blocks - Fixed Heights to Guarantee Zero-Scroll */
 .response-box {
     background-color: #e8f8f5;
     border-left: 4px solid #18bc9c;
-    padding: 10px !important;
+    padding: 6px 8px !important;
     border-radius: 4px;
-    margin-top: 0.4rem;
-    margin-bottom: 0.4rem;
+    height: 62px;
+    overflow: hidden;
 }
 
 .followup-box {
     background-color: #f4f6f7;
     border-left: 4px solid #34495e;
-    padding: 10px !important;
+    padding: 6px 8px !important;
     border-radius: 4px;
-    margin-top: 0.4rem;
-    margin-bottom: 0.4rem;
-}
-
-.match-box {
-    background-color: #ebf5fb;
-    border-left: 4px solid #3498db;
-    padding: 8px !important;
-    border-radius: 4px;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
-    font-size: 11.5px;
+    height: 62px;
+    overflow: hidden;
 }
 
 .growth-box {
     background-color: #fef9e7;
     border-left: 4px solid #f39c12;
-    padding: 8px !important;
+    padding: 6px 8px !important;
     border-radius: 4px;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
-    font-size: 11.5px;
+    height: 52px;
+    overflow: hidden;
 }
 
-.trigger-btn button {
-    width: 100% !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    font-size: 10px !important;
-    padding: 0.2rem 0.4rem !important;
-    height: 32px !important;
-    margin-bottom: 4px !important;
-    text-align: left !important;
+.match-box {
+    background-color: #ebf5fb;
+    border-left: 4px solid #3498db;
+    padding: 6px 8px !important;
+    border-radius: 4px;
+    height: 52px;
+    overflow: hidden;
+    font-size: 11px;
 }
 
-.category-header {
-    font-size: 11px !important;
-    font-weight: bold !important;
-    color: #2c3e50;
-    border-bottom: 1px solid #e9ecef;
-    padding-bottom: 2px;
-    margin-top: 0.1rem !important;
-    margin-bottom: 0.4rem !important;
+.bullet-container-box {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 8px !important;
+    height: 122px;
+    overflow: hidden;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# DATA_MAPPING structured by Framework Intent (WHAT, WHY, HOW, WHEN, INVESTIGATE)
+# 20 Strategic Blocks Ordered Chronologically & Structurally
 DATA_MAPPING = {
     1: {
         "category": "WHAT - Capabilities & Profile",
-        "title": "1. Tell me about yourself",
+        "title": "Tell me about yourself",
         "tag": "PROFILE",
         "bridge": "I take messy, unmapped data pipelines and structure them so global digital businesses can scale without risk.",
         "followup": "With my engineering background and MBA, I don't just look at code syntax—I design systems that secure operational and revenue workflows.",
@@ -119,7 +156,7 @@ DATA_MAPPING = {
     },
     2: {
         "category": "WHY - Intent & Fit",
-        "title": "2. Why DWA?",
+        "title": "Why DWA?",
         "tag": "STRATEGY",
         "bridge": "Your main compliance risks are not waiting at a physical shipping dock. They are living inside your live checkout database.",
         "followup": "When a digital brand scales cross-border via Stripe, the real bottlenecks are digital tax lines and payment gateway holds.",
@@ -134,21 +171,21 @@ DATA_MAPPING = {
     },
     3: {
         "category": "WHY - Intent & Fit",
-        "title": "3. Why Trade Compliance?",
+        "title": "Why Trade Compliance?",
         "tag": "COMPLIANCE",
         "bridge": "Modern trade compliance is no longer a legal paperwork task. It is a pure data analytics problem.",
         "followup": "Digital assets and global checkouts follow logical boolean rules. If your data views are broken, your compliance fails.",
         "match": "Turns a lack of legacy customs experience into a modern technical advantage for a cloud-first company.",
         "case": "Data Governance & Process Workflows.",
         "bullets": [
-            "Traditional customs analysts check papers one by one. I build automated scripts to audit data in bulk.",
+            "Traditional customs analysts check papers one by one. I build automated codes to audit data in bulk.",
             "My experience with data frameworks allows me to track and categorize digital transactions in real time.",
             "I ensure operational compliance is embedded directly into the code pipeline to prevent penalties."
         ]
     },
     4: {
         "category": "WHAT - Capabilities & Profile",
-        "title": "4. Your Value Proposition",
+        "title": "Your Value Proposition",
         "tag": "VALUE",
         "bridge": "I bring technical scale and pipeline automation to a department that traditionally works with manual tools.",
         "followup": "I bridge the gap between complex legal regulations and hard database rules, removing human error completely.",
@@ -162,7 +199,7 @@ DATA_MAPPING = {
     },
     5: {
         "category": "WHY - Intent & Fit",
-        "title": "5. Salary Expectations",
+        "title": "Salary Expectations",
         "tag": "ANCHOR",
         "bridge": "My financial target is based on the data infrastructure scale and cost savings I can deliver.",
         "case": "Firm Target Range (Clear numbers written out).",
@@ -170,14 +207,14 @@ DATA_MAPPING = {
         "match": "Establishes a transparent, business-driven value alignment without awkward verbal gaps.",
         "growth": "Protects their bottom line. A data-driven approach means your salary is offset by systemic optimization.",
         "bullets": [
-            "For a local corporate structure, my target is between 8,000 (eight thousand) and 10,000 (ten thousand) Reais per month.",
+            "For a local structure, my target is between 8,000 (eight thousand) and 10,000 (ten thousand) Reais per month.",
             "For an international contractor setup, that maps directly to 2,000 (two thousand) US Dollars per month.",
             "This range reflects a professional who actively implements FinOps and automated data governance layers."
         ]
     },
     6: {
         "category": "WHAT - Capabilities & Profile",
-        "title": "6. No Physical Customs Exp",
+        "title": "No Physical Customs Exp",
         "tag": "OBJECTION",
         "bridge": "That is true for physical shipping, but I view international trade regulations as logical database rules.",
         "case": "Burity (Legal Audits) + Advanced SQL logic.",
@@ -192,7 +229,7 @@ DATA_MAPPING = {
     },
     7: {
         "category": "WHAT - Capabilities & Profile",
-        "title": "7. No HTS Code Mastery",
+        "title": "No HTS Code Mastery",
         "tag": "HTS-MAPPING",
         "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.",
         "case": "Amazon Athena / BigQuery View Structuring.",
@@ -207,7 +244,7 @@ DATA_MAPPING = {
     },
     8: {
         "category": "WHY - Intent & Fit",
-        "title": "8. You are Overqualified",
+        "title": "You are Overqualified",
         "tag": "RETENTION",
         "bridge": "Honestly, I am specifically looking for a complex risk architecture challenge, not a comfortable routine.",
         "case": "FinOps & Cloud Optimization Mentality.",
@@ -222,7 +259,7 @@ DATA_MAPPING = {
     },
     9: {
         "category": "WHAT - Capabilities & Profile",
-        "title": "9. Short Tenures (Stalse/NTT)",
+        "title": "Short Tenures (Stalse/NTT)",
         "tag": "PROJECTS",
         "bridge": "These were strategic, fast-paced contract projects brought in to unlock specific data architecture blocks.",
         "case": "Agile Sprints & Cross-Cloud Toolkit.",
@@ -237,7 +274,7 @@ DATA_MAPPING = {
     },
     10: {
         "category": "WHY - Intent & Fit",
-        "title": "10. Why change fields now?",
+        "title": "Why change fields now?",
         "tag": "EVOLUTION",
         "bridge": "I don't see it as changing fields. I am simply applying modern tools to classic governance problems.",
         "case": "Transition from Management Analytics to Data Engineering.",
@@ -252,7 +289,7 @@ DATA_MAPPING = {
     },
     11: {
         "category": "HOW - Case Methodology (STAR)",
-        "title": "11. ASICS (2026 - FinOps)",
+        "title": "ASICS (2026 - FinOps)",
         "tag": "CROSS-BORDER",
         "bridge": "I built a unified, cross-border financial data model across 3 (three) countries to secure international revenue tracking.",
         "case": "Stalse Project for ASICS Latam (Brazil, Chile, Colombia).",
@@ -267,7 +304,7 @@ DATA_MAPPING = {
     },
     12: {
         "category": "HOW - Case Methodology (STAR)",
-        "title": "12. NTT DATA / Itaú (2025)",
+        "title": "NTT DATA / Itaú (2025)",
         "tag": "SCALE-DATA",
         "bridge": "I engineered cloud data pipelines to deliver automated performance reporting for 5,000 (five thousand) executives.",
         "case": "Data Analyst at NTT Data for Itaú (AWS Cloud Environment).",
@@ -282,7 +319,7 @@ DATA_MAPPING = {
     },
     13: {
         "category": "HOW - Case Methodology (STAR)",
-        "title": "13. Heineken (2023 - 2024)",
+        "title": "Heineken (2023 - 2024)",
         "tag": "E-COMMERCE",
         "bridge": "I normalized chaotic e-commerce data streams across 200 (two hundred) distinct online digital products.",
         "case": "Sxpel Technologies allocated at Heineken (Digital Channel Analytics).",
@@ -297,7 +334,7 @@ DATA_MAPPING = {
     },
     14: {
         "category": "HOW - Case Methodology (STAR)",
-        "title": "14. Afinz (2022 - 2023)",
+        "title": "Afinz (2022 - 2023)",
         "tag": "OPTIMIZATION",
         "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to protect speed and security.",
         "case": "MIS Analyst at Afinz / Sorocred.",
@@ -312,7 +349,7 @@ DATA_MAPPING = {
     },
     15: {
         "category": "HOW - Case Methodology (STAR)",
-        "title": "15. Burity (Regulatory Base)",
+        "title": "Burity (Regulatory Base)",
         "tag": "LEGAL-AUDIT",
         "bridge": "I acted as a legal proxy managing high-value regulatory, contract, and operational risks with zero liabilities.",
         "case": "Asset & Property Manager at Burity Empresarial.",
@@ -327,7 +364,7 @@ DATA_MAPPING = {
     },
     16: {
         "category": "WHEN - Extreme Scenarios & Crisis",
-        "title": "16. Handling a Major Mistake",
+        "title": "Handling a Major Mistake",
         "tag": "MISTAKE-LOG",
         "bridge": "If a pipeline or business rule breaks, my immediate step is to isolate the anomaly and patch the system.",
         "case": "Data Quality and Traceability mindset.",
@@ -342,7 +379,8 @@ DATA_MAPPING = {
     },
     17: {
         "category": "WHEN - Extreme Scenarios & Crisis",
-        "title": "17. Unmapped High-Pressure Task",
+        "title": "Unmapped High-Pressure Task",
+        "tag": "CONTEXT",
         "bridge": "Under extreme pressure with unmapped issues, I rely on structured frameworks, not emotional guessing.",
         "case": "Agile problem diagnosis.",
         "followup": "When a system blind spot appears, you isolate the parameters, review historical logs, and roll out a safe patch.",
@@ -356,7 +394,8 @@ DATA_MAPPING = {
     },
     18: {
         "category": "WHEN - Extreme Scenarios & Crisis",
-        "title": "18. Conflict with Stakeholders",
+        "title": "Conflict with Stakeholders",
+        "tag": "CONTEXT",
         "bridge": "I do not fight with subjective opinions. I align conflicting teams by putting hard data criteria on the table.",
         "case": "Strategic performance alignment with cross-functional teams.",
         "followup": "People usually push back because of underlying business anxieties. Once you show them the numbers, the noise stops.",
@@ -370,7 +409,7 @@ DATA_MAPPING = {
     },
     19: {
         "category": "WHEN - Extreme Scenarios & Crisis",
-        "title": "19. Tech to Non-Tech",
+        "title": "Tech to Non-Tech",
         "tag": "COMMS",
         "bridge": "I translate complex backend data pipelines into clear financial metrics and corporate risk mitigation.",
         "case": "Executive reporting layers at Afinz and Heineken.",
@@ -385,7 +424,7 @@ DATA_MAPPING = {
     },
     20: {
         "category": "INVESTIGATE - Reverse Interview & Closing",
-        "title": "20. Investigative Approach & Closing",
+        "title": "Investigative Approach & Closing",
         "tag": "INVESTIGATIVE",
         "bridge": "To wrap up, I would love to ask a couple of technical questions to better understand the live challenges you are dealing with right now.",
         "case": "Taking control of the interview context with deep authority.",
@@ -409,13 +448,13 @@ with st.sidebar:
     st.caption("• Academia de Riqueza Digital.pdf")
     
     st.markdown("### Strategic Framework")
-    st.info("**WHY:** Intent, Motivation & Culture\n\n**WHAT:** Scope, Value & Experience\n\n**HOW:** STAR Core Methodology\n\n**WHEN:** Crisis & Scenarios")
+    st.info("**WHY:** Motivation & Fit\n\n**WHAT:** Scope & Profile\n\n**HOW:** STAR Actions\n\n**WHEN:** Crisis Scenarios")
     
     st.markdown("### Match Analytics")
     st.metric(label="Interview Adherence Score", value="98%", delta="Elite Match")
     st.caption("**Target:** DWA · Trade Compliance Analyst")
 
-# Grouped by the new mental trigger mapping
+# Layout Render Pipeline
 categories_list = [
     "WHAT - Capabilities & Profile", 
     "WHY - Intent & Fit", 
@@ -424,10 +463,10 @@ categories_list = [
     "INVESTIGATE - Reverse Interview & Closing"
 ]
 
-# Filtering non-empty categories dynamically for layout stability
 active_categories = [cat for cat in categories_list if any(v["category"] == cat for v in DATA_MAPPING.values())]
 cols = st.columns(len(active_categories))
 
+# Generate the completely symmetric, non-cut Flexbox Grid Layout
 for idx, cat_name in enumerate(active_categories):
     with cols[idx]:
         st.markdown(f'<div class="category-header">{cat_name.split(" - ")[0]}</div>', unsafe_allow_html=True)
@@ -436,27 +475,26 @@ for idx, cat_name in enumerate(active_categories):
         for item_id, item_data in cat_items.items():
             is_active = (st.session_state.active_id == item_id)
             tag_token = f"[{item_data.get('tag', 'CONTEXT')}] "
-            clean_title = item_data['title'].split(". ")[1] if ". " in item_data['title'] else item_data['title']
+            clean_title = item_data['title']
             btn_label = f"▸ {tag_token}{clean_title}" if is_active else f"{tag_token}{clean_title}"
             
-            st.markdown('<div class="trigger-btn">', unsafe_allow_html=True)
             if st.button(btn_label, key=f"btn_{item_id}"):
                 st.session_state.active_id = item_id
                 st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
 
-st.markdown("<div style='margin-top: 0.6rem; border-top: 1px solid #e9ecef; margin-bottom: 0.4rem;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-top: 0.1rem; border-top: 1px solid #e9ecef; margin-bottom: 0.2rem;'></div>", unsafe_allow_html=True)
 
 active_data = DATA_MAPPING[st.session_state.active_id]
 
-col_out1, col_out2 = st.columns([0.48, 0.52])
+# Two Perfectly Proportioned Sub-Panels for Simultaneous Data Delivery
+col_out1, col_out2 = st.columns([0.50, 0.50])
 
 with col_out1:
     st.markdown(
         f"""
         <div class="response-box">
-            <span style="color:#117a65; font-size:11px; font-weight:bold; text-transform:uppercase;">The Golden Bridge (Natural phrasing):</span><br>
-            <strong style="font-size:13.5px; color:#2c3e50;">"{active_data['bridge']}"</strong>
+            <span style="color:#117a65; font-size:9.5px; font-weight:bold; text-transform:uppercase;">The Golden Bridge (Natural phrasing):</span><br>
+            <strong style="font-size:12px; color:#2c3e50; line-height:1.2;">"{active_data['bridge']}"</strong>
         </div>
         """, 
         unsafe_allow_html=True
@@ -465,8 +503,8 @@ with col_out1:
     st.markdown(
         f"""
         <div class="followup-box">
-            <span style="color:#2c3e50; font-size:11px; font-weight:bold; text-transform:uppercase;">Deep Dive (If asked to elaborate):</span><br>
-            <p style="font-size:12.5px; color:#34495e; margin-top:2px;">{active_data['followup']}</p>
+            <span style="color:#2c3e50; font-size:9.5px; font-weight:bold; text-transform:uppercase;">Deep Dive (If asked to elaborate):</span><br>
+            <p style="font-size:11.5px; color:#34495e; line-height:1.2;">{active_data['followup']}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -475,8 +513,8 @@ with col_out1:
     st.markdown(
         f"""
         <div class="growth-box">
-            <strong style="color:#d35400; text-transform:uppercase; font-size:10px;">The DWA Growth Link (The Strategic Approach):</strong><br>
-            <p style="color:#ba4a00; margin-top:2px;">{active_data['growth']}</p>
+            <strong style="color:#d35400; text-transform:uppercase; font-size:9px;">The DWA Growth Link (The Strategic Approach):</strong><br>
+            <p style="color:#ba4a00; font-size:11px; line-height:1.2; margin-top:1px;">{active_data['growth']}</p>
         </div>
         """, 
         unsafe_allow_html=True
@@ -485,16 +523,21 @@ with col_out1:
     st.markdown(
         f"""
         <div class="match-box">
-            <strong style="color:#2980b9; text-transform:uppercase; font-size:10px;">The Compliance Match Concept:</strong><br>
-            {active_data['match']}
+            <strong style="color:#2980b9; text-transform:uppercase; font-size:9px;">The Compliance Match Concept:</strong><br>
+            <p style="color:#1f618d; font-size:11px; line-height:1.2; margin-top:1px;">{active_data['match']}</p>
         </div>
         """, 
         unsafe_allow_html=True
     )
-    
-    st.markdown(f"<p style='font-size:11.5px; margin-top:0.4rem; color:#7f8c8d;'><strong>Baseline Reference:</strong> {active_data['case']}</p>", unsafe_allow_html=True)
 
 with col_out2:
-    st.markdown("<p style='font-weight:bold; font-size:12px; color:#2c3e50; margin-bottom:0.3rem;'>Bulletproof Supporting Arguments:</p>", unsafe_allow_html=True)
-    for bullet in active_data["bullets"]:
-        st.markdown(f"<p style='font-size:12.5px; margin-bottom:5px !important;'>• {bullet}</p>", unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class="bullet-container-box">
+            <span style="color:#2c3e50; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:3px;">Bulletproof Supporting Arguments:</span>
+            {"".join(f'<p style="font-size:11.5px; color:#2c3e50; line-height:1.25; margin-bottom:3px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
+            <p style='font-size:10.5px; color:#7f8c8d; margin-top:5px; border-top: 1px dashed #e9ecef; padding-top:2px;'><strong>Baseline Case Reference:</strong> {active_data['case']}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
