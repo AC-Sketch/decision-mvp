@@ -12,8 +12,8 @@ st.markdown("""
 <style>
 /* Reset main padding limits to prevent overlapping headers */
 .block-container {
-    padding-top: 1.5rem !important;
-    padding-bottom: 0.5rem !important;
+    padding-top: 1.2rem !important;
+    padding-bottom: 0.2rem !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     max-width: 100% !important;
@@ -25,7 +25,7 @@ st.markdown("""
 }
 
 div[data-testid="stVerticalBlock"] {
-    gap: 0.25rem !important;
+    gap: 0.2rem !important;
 }
 
 [data-testid="stSidebarUserContent"] {
@@ -78,60 +78,61 @@ div.stButton > button {
 .response-box {
     background-color: #e8f8f5;
     border-left: 4px solid #18bc9c;
-    padding: 8px 10px !important;
+    padding: 6px 10px !important;
     border-radius: 4px;
-    margin-bottom: 0.4rem;
-    min-height: 65px;
+    margin-bottom: 0.3rem;
+    min-height: 50px;
 }
 
 .followup-box {
     background-color: #f4f6f7;
     border-left: 4px solid #34495e;
-    padding: 8px 10px !important;
+    padding: 6px 10px !important;
     border-radius: 4px;
-    margin-bottom: 0.4rem;
-    min-height: 65px;
+    margin-bottom: 0.3rem;
+    min-height: 50px;
 }
 
 .growth-box {
     background-color: #fef9e7;
     border-left: 4px solid #f39c12;
-    padding: 6px 10px !important;
+    padding: 5px 10px !important;
     border-radius: 4px;
-    margin-bottom: 0.4rem;
-    min-height: 55px;
+    margin-bottom: 0.3rem;
+    min-height: 45px;
 }
 
 .match-box {
     background-color: #ebf5fb;
     border-left: 4px solid #3498db;
-    padding: 6px 10px !important;
+    padding: 5px 10px !important;
     border-radius: 4px;
-    margin-bottom: 0.4rem;
-    min-height: 55px;
+    margin-bottom: 0.3rem;
+    min-height: 45px;
 }
 
 .bullet-container-box {
     background-color: #ffffff;
     border: 1px solid #e9ecef;
     border-radius: 4px;
-    padding: 10px !important;
-    min-height: 250px;
+    padding: 8px 10px !important;
+    min-height: 195px;
 }
 
 .qa-container-box {
-    background-color: #fdfefe;
+    background-color: #f2f4f4;
     border: 1px solid #d5dbdb;
+    border-left: 4px solid #1b4f72;
     border-radius: 4px;
-    padding: 10px !important;
-    margin-top: 8px;
-    min-height: 280px;
+    padding: 8px 10px !important;
+    margin-top: 4px;
+    min-height: 220px;
 }
 
 .qa-item {
-    margin-bottom: 8px !important;
-    padding-bottom: 6px;
-    border-bottom: 1px dashed #eaeded;
+    margin-bottom: 5px !important;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #d5dbdb;
 }
 .qa-item:last-child {
     border-bottom: none;
@@ -583,7 +584,7 @@ for idx, cat_name in enumerate(categories_list):
                 st.session_state.active_id = item_id
                 st.rerun()
 
-st.markdown("<div style='margin-top: 0.3rem; border-top: 1px solid #e9ecef; margin-bottom: 0.4rem;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-top: 0.2rem; border-top: 1px solid #e9ecef; margin-bottom: 0.3rem;'></div>", unsafe_allow_html=True)
 
 active_data = DATA_MAPPING[st.session_state.active_id]
 
@@ -636,27 +637,27 @@ with col_out2:
         f"""
         <div class="bullet-container-box">
             <span style="color:#2c3e50; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">Bulletproof Supporting Arguments:</span>
-            {"".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.3; margin-bottom:4px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
-            <p style='font-size:11px; color:#7f8c8d; margin-top:8px; border-top: 1px solid #e9ecef; padding-top:4px;'><strong>Baseline Case Reference:</strong> {active_data['case']}</p>
+            {"".join(f'<p style="font-size:12px; color:#2c3e50; line-height:1.3; margin-bottom:3px !important;">• {bullet}</p>' for bullet in active_data["bullets"])}
+            <p style='font-size:11px; color:#7f8c8d; margin-top:6px; border-top: 1px solid #e9ecef; padding-top:4px;'><strong>Baseline Case Reference:</strong> {active_data['case']}</p>
         </div>
         """,
         unsafe_allow_html=True
     )
     
-    # NEW UX INJECTION: Dynamic C-Level Predictor Q&A Box taking over the empty bottom right space
+    # Refactored UX Box: Dark Blue Accent & Compact Spacing to Prevent Vertical Scrolling
     qa_html_items = ""
     for qa in active_data["qa_responses"]:
         qa_html_items += f"""
         <div class="qa-item">
-            <strong style="font-size:11.5px; color:#c0392b; display:block; line-height:1.2;">Q: {qa['q']}</strong>
-            <p style="font-size:11.5px; color:#232b2b; line-height:1.25; margin-top:2px !important;"><strong>A:</strong> {qa['a']}</p>
+            <strong style="font-size:11.5px; color:#1b4f72; display:block; line-height:1.2;">Q: {qa['q']}</strong>
+            <p style="font-size:11.5px; color:#154360; line-height:1.25; margin-top:1px !important;"><strong>A:</strong> {qa['a']}</p>
         </div>
         """
         
     st.markdown(
         f"""
         <div class="qa-container-box">
-            <span style="color:#78281f; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:6px;">⚡ TOUGHEST C-LEVEL Q&A SIMULATOR:</span>
+            <span style="color:#154360; font-size:10.5px; font-weight:bold; text-transform:uppercase; display:block; margin-bottom:4px;">⚡ TOUGHEST C-LEVEL Q&A SIMULATOR:</span>
             {qa_html_items}
         </div>
         """,
