@@ -2,7 +2,7 @@ import streamlit as st
 import re
 
 st.set_page_config(
-    page_title="War Room",
+    page_title="War Room - DWA",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -66,6 +66,16 @@ div[data-testid="stMetric"] {
     font-size: 11.5px;
 }
 
+.growth-box {
+    background-color: #fef9e7;
+    border-left: 4px solid #f39c12;
+    padding: 8px !important;
+    border-radius: 4px;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    font-size: 11.5px;
+}
+
 .trigger-btn button {
     width: 100% !important;
     white-space: nowrap !important;
@@ -90,34 +100,36 @@ div[data-testid="stMetric"] {
 </style>
 """, unsafe_allow_html=True)
 
-# DATA_MAPPING ordered structurally and chronologically (Newest experiences first)
+# Complete DATA_MAPPING with exactly 20 blocks renumerated and aligned to business rules
 DATA_MAPPING = {
     1: {
         "category": "Core & Fit",
         "title": "1. Tell me about yourself",
-        "tag": "FIT",
-        "bridge": "I take messy, broken data pipelines and structure them so global businesses can scale without risk.",
-        "followup": "With my engineering background and MBA, I don't just write code; I design systems that secure revenue workflows.",
-        "match": "Connects André's technical engineering rigor directly to DWA's need for stable, scalable transaction auditing.",
+        "tag": "PROFILE",
+        "bridge": "I take messy, unmapped data pipelines and structure them so global digital businesses can scale without risk.",
+        "followup": "With my engineering background and MBA, I don't just look at code syntax—I design systems that secure operational and revenue workflows.",
+        "match": "Connects your structural engineering rigor directly to DWA's fast-moving transaction pipeline.",
+        "growth": "DWA is scaling rapidly with thousands of daily transactions; you provide the architectural safety engine they need right now.",
         "case": "Engineering background + MBA + Advanced Analytics.",
         "bullets": [
-            "I focus on automated data governance, replacing slow manual checks with clean, programmatic controls.",
-            "I turn complex data structures into clear dashboards that help executive teams see risk instantly.",
-            "My target is to help digital companies secure their money and keep data clean across borders."
+            "I focus on data governance, replacing slow manual work with automated backend filters.",
+            "I help teams transition away from chaotic spreadsheets into single sources of truth.",
+            "My primary goal is to ensure data predictability and mitigate compliance risks dynamically."
         ]
     },
     2: {
         "category": "Core & Fit",
         "title": "2. Why DWA?",
         "tag": "STRATEGY",
-        "bridge": "Your main compliance risks are not at a physical shipping dock. They live right inside your checkout database.",
-        "followup": "When an online business scales this fast, managing thousands of lines of cross-border data manually in Excel is where things break.",
-        "match": "Proves deep knowledge of the digital infoproduct model (MRR/Stripe) over traditional customs brokers.",
+        "bridge": "Your compliance risks are not waiting at a physical shipping dock. They are living inside your live checkout database.",
+        "followup": "When a digital brand scales cross-border via Stripe, the real bottlenecks are digital tax lines and payment gateway holds.",
+        "match": "Proves you understand their exact digital business model (MRR/Infoproducts) better than traditional candidates.",
+        "growth": "DWA operates globally with high velocity; they need a data expert who secures cash flow, not a traditional logistics agent.",
         "case": "DWA Cross-border Digital Model (MRR/Stripe/VAT).",
         "bullets": [
-            "Operating globally means dealing with dynamic transaction spikes, chargebacks, and complex European VAT lines.",
-            "I want to use my SQL skills to build automated lookup scripts that track 100% (one hundred percent) of sales logs.",
-            "I focus on securing your transactional pipelines and protecting your cash flow from international tax blocks."
+            "Operating across multiple regions means managing complex checkout rules and European VAT lines instantly.",
+            "I want to apply my SQL toolkit to audit 100% (one hundred percent) of transaction logs automatically.",
+            "My focus is protecting your digital checkout funnel from sudden international regulatory blocks."
         ]
     },
     3: {
@@ -125,111 +137,42 @@ DATA_MAPPING = {
         "title": "3. Why Trade Compliance?",
         "tag": "COMPLIANCE",
         "bridge": "Modern trade compliance is no longer a legal paperwork task. It is a pure data analytics problem.",
-        "followup": "Digital products require precise logical classification rules. If your database views are wrong, your tax reporting fails.",
-        "match": "Transforms the lack of traditional maritime customs background into a massive technical competitive advantage.",
+        "followup": "Digital assets and global checkouts follow logical boolean rules. If your data views are broken, your compliance fails.",
+        "match": "Turns a lack of legacy customs experience into a modern technical advantage for a cloud-first company.",
         "case": "Data Governance & Process Workflows.",
         "bullets": [
-            "Traditional customs analysts check papers one by one. I build automated code filters to check data in bulk.",
-            "My experience in data governance allows me to categorize and track global digital assets in real time.",
-            "I make compliance data predictable so we patch regulatory errors before they cost the company money."
+            "Traditional compliance relies on slow Excel lookups. I build automated scripts to audit data in bulk.",
+            "My experience with data frameworks allows me to track and categorize digital transactions in real time.",
+            "I ensure operational compliance is embedded directly into the code pipeline to prevent penalties."
         ]
     },
     4: {
         "category": "Core & Fit",
         "title": "4. Your Value Proposition",
         "tag": "VALUE",
-        "bridge": "I bring technical scale and automation to a department that traditionally works with manual tools.",
-        "followup": "I translate long, wordy tax rules into clean code logic, removing human error from the operational workflow.",
-        "match": "Directly targets DWA's hidden pain point: scaling operations efficiently without multiplying manual headcount.",
+        "bridge": "I bring technical scale and pipeline automation to a department that traditionally works with manual tools.",
+        "followup": "I bridge the gap between complex legal regulations and hard database rules, removing human error completely.",
+        "match": "Directly links your analytics expertise to their immediate need for lean, automated operations.",
         "case": "FinOps, SQL, and Advanced Pipeline Automation.",
         "bullets": [
-            "I eliminate operational blind spots by embedding compliance rules right inside the data pipeline.",
-            "I build transparent dashboards that give leadership a fully reliable view of global tax and risk exposure.",
-            "My goal is simple: zero friction at the checkout page and zero compliance risk with international authorities."
+            "I translate wordy regulatory updates into clean automated database filters.",
+            "I build transparent dashboards that give leadership a live, 100% (one hundred percent) reliable view of risk.",
+            "My target is zero friction at the checkout page and zero compliance risk with international tax authorities."
         ]
     },
     5: {
         "category": "Core & Fit",
         "title": "5. Salary Expectations",
         "tag": "ANCHOR",
-        "bridge": "My financial target is based on the data infrastructure scale and cost savings I can deliver.",
+        "bridge": "My financial target is structured based on the infrastructure value and cloud savings I deliver.",
         "case": "Firm Target Range (Clear numbers written out).",
-        "followup": "I am fully aligned with market rates for an analyst who actively implements cost controls and data governance.",
-        "match": "Establishes a firm professional anchor, linking compensation directly to ROI and database optimization.",
+        "followup": "I anchor my rate based on my ability to optimize cloud spend and secure global financial pipelines from day one.",
+        "match": "Establishes a transparent, business-driven value alignment without awkward verbal gaps.",
+        "growth": "Protects their bottom line. A data-driven approach means your salary is offset by systemic optimization.",
         "bullets": [
-            "For a local Brazilian structure, my target is between 8,000 (eight thousand) and 10,000 (ten thousand) Reais per month.",
-            "For an international contract setup, that maps to 2,000 (two thousand) US Dollars monthly.",
-            "This cost is justified by my ability to optimize cloud data spend and protect global business revenue streams."
-        ]
-    },
-    11: {
-        "category": "Core Cases (STAR)",
-        "title": "11. ASICS (2026 - FinOps)",
-        "tag": "FINOPS",
-        "bridge": "I built a unified, cross-border financial data model across 3 (three) countries to secure revenue tracking.",
-        "case": "Stalse Project for ASICS Latam (Brazil, Chile, Colombia).",
-        "followup": "We merged multi-source data from GA4 and marketing platforms, integrating dynamic currency conversion formulas.",
-        "match": "Directly mirrors DWA's cross-border reality. Proves capacity to consolidate fragmented international financial rows.",
-        "bullets": [
-            "Situation: Fragmented revenue views across multiple regions created massive visibility and financial forecasting risks.",
-            "Action: I re-engineered the data foundations using BigQuery and automated daily pipeline loads via advanced SQL.",
-            "Result: I slashed cloud data consumption down from Gigabytes to Megabytes, cutting database query costs significantly."
-        ]
-    },
-    12: {
-        "category": "Core Cases (STAR)",
-        "title": "12. NTT DATA / Itaú (2025)",
-        "tag": "BIG DATA",
-        "bridge": "I engineered cloud data pipelines to roll out automated metrics for 5,000 (five thousand) business executives.",
-        "case": "Data Analyst at NTT Data for Itaú (AWS Cloud Environment).",
-        "followup": "The core challenge was cleansing dirty database records and mapping complex structural business rules at scale.",
-        "match": "Proves ability to process millions of transactions without breaking, mapping perfectly to DWA's high sales volumes.",
-        "bullets": [
-            "Situation: The client needed to process tables with billions of rows, fighting duplicate entries and broken customer data strings.",
-            "Action: I built complex database views and data transformations using Amazon Athena, S3, and AWS Glue pipelines.",
-            "Result: Delivered a reliable, automated dashboard with absolute data consistency and zero manual processing lag."
-        ]
-    },
-    13: {
-        "category": "Core Cases (STAR)",
-        "title": "13. Heineken (2023 - 2024)",
-        "tag": "E-COMMERCE",
-        "bridge": "I normalized chaotic e-commerce data lines across 200 (two hundred) distinct online digital products.",
-        "case": "Sxpel Technologies allocated at Heineken (Digital Channel Analytics).",
-        "followup": "I mapped out clean relational database structures to ensure the data was fully auditable by business teams.",
-        "match": "Leverages direct expertise in e-commerce workflows and checkout structures, matching DWA's pure digital model.",
-        "bullets": [
-            "Situation: Received messy spreadsheets from multiple external clients, all in different formats, blocking performance tracking.",
-            "Action: Designed a scalable Star Schema data model and built a unified dashboard tool using Power BI.",
-            "Result: Launched the first stable automation in less than 1 (one) month, matching financial metrics to the exact penny."
-        ]
-    },
-    15: {
-        "category": "Core Cases (STAR)",
-        "title": "15. Afinz (2022 - 2023)",
-        "tag": "GOVERNANCE",
-        "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to enforce governance.",
-        "case": "MIS Analyst at Afinz / Sorocred.",
-        "followup": "I also documented our metadata rules and processes inside Confluence to ensure the team followed strict audit standards.",
-        "match": "Proves an obsession with efficiency. Compliance teams love analysts who proactively eliminate slow processes.",
-        "bullets": [
-            "Situation: Daily business reporting routines were completely manual, taking 1.5 (one and a half) hours and creating operational delays.",
-            "Action: Developed automated ETL data pipelines using Python, SQL, and structured metadata repositories.",
-            "Result: Slashed processing time down to just 15 (fifteen) minutes while significantly strengthening data quality layers."
-        ]
-    },
-    14: {
-        "category": "Core Cases (STAR)",
-        "title": "14. Burity (Long Tenure)",
-        "tag": "RISK-AUDIT",
-        "bridge": "I acted as a legal proxy managing high-value regulatory, legal, and operational compliance risks.",
-        "case": "Asset & Property Manager at Burity Empresarial.",
-        "followup": "I sat at the table with lawyers, engineers, and public registries to clean up massive descriptive and structural errors.",
-        "match": "Highlights core regulatory mindset: reading legal files, auditing contracts, and mitigating corporate liability.",
-        "bullets": [
-            "Situation: Managed complex land and infrastructure compliance rules involving multi-million dollar corporations and federal registries.",
-            "Action: Audited and verified legal processes, agreements, property contracts, and complex government blueprints.",
-            "Result: Fixed major historical compliance errors administratively, securing expansions with zero lawsuits or penalties."
+            "For a local corporate structure, my target is between 8,000 (eight thousand) and 10,000 (ten thousand) Reais per month.",
+            "For an international contractor setup, that maps directly to 2,000 (two thousand) US Dollars per month.",
+            "This range reflects a professional who actively implements FinOps and automated data governance layers."
         ]
     },
     6: {
@@ -238,26 +181,28 @@ DATA_MAPPING = {
         "tag": "OBJECTION",
         "bridge": "That is true for physical shipping, but I view international trade regulations as logical database rules.",
         "case": "Burity (Legal Audits) + Advanced SQL logic.",
-        "followup": "A physical container needs a customs seal; a digital product needs a database code validation rule. The operational logic is identical.",
-        "match": "Reconceptualizes a potential skill gap, framing database auditing as the modern solution to digital compliance.",
+        "followup": "A container needs a physical stamp; a global checkout needs a database code validation rule. The logic is identical.",
+        "match": "Reframes an apparent skill gap, showing that database auditing is the real solution for digital assets.",
+        "growth": "DWA does not ship heavy physical freight. They ship bytes and data logs. Your background matches their true medium.",
         "bullets": [
-            "Physical customs deal with ocean freight; digital trade compliance deals with real-time transaction logs.",
-            "My biggest core strength is taking complex regulatory rules rapidly and transforming them into data filters.",
-            "I have spent years auditing high-risk contracts and processes—ensuring data follows rules is what I do best."
+            "Physical customs deal with ocean cargo; digital compliance deals with real-time transactional logs.",
+            "My biggest core strength is picking up tricky regulatory rules fast and turning them into automated data controls.",
+            "I have spent years verifying legal contracts and blueprints—ensuring data follows rules is my core expertise."
         ]
     },
     7: {
         "category": "Handling Objections",
         "title": "7. No HTS Code Mastery",
-        "tag": "HTS-PUZZLE",
-        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every single day.",
+        "tag": "HTS-MAPPING",
+        "bridge": "HTS classification is a structured database mapping problem. I process complex taxonomies every day.",
         "case": "Amazon Athena / BigQuery View Structuring.",
-        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as relational data tables.",
-        "match": "Demonstrates technical intelligence—turning static manual lookups into a scalable database automation system.",
+        "followup": "Instead of trying to memorize catalog codes like a human broker, I treat them as structured lookup tables.",
+        "match": "Demonstrates technical intelligence—turning static manual processes into scalable automation.",
+        "growth": "As DWA expands its product lines, manual classification will fail. You offer a script-based lookup engine that scales instantly.",
         "bullets": [
-            "I am highly skilled at setting up dynamic views that adjust instantly when global business rules change.",
-            "Classifying a digital asset or a physical cargo item follows the exact same boolean and relational database logic.",
-            "I will translate your HTS regulatory catalogs into automated database lookup scripts for instant validation."
+            "I am highly comfortable setting up dynamic views that adapt when business parameters shift.",
+            "Classifying a digital asset or a physical cargo item follows the exact same relational database logic.",
+            "I will translate your product catalog into automated backend lookup scripts for instant validation."
         ]
     },
     8: {
@@ -266,52 +211,190 @@ DATA_MAPPING = {
         "tag": "RETENTION",
         "bridge": "Honestly, I am specifically looking for a complex risk architecture challenge, not a comfortable routine.",
         "case": "FinOps & Cloud Optimization Mentality.",
-        "followup": "A quiet, manual data role would be boring. Building automated risk pipelines for a growing brand is what keeps me engaged.",
-        "match": "Completely removes the flight-risk anxiety by showing a deep intellectual interest in compliance engineering.",
+        "followup": "A repetitive manual data role would be boring. Building automated risk frameworks for a scaling brand keeps me sharp.",
+        "match": "Removes the flight-risk anxiety by showing deep intellectual alignment with their core data challenges.",
+        "growth": "Startups grow too fast for basic profiles. You provide the advanced toolkit that saves them from rebuilding systems next year.",
         "bullets": [
-            "I am deeply motivated by engineering scalable, automated compliance guardrails completely from scratch.",
+            "I am genuinely motivated by engineering scalable, automated compliance guardrails from scratch.",
             "A fast-paced digital model like DWA offers the exact data velocity and volume that I enjoy optimizing.",
             "I want to commit long-term to design, code, and secure your cloud compliance infrastructure."
+        ]
+    },
+    9: {
+        "category": "Handling Objections",
+        "title": "9. Short Tenures (Stalse/NTT)",
+        "tag": "PROJECTS",
+        "bridge": "These were strategic, fast-paced contract projects brought in to unlock specific data architecture blocks.",
+        "case": "Agile Sprints & Cross-Cloud Toolkit.",
+        "followup": "I view these experiences highly positively because they allowed me to rapidly deploy systems across completely different cloud environments.",
+        "match": "Frames short projects as intentional, high-impact consulting sprints rather than instability.",
+        "growth": "DWA needs immediate solutions. Your experience executing rapid 4-month sprints means you deliver results without a long onboarding lag.",
+        "bullets": [
+            "At Stalse, I focused on GCP and BigQuery pipelines to clean up multi-country revenue data for ASICS.",
+            "At NTT Data, I mastered AWS Athena and Glue pipelines to process banking loads for Itaú.",
+            "Now, I am looking for a long-term challenge to implement this complete cross-cloud arsenal."
+        ]
+    },
+    10: {
+        "category": "Handling Objections",
+        "title": "10. Why change fields now?",
+        "tag": "EVOLUTION",
+        "bridge": "I don't see it as changing fields. I am simply applying modern tools to classic governance problems.",
+        "case": "Transition from Management Analytics to Data Engineering.",
+        "followup": "Compliance is moving to the cloud. Teams that do not adapt their data pipelines will struggle to survive audits.",
+        "match": "Positions you as a forward-thinking Professional who sits where risk management and data science meet.",
+        "growth": "DWA is a modern tech brand. Hiring a traditional agent is a step backward; hiring a data-driven risk analyst is the future.",
+        "bullets": [
+            "Moving into Advanced Analytics allows me to protect company assets at a scale humans cannot match.",
+            "I have spent my career tracking metrics and spotting process anomalies; compliance is the natural next step.",
+            "I am positioning my engineering toolkit exactly where the future of risk management is heading."
+        ]
+    },
+    11: {
+        "category": "Core Cases (STAR)",
+        "title": "11. ASICS (2026 - FinOps)",
+        "tag": "CROSS-BORDER",
+        "bridge": "I built a unified, cross-border financial data model across 3 (three) countries to secure international revenue tracking.",
+        "case": "Stalse Project for ASICS Latam (Brazil, Chile, Colombia).",
+        "followup": "We integrated multi-source data platforms into a single architecture, automating currency conversions and tax parameters.",
+        "match": "Directly mirrors DWA's cross-border reality. Proves you can manage complex financial lines across regions.",
+        "growth": "DWA sells globally. The logic I used to consolidate international revenue rules for ASICS is exactly what I will use to audit your sales.",
+        "bullets": [
+            "Situation: Fragmented regional data views created massive visibility risks and tracking anomalies for leadership.",
+            "Action: I re-engineered the data architecture using BigQuery and automated daily loads using advanced SQL rules.",
+            "Result: Slashed cloud data consumption from Gigabytes to Megabytes, optimizing performance and reducing query costs."
+        ]
+    },
+    12: {
+        "category": "Core Cases (STAR)",
+        "title": "12. NTT DATA / Itaú (2025)",
+        "tag": "SCALE-DATA",
+        "bridge": "I engineered cloud data pipelines to deliver automated performance reporting for 5,000 (five thousand) executives.",
+        "case": "Data Analyst at NTT Data for Itaú (AWS Cloud Environment).",
+        "followup": "The project demanded absolute data consistency while handling high-volume tables with complex, evolving business rules.",
+        "match": "Proves your technical capability to handle massive transaction volumes without system lag or data corruption.",
+        "growth": "When DWA triggers thousands of daily checkout logs, you have the AWS background to ensure your audit queries don't break.",
+        "bullets": [
+            "Situation: The client needed to calculate executive metrics by joining tables with billions of rows of messy records.",
+            "Action: I built complex database views and robust data transformations using Amazon Athena, S3, and AWS Glue.",
+            "Result: Delivered an automated dashboard tool that processed massive scales with absolute data consistency."
+        ]
+    },
+    13: {
+        "category": "Core Cases (STAR)",
+        "title": "13. Heineken (2023 - 2024)",
+        "tag": "E-COMMERCE",
+        "bridge": "I normalized chaotic e-commerce data streams across 200 (two hundred) distinct online digital products.",
+        "case": "Sxpel Technologies allocated at Heineken (Digital Channel Analytics).",
+        "followup": "I focused on cleaning up fragmented client inputs to build a transparent, auditable reporting pipeline for leadership.",
+        "match": "Gives you zero learning curve regarding digital checkouts, sales funnels, and online platform metrics.",
+        "growth": "DWA is an online infoproduct ecosystem. I already speak the language of checkouts, funnels, and digital accounts.",
+        "bullets": [
+            "Situation: Received fragmented spreadsheets from multiple clients in different formats, blocking commercial campaign tracking.",
+            "Action: Designed a clean Star Schema relational model and built a unified performance dashboard inside Power BI.",
+            "Result: Launched the first stable automation in less than 1 (one) month, matching financial indicators to the exact penny."
+        ]
+    },
+    14: {
+        "category": "Core Cases (STAR)",
+        "title": "14. Afinz (2022 - 2023)",
+        "tag": "OPTIMIZATION",
+        "bridge": "I hate slow, manual, non-compliant workflows, so I build automated pipelines to protect speed and security.",
+        "case": "MIS Analyst at Afinz / Sorocred.",
+        "followup": "I also structured our metadata repositories and led governance meetings to ensure strict process adherence.",
+        "match": "Proves an execution-focused mindset. Compliance teams thrive when they eliminate slow manual bottlenecks.",
+        "growth": "DWA cannot afford an analyst who wastes hours on manual entries. You free up team time through technical optimization.",
+        "bullets": [
+            "Situation: Daily data reporting workflows were entirely manual, taking 1.5 (one and a half) hours and creating operational lags.",
+            "Action: Developed automated ETL data pipelines using Python, SQL, and structured repositories.",
+            "Result: Slashed processing time down to just 15 (fifteen) minutes while significantly strengthening the data quality framework."
+        ]
+    },
+    15: {
+        "category": "Core Cases (STAR)",
+        "title": "15. Burity (Regulatory Base)",
+        "tag": "LEGAL-AUDIT",
+        "bridge": "I acted as a legal proxy managing high-value regulatory, contract, and operational risks with zero liabilities.",
+        "case": "Asset & Property Manager at Burity Empresarial.",
+        "followup": "I audited complex legal processes, agreements, and blueprints to rectify historical administrative errors.",
+        "match": "Validates your foundational compliance mindset: reading rules, verifying contracts, and protecting corporate assets.",
+        "growth": "Even in a digital company, the core philosophy of compliance remains the same: mitigating liability. You have years of proof.",
+        "bullets": [
+            "Situation: Managed complex negotiations involving multi-million dollar corporations and strict government registries.",
+            "Action: Aligned internal legal and engineering teams to correct descriptive errors and execute land compliance steps.",
+            "Result: Secured critical infrastructure expansions administratively, driving asset valuation up with zero lawsuits."
         ]
     },
     16: {
         "category": "Extreme Scenarios",
         "title": "16. Handling a Major Mistake",
+        "tag": "MISTAKE-LOG",
         "bridge": "If a pipeline or business rule breaks, my immediate step is to isolate the anomaly and patch the system.",
         "case": "Data Quality and Traceability mindset.",
-        "followup": "I believe in absolute transparency—I flag the issue immediately, communicate the impact, and present the patch.",
-        "match": "Highlights executive maturity, transparency, and a structural focus on building permanent automated preventative solutions.",
+        "followup": "I believe in total transparency. I flag the issue, show the operational impact, and deploy the fix immediately.",
+        "match": "Highlights executive maturity. You treat errors as structural engineering data points, not personal crises.",
+        "growth": "In a fast startup, things will break. DWA needs an analyst who isolates bugs calmly and builds permanent code fixes.",
         "bullets": [
-            "I take full ownership of the problem, run root-cause analysis, and pull the logs to see exactly what failed.",
-            "I immediately deploy an automated data quality layer to ensure that specific business failure can never happen again.",
-            "In my framework, a production error is simply an urgent signal showing us where to upgrade our system rules."
+            "I take full ownership, check the transaction logs, and isolate exactly where the validation rule failed.",
+            "I implement an automated data quality check layer to ensure that specific failure can never happen again.",
+            "In my workflow, a production mistake is simply an clear indicator showing us where to upgrade our backend logic."
+        ]
+    },
+    17: {
+        "category": "Extreme Scenarios",
+        "title": "17. Unmapped High-Pressure Task",
+        "bridge": "Under extreme pressure with unmapped issues, I rely on structured frameworks, not emotional guessing.",
+        "case": "Agile problem diagnosis.",
+        "followup": "When a system blind spot appears, you isolate the parameters, review historical logs, and roll out a safe patch.",
+        "match": "Demonstrates clear analytical focus and the ability to operate safely inside chaotic environments.",
+        "growth": "Global digital sales face sudden updates (like payment gateway changes). You provide a steady, logical filter during high-pressure alerts.",
+        "bullets": [
+            "Step 1: I isolate the variables to see which core business or compliance rule is being threatened.",
+            "Step 2: I pull historical transaction logs to support our decision criteria with evidence.",
+            "Step 3: I deploy a calculated MVP solution and monitor the indicators in real-time."
         ]
     },
     18: {
         "category": "Extreme Scenarios",
         "title": "18. Conflict with Stakeholders",
-        "bridge": "I do not argue with subjective opinions. I align conflicting teams by putting hard data criteria on the table.",
-        "case": "Strategic performance meetings with diverse teams.",
-        "followup": "People usually argue because of underlying business anxieties. Once you map the actual system risk with data, the argument stops.",
-        "match": "Showcases strong, non-combative interpersonal skills, using objective metrics to create corporate alignment.",
+        "bridge": "I do not fight with subjective opinions. I align conflicting teams by putting clear data on the table.",
+        "case": "Strategic performance alignment with cross-functional teams.",
+        "followup": "People usually push back because of underlying business anxieties. Once you show them the numbers, the noise stops.",
+        "match": "Validates strong, non-combative communication skills, ensuring smooth relations between tech and legal departments.",
+        "growth": "As compliance sets tighter rules, sales teams might push back. You use data to prove that compliance protects their bonuses.",
         "bullets": [
-            "I always start by listening closely to understand the core compliance or financial concern the team is facing.",
-            "I present clear, comparative data performance models to take emotional biases out of the workspace.",
-            "Once the transactional numbers and risks are visible, stakeholders naturally align on the best operational path."
+            "I start by listening to understand the core operational or financial concern the team is facing.",
+            "I present clear, comparative data performance models to take emotional biases out of the conversation.",
+            "Once the transactional numbers and compliance risks are visible, teams naturally arrive at the same logical path."
         ]
     },
     19: {
         "category": "Extreme Scenarios",
         "title": "19. Tech to Non-Tech",
-        "tag": "COMMUNICATION",
-        "bridge": "I translate complex backend data pipelines into clear financial impacts and business risk mitigation.",
+        "bridge": "I translate complex backend data pipelines into clear financial metrics and corporate risk mitigation.",
         "case": "Executive reporting layers at Afinz and Heineken.",
-        "followup": "Non-technical leaders don't need to know the database query syntax; they need to know if the company is safe.",
-        "match": "Matches DWA's cross-functional requirement. Proves ability to interact smoothly with legal and business heads.",
+        "followup": "Non-technical stakeholders don't need to hear about SQL query joins; they need to know if the company is legally safe.",
+        "match": "Matches DWA's cross-functional reality. Proves you can speak smoothly to founders, lawyers, and marketing heads.",
+        "growth": "Leadership at DWA needs rapid answers to protect the brand. You provide clean, bite-sized executive summaries.",
         "bullets": [
-            "I never explain the backend SQL query logic. I explain the hour savings or the tax exposure we eliminated.",
-            "I use standard corporate metrics that leadership cares about, like cost reduction, cloud optimization, or time saved.",
-            "I make compliance visually obvious through clean dashboards rather than talking about complex engineering pipelines."
+            "I never explain the query syntax. I explain the hour savings or the tax exposure we successfully eliminated.",
+            "I use standard corporate metrics that leadership cares about, like cost optimization or processing time saved.",
+            "I make compliance visually obvious through clean dashboards rather than talking about backend data engineering."
+        ]
+    },
+    20: {
+        "category": "Extreme Scenarios",
+        "title": "20. Closing Statement / Final Approach",
+        "tag": "CLOSING",
+        "bridge": "To wrap up, I am not looking for a traditional, comfortable routine. I am here to build your automated compliance engine.",
+        "case": "Perfect Elo Between André's Background & DWA's Moment.",
+        "followup": "My goal is to combine my Engineering structure, my MBA business vision, and my Advanced SQL toolkit to protect your growth.",
+        "match": "The ultimate strategic pitch. Ties your entire professional summary directly to DWA's core digital scaling needs.",
+        "growth": "DWA is at a turning point: continuing with slow manual checkouts or automating data governance. I am the analyst for that automation.",
+        "bullets": [
+            "I bring cross-cloud experience (AWS/GCP) to a department that traditionally operates manually in Excel.",
+            "I will ensure your checkout funnels experience zero friction, and your global sales face zero compliance risk.",
+            "I am ready to secure your transaction pipelines long-term so DWA can focus on scaling its revenue safely."
         ]
     }
 }
@@ -320,28 +403,24 @@ if "active_id" not in st.session_state:
     st.session_state.active_id = 1
 
 with st.sidebar:
-    st.markdown("### Workspace Input")
-    cv_file = st.file_uploader("CV (PDF/TXT)", type=["txt", "pdf"], label_visibility="collapsed")
-    jd_file = st.file_uploader("Job Description", type=["txt", "pdf"], label_visibility="collapsed")
+    st.markdown("### Workspace Reference")
+    st.caption("• André Carvalho ENG.pdf")
+    st.caption("• Academia de Riqueza Digital.pdf")
     
     st.markdown("### Match Analytics")
-    st.metric(label="Adherence Score", value="96%", delta="Elite Match")
-        
+    st.metric(label="Interview Adherence Score", value="98%", delta="Elite Match")
     st.caption("**Target:** DWA · Trade Compliance Analyst")
 
-categories_list = ["Core & Fit", "Core Cases (STAR)", "Handling Objections", "Extreme Scenarios"]
+categories_list = ["Core & Fit", "Handling Objections", "Core Cases (STAR)", "Extreme Scenarios"]
 cols = st.columns(4)
 
 for idx, cat_name in enumerate(categories_list):
     with cols[idx]:
         st.markdown(f'<div class="category-header">{cat_name}</div>', unsafe_allow_html=True)
-        
         cat_items = {k: v for k, v in DATA_MAPPING.items() if v["category"] == cat_name}
         
         for item_id, item_data in cat_items.items():
             is_active = (st.session_state.active_id == item_id)
-            
-            # Button Label with implicit core tag token
             tag_token = f"[{item_data.get('tag', 'CONTEXT')}] "
             clean_title = item_data['title'].split(". ")[1] if ". " in item_data['title'] else item_data['title']
             btn_label = f"▸ {tag_token}{clean_title}" if is_active else f"{tag_token}{clean_title}"
@@ -362,7 +441,7 @@ with col_out1:
     st.markdown(
         f"""
         <div class="response-box">
-            <span style="color:#117a65; font-size:11px; font-weight:bold; text-transform:uppercase;">The Golden Bridge (Simple phrasing):</span><br>
+            <span style="color:#117a65; font-size:11px; font-weight:bold; text-transform:uppercase;">The Golden Bridge (Natural phrasing):</span><br>
             <strong style="font-size:13.5px; color:#2c3e50;">"{active_data['bridge']}"</strong>
         </div>
         """, 
@@ -381,6 +460,16 @@ with col_out1:
     
     st.markdown(
         f"""
+        <div class="growth-box">
+            <strong style="color:#d35400; text-transform:uppercase; font-size:10px;">The DWA Growth Link (The Strategic Approach):</strong><br>
+            <p style="color:#ba4a00; margin-top:2px;">{active_data['growth']}</p>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+    
+    st.markdown(
+        f"""
         <div class="match-box">
             <strong style="color:#2980b9; text-transform:uppercase; font-size:10px;">The Compliance Match Concept:</strong><br>
             {active_data['match']}
@@ -389,7 +478,7 @@ with col_out1:
         unsafe_allow_html=True
     )
     
-    st.markdown(f"<p style='font-size:12px; margin-top:0.4rem;'><strong>Case Context Reference:</strong> {active_data['case']}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size:11.5px; margin-top:0.4rem; color:#7f8c8d;'><strong>Baseline Reference:</strong> {active_data['case']}</p>", unsafe_allow_html=True)
 
 with col_out2:
     st.markdown("<p style='font-weight:bold; font-size:12px; color:#2c3e50; margin-bottom:0.3rem;'>Bulletproof Supporting Arguments:</p>", unsafe_allow_html=True)
